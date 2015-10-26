@@ -1,0 +1,3 @@
+rootProject.name = 'ReelTalk'
+
+include ':app'

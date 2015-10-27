@@ -11,14 +11,11 @@ var {
 
 
 var LolomoRow = React.createClass({
+
   render: function() {
     return (
       <View style={styles.container}>
-        <Image
-          source={{uri: 'http://themeaparty.com/wp-content/uploads/elmo-face.jpg'}}
-          style={styles.image}
-        />
-        <Text> Just Me </Text>
+        <Text>{this.props.show.name}</Text>
       </View>
     );
   },

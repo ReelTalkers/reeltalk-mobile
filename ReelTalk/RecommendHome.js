@@ -8,12 +8,19 @@ var {
   View,
 } = React;
 
+var Billboard = require('./Billboard');
+var Lolomo = require('./Lolomo');
 
 var RecommendHome = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Text>Recommend Home</Text>
+        <View style={styles.filterContainer}>
+          <Billboard/>
+        </View>
+        <View style={styles.recommendationsContainer}>
+          <Lolomo/>
+        </View>
       </View>
     );
   },
@@ -21,10 +28,21 @@ var RecommendHome = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    alignSelf: 'stretch',
+    marginTop: 65,
+  },
+  filterContainer: {
+    flex: 1,
+    backgroundColor: '#00CC33',
+  },
+  recommendationsContainer: {
+    flex: 4,
+    backgroundColor: '#CC3333',
+  },
+  big: {
+    fontSize: 100,
   },
 });
 

@@ -15,7 +15,7 @@ var LolomoRow = React.createClass({
 
   render: function() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text>{this.props.category.name}</Text>
         <View style={styles.rowContainer}>
           <ScrollView
@@ -35,12 +35,10 @@ var createThumbnail = (show) => <Image
 />;
 
 var styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'blue',
-  },
   image: {
     width: 140,
-    height: 200
+    height: 200,
+    margin: 2,
   },
 });
 

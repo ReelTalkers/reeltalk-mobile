@@ -5,31 +5,79 @@ var {
   AppRegistry,
   NavigatorIOS,
   StyleSheet,
+  TabBarIOS,
 } = React;
 
-var HomeScreen = require('./HomeScreen');
+var RecommendScreen = require('./RecommendScreen');
+var ListsScreen = require('./ListsScreen');
+var TopChartsScreen = require('./TopChartsScreen');
+var SettingsScreen = require('./SettingsScreen');
 
 var ReelTalk = React.createClass({
-  render: function() {
-    return (
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Movies',
-          component: HomeScreen,
-        }}
-      />
-    );
-  }
-});
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
+	getInitialState: function() {
+    return {selectedTab: 'recommend'};
   },
-});
 
-AppRegistry.registerComponent('ReelTalk', () => ReelTalk);
+	render: function() {
+	return (
+		<TabBarIOS selectedTab={this.state.selectedTab}>
+	    <TabBarIOS.Item
+	      selected={this.state.selectedTab === 'recommend'}
+	      systemIcon="favorites"
+	      onPress={() => {
+	          this.setState({
+	              selectedTab: 'recommend',
+	          });
+	      }}>
+	        <RecommendScreen/>
+	    </TabBarIOS.Item>
 
-module.exports = ReelTalk;
+	    <TabBarIOS.Item
+	      selected={this.state.selectedTab === 'lists'}
+	      systemIcon="bookmarks"
+	      onPress={() => {
+	            this.setState({
+	                selectedTab: 'lists',
+	            });
+	      }}>
+	      <ListsScreen/>
+	    </TabBarIOS.Item>
+
+	    <TabBarIOS.Item
+	      selected={this.state.selectedTab === 'charts'}
+	      systemIcon="most-viewed"
+	      onPress={() => {
+	            this.setState({
+	                selectedTab: 'charts',
+	            });
+	      }}>
+	      <TopChartsScreen/>
+	    </TabBarIOS.Item>
+
+	    <TabBarIOS.Item
+	      selected={this.state.selectedTab === 'settings'}
+	      systemIcon="more"
+	      onPress={() => {
+	            this.setState({
+	                selectedTab: 'settings',
+	            });
+	      }}>
+	      <SettingsScreen/>
+	    </TabBarIOS.Item>
+
+	  </TabBarIOS>
+	);
+	}
+	});
+
+	var styles = StyleSheet.create({
+	container: {
+	flex: 1,
+	backgroundColor: 'white',
+	},
+	});
+
+	AppRegistry.registerComponent('ReelTalk', () => ReelTalk);
+
+	module.exports = ReelTalk;

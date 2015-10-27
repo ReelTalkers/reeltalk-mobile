@@ -9,11 +9,11 @@ var {
 } = React;
 
 
-var HomeScreen = React.createClass({
+var RecommendScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Text>ReelTalk</Text>
+        <Text>Recommend Screen</Text>
       </View>
     );
   },
@@ -28,4 +28,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = HomeScreen;
+module.exports = RecommendScreen;

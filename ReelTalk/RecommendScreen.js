@@ -4,17 +4,23 @@ var React = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
+  NavigatorIOS,
   Text,
   View,
 } = React;
 
+var RecommendHome = require('./RecommendHome');
 
 var RecommendScreen = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text>Recommend Screen</Text>
-      </View>
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'Recommend',
+          component: RecommendHome,
+        }}
+      />
     );
   },
 });
@@ -22,9 +28,7 @@ var RecommendScreen = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
 });
 

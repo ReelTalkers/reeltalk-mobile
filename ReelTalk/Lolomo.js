@@ -24,7 +24,7 @@ var Lolomo = React.createClass({
 
   renderLolomoRow: function(show) {
     return (
-      <LolomoRow category={show}/>
+      <LolomoRow navigator={this.props.navigator} category={show}/>
     )
   },
 

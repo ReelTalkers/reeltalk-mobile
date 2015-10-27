@@ -10,8 +10,14 @@ var {
 
 var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
+var MovieDetailView = require('./MovieDetailView');
 
 var RecommendHome = React.createClass({
+
+  renderDetailView: function() {
+    this.props.navigator.push({title: "show",  component: MovieDetailView});
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -19,7 +25,7 @@ var RecommendHome = React.createClass({
           <Billboard/>
         </View>
         <View>
-          <Lolomo/>
+          <Lolomo navigator={this.props.navigator}/>
         </View>
       </View>
     );

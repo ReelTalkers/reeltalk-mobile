@@ -18,7 +18,7 @@ var RecommendHome = React.createClass({
         <View style={styles.filterContainer}>
           <Billboard/>
         </View>
-        <View style={styles.recommendationsContainer}>
+        <View>
           <Lolomo/>
         </View>
       </View>
@@ -28,21 +28,10 @@ var RecommendHome = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    alignSelf: 'stretch',
     marginTop: 65,
   },
   filterContainer: {
-    flex: 1,
     backgroundColor: '#00CC33',
-  },
-  recommendationsContainer: {
-    flex: 4,
-    backgroundColor: '#CC3333',
-  },
-  big: {
-    fontSize: 100,
   },
 });
 

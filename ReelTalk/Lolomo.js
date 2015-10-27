@@ -33,6 +33,7 @@ var Lolomo = React.createClass({
       <View style={styles.container}>
          <ListView
           dataSource={this.state.dataSource}
+          automaticallyAdjustContentInsets={false}
           renderRow={this.renderLolomoRow}
           style={styles.listView}/>
       </View>
@@ -46,6 +47,8 @@ var styles = StyleSheet.create({
     },
     listView: {
       backgroundColor: 'white',
+      width: 375,
+      height: 435,
   },
 });
 

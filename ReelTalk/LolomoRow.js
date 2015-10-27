@@ -17,12 +17,13 @@ var LolomoRow = React.createClass({
     return (
       <View style={styles.container}>
         <Text>{this.props.category.name}</Text>
+        <View style={styles.rowContainer}>
           <ScrollView
             automaticallyAdjustContentInsets={false}
-            horizontal={true}
-            style={[styles.scrollView,]}>
+            horizontal={true}>
             {this.props.category.shows.map(createThumbnail)}
           </ScrollView>
+        </View>
       </View>
     );
   },
@@ -34,18 +35,12 @@ var createThumbnail = (show) => <Image
 />;
 
 var styles = StyleSheet.create({
-    container: {
-      backgroundColor: 'blue',
-      height: 100,
-    },
-    scrollView: {
-    backgroundColor: 'green',
-    height: 300,
-    width:200,
+  container: {
+    backgroundColor: 'blue',
   },
   image: {
-    width: 100,
-    height: 100
+    width: 140,
+    height: 200
   },
 });
 

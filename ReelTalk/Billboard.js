@@ -30,7 +30,10 @@ var styles = StyleSheet.create({
       backgroundColor: 'white',
       alignItems: 'center',
     },
-    image: { width: 100, height: 100 },
+    image: {
+      width: 100,
+      height: 100
+    },
 });
 
 module.exports = Billboard;

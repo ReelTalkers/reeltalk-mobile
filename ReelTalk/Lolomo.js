@@ -42,18 +42,10 @@ var Lolomo = React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-      flex: 1,
       backgroundColor: 'white',
-      alignItems: 'center',
-    },
-    image: {
-      width: 100,
-      height: 100,
     },
     listView: {
-    paddingTop: 20,
-    backgroundColor: 'white',
-    height: 457,
+      backgroundColor: 'white',
   },
 });
 

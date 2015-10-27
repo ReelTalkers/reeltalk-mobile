@@ -5,6 +5,7 @@ var {
   AppRegistry,
   StyleSheet,
   Image,
+  ScrollView,
   Text,
   View,
 } = React;
@@ -16,6 +17,12 @@ var LolomoRow = React.createClass({
     return (
       <View style={styles.container}>
         <Text>{this.props.show.name}</Text>
+          <ScrollView
+            automaticallyAdjustContentInsets={false}
+            horizontal={true}
+            style={[styles.scrollView,]}>
+            <Text>HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello</Text>
+          </ScrollView>
       </View>
     );
   },
@@ -23,11 +30,14 @@ var LolomoRow = React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: 'white',
-      alignItems: 'center',
+      backgroundColor: 'blue',
+      height: 100,
     },
-    image: { width: 100, height: 100 },
+    scrollView: {
+    backgroundColor: 'green',
+    height: 300,
+    width:200,
+  },
 });
 
 module.exports = LolomoRow;

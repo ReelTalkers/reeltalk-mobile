@@ -47,7 +47,6 @@ var styles = StyleSheet.create({
     },
     listView: {
       backgroundColor: 'white',
-      width: 375,
       height: 435,
   },
 });

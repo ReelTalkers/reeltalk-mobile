@@ -5,7 +5,7 @@ mobile native implementation of ReelTalk
 
 Before running the app, make sure you ran:
 
-    cd react-native
+    cd ReelTalk
     npm install
 
 Targeted platforms:

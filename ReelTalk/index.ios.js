@@ -18,7 +18,7 @@ var ReelTalk = React.createClass({
 	getInitialState: function() {
     	return {
     		selectedTab: 'recommend',
-    		userId: '1',
+    		userId: '2',
     	};
   	},
 

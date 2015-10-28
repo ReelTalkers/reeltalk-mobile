@@ -6,6 +6,7 @@ var {
   Image,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } = React;
 
@@ -15,11 +16,15 @@ var Star = React.createClass({
     return (color === 'gold') ? <Image source={require('image!GoldStar')} /> : <Image source={require('image!GrayStar')} />;
   },
 
+  _onPress: function() {
+    this.props.onSelect(this.props.value);
+  },
+
   render: function() {
     return (
-      <View style={styles.container}>
-        {this._selectStar(this.props.color)}
-      </View>
+        <TouchableHighlight onPress={this._onPress}>
+          {this._selectStar(this.props.color)}
+        </TouchableHighlight>
     );
   },
 });

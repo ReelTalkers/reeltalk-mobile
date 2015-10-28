@@ -18,6 +18,12 @@ var Rating = React.createClass({
     	};
   	},
 
+  _changeScore: function(newScore) {
+    this.setState({
+      score: newScore,
+    })
+  },
+
   _selectStar: function(index) {
     if (index <= this.state.rating) {
       return 'image!GoldStar';
@@ -28,11 +34,11 @@ var Rating = React.createClass({
   },
 
   render: function() {
-    const stars = [1, 2, 3, 4, 5].map((e, i) => (i + 1 <= this.state.score) ? {color: 'gold'} : {color: 'gray'});
+    var stars = [1, 2, 3, 4, 5].map((e, i) => (i + 1 <= this.state.score) ? {color: 'gold'} : {color: 'gray'});
     return (
       <View style={styles.container}>
         <Text>Rating:</Text>
-        {stars.map(star => <Star color={star.color}/>)}
+        {stars.map((star, i) => <Star color={star.color} value={i + 1} onSelect={this._changeScore}/>)}
       </View>
     );
   },

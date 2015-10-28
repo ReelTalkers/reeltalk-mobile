@@ -28,7 +28,10 @@ var LolomoRow = React.createClass({
 
   createThumbnail: function(show) {
     return (
-      <TouchableHighlight onPress={()=>this.showDetails(show)}>
+      <TouchableHighlight 
+        style={styles.movieButton}
+        onPress={()=>this.showDetails(show)}
+      >
         <Image
             source={{uri: show.thumbnail}}
             style={styles.image}
@@ -62,7 +65,6 @@ var styles = StyleSheet.create({
   image: {
     width: 115,
     height: 172,
-    marginLeft: 5,
     // TODO: shadows not working right now for some reason
     shadowColor: "#000000",
     shadowOpacity: 0.35,
@@ -71,6 +73,9 @@ var styles = StyleSheet.create({
       height: 2,
       width: 0
     }
+  },
+  movieButton: {
+    marginLeft: 5,
   },
   // added just so that we can have padding on the left and right of all movies
   endOfRow: {

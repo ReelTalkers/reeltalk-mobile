@@ -11,6 +11,7 @@ var {
 
 var json = require("./Data");
 var LolomoRow = require('./LolomoRow');
+var Billboard = require('./Billboard');
 
 
 var Lolomo = React.createClass({
@@ -28,26 +29,31 @@ var Lolomo = React.createClass({
     )
   },
 
+  renderBillboard: function() {
+    return (
+      <Billboard
+        userId={this.props.userId}
+      />
+    )
+  },
+
   render: function() {
     return (
-      <View style={styles.container}>
-         <ListView
-          dataSource={this.state.dataSource}
-          automaticallyAdjustContentInsets={false}
-          renderRow={this.renderLolomoRow}
-          style={styles.listView}/>
-      </View>
+      <ListView
+        // TODO: not sure if I like that a header is part of a Lolomo
+        renderHeader={this.renderBillboard}
+        dataSource={this.state.dataSource}
+        automaticallyAdjustContentInsets={false}
+        renderRow={this.renderLolomoRow}
+        style={styles.listView}
+      />
     );
   },
 });
 
 var styles = StyleSheet.create({
-    container: {
-      backgroundColor: 'white',
-    },
     listView: {
       backgroundColor: 'white',
-      height: 435,
   },
 });
 

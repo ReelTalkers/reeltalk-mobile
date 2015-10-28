@@ -8,21 +8,15 @@ var {
   View,
 } = React;
 
-var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
 
 var RecommendHome = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <View style={styles.filterContainer}>
-          <Billboard
-            userId = {this.props.userId}
-          />
-        </View>
-        <View>
-          <Lolomo/>
-        </View>
+        <Lolomo 
+          userId = {this.props.userId}
+        />
       </View>
     );
   },
@@ -30,10 +24,8 @@ var RecommendHome = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: 65,
-  },
-  filterContainer: {
-    backgroundColor: '#00CC33',
   },
 });
 

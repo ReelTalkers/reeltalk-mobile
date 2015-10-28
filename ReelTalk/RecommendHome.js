@@ -13,19 +13,16 @@ var Lolomo = require('./Lolomo');
 var RecommendHome = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
-        <Lolomo 
-          userId = {this.props.userId}
-        />
-      </View>
+      <Lolomo style={styles.lolomo}
+        userId = {this.props.userId}
+      />
     );
   },
 });
 
 var styles = StyleSheet.create({
-  container: {
+  lolomo: {
     flex: 1,
-    marginTop: 65,
   },
 });
 

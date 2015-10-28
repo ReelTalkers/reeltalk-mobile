@@ -43,7 +43,6 @@ var Lolomo = React.createClass({
         // TODO: not sure if I like that a header is part of a Lolomo
         renderHeader={this.renderBillboard}
         dataSource={this.state.dataSource}
-        automaticallyAdjustContentInsets={false}
         renderRow={this.renderLolomoRow}
         style={styles.listView}
       />

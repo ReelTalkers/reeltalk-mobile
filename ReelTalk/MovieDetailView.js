@@ -11,6 +11,8 @@ var {
 } = React;
 
 var Rating = require('./Rating');
+var json = require("./Data");
+var LolomoRow = require('./LolomoRow');
 
 var MovieDetailView = React.createClass({
   render: function() {
@@ -34,6 +36,7 @@ var MovieDetailView = React.createClass({
         </View>
         <Text>Description: {this.props.show.description}</Text>
         <Rating averageRating={this.props.show.averageRating}/>
+        <LolomoRow/>
       </View>
     );
   },

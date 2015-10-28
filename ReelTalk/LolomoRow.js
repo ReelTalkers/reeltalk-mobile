@@ -15,13 +15,13 @@ var {
 var MovieDetailView = require('./MovieDetailView');
 
 var LolomoRow = React.createClass({
-
   showDetails: function(show) {
     this.props.navigator.push({
       title: show.name,
       component: MovieDetailView,
       passProps: {
-        show: show
+        show: show,
+        navigator: this.props.navigator,
       },
     });
   },

@@ -10,6 +10,7 @@ var {
   View,
 } = React;
 
+var Rating = require('./Rating');
 
 var MovieDetailView = React.createClass({
   render: function() {
@@ -32,6 +33,7 @@ var MovieDetailView = React.createClass({
           </View>
         </View>
         <Text>Description: {this.props.show.description}</Text>
+        <Rating averageRating={this.props.show.averageRating}/>
       </View>
     );
   },

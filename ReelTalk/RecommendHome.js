@@ -17,7 +17,9 @@ var RecommendHome = React.createClass({
     return (
       <View style={styles.container}>
         <View style={styles.filterContainer}>
-          <Billboard/>
+          <Billboard
+            userId = {this.props.userId}
+          />
         </View>
         <View>
           <Lolomo navigator={this.props.navigator}/>

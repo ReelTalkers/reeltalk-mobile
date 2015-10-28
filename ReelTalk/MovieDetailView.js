@@ -31,6 +31,7 @@ var MovieDetailView = React.createClass({
             {this.props.show.actors.map(actor => <Text>{actor}</Text>)}
           </View>
         </View>
+        <Text>Description: {this.props.show.description}</Text>
       </View>
     );
   },

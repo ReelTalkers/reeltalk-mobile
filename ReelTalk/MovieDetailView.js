@@ -6,37 +6,66 @@ var {
   Image,
   StyleSheet,
   ListView,
+  ScrollView,
   Text,
+  TouchableHighlight,
   View,
 } = React;
 
 var Rating = require('./Rating');
 var json = require("./Data");
-var LolomoRow = require('./LolomoRow');
 
 var MovieDetailView = React.createClass({
+  getInitialState: function() {
+  	return {
+  		show: this.props.initialShow,
+  	};
+	},
+
+  changeShow: function(newShow) {
+    this.setState({
+      show: newShow,
+    });
+  },
+
+  createThumbnail: function(show) {
+    return (
+      <TouchableHighlight onPress={()=>this.changeShow(show)}>
+        <Image
+            source={{uri: show.thumbnail}}
+            style={styles.image}
+        />
+      </TouchableHighlight>
+    );
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
         <View style={styles.movieInfo}>
           <Image
-              source={{uri: this.props.show.thumbnail}}
+              source={{uri: this.state.show.thumbnail}}
               style={styles.image}
           />
           <View style={styles.metadata}>
-            <Text>Name: {this.props.show.name}</Text>
-            <Text>Year: {this.props.show.year}</Text>
-            <Text>Runtime: {this.props.show.runtime}</Text>
-            <Text>Rating: {this.props.show.rating}</Text>
-            <Text>Genre: {this.props.show.genre}</Text>
-            <Text>Director: {this.props.show.director}</Text>
+            <Text>Name: {this.state.show.name}</Text>
+            <Text>Year: {this.state.show.year}</Text>
+            <Text>Runtime: {this.state.show.runtime}</Text>
+            <Text>Rating: {this.state.show.rating}</Text>
+            <Text>Genre: {this.state.show.genre}</Text>
+            <Text>Director: {this.state.show.director}</Text>
             <Text style={styles.actors}>Actors</Text>
-            {this.props.show.actors.map(actor => <Text>{actor}</Text>)}
+            {this.state.show.actors.map(actor => <Text>{actor}</Text>)}
           </View>
         </View>
-        <Text>Description: {this.props.show.description}</Text>
-        <Rating averageRating={this.props.show.averageRating}/>
-        <LolomoRow/>
+        <Text>Description: {this.state.show.description}</Text>
+        <Rating averageRating={this.state.show.averageRating}/>
+        <Text>Viewers also Enjoyed</Text>
+        <ScrollView
+          automaticallyAdjustContentInsets={false}
+          horizontal={true}>
+          {json.categories[0].shows.map(show => this.createThumbnail(show))}
+        </ScrollView>
       </View>
     );
   },

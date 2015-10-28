@@ -12,7 +12,6 @@ var {
 var json = require("./Data");
 var LolomoRow = require('./LolomoRow');
 
-
 var Lolomo = React.createClass({
 
   getInitialState: function() {

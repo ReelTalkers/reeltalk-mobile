@@ -20,7 +20,7 @@ var LolomoRow = React.createClass({
       title: show.name,
       component: MovieDetailView,
       passProps: {
-        show: show,
+        initialShow: show,
         navigator: this.props.navigator,
       },
     });

@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  Image,
   StyleSheet,
   ListView,
   Text,
@@ -14,7 +15,22 @@ var MovieDetailView = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-         <Text>Details</Text>
+        <View style={styles.movieInfo}>
+          <Image
+              source={{uri: this.props.show.thumbnail}}
+              style={styles.image}
+          />
+          <View style={styles.metadata}>
+            <Text>Name: {this.props.show.name}</Text>
+            <Text>Year: {this.props.show.year}</Text>
+            <Text>Runtime: {this.props.show.runtime}</Text>
+            <Text>Rating: {this.props.show.rating}</Text>
+            <Text>Genre: {this.props.show.genre}</Text>
+            <Text>Director: {this.props.show.director}</Text>
+            <Text style={styles.actors}>Actors</Text>
+            {this.props.show.actors.map(actor => <Text>{actor}</Text>)}
+          </View>
+        </View>
       </View>
     );
   },
@@ -22,10 +38,21 @@ var MovieDetailView = React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
+      marginTop: 65,
+    },
+    movieInfo: {
+      flexDirection: 'row',
+    },
+    actors: {
+      textDecorationLine: 'underline',
+    },
+    metadata: {
+      flexDirection: 'column',
+    },
+    image: {
+      width: 140,
+      height: 200,
+      margin: 2,
     },
 });
 

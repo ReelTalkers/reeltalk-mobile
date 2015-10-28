@@ -36,7 +36,7 @@ var Lolomo = React.createClass({
 
   renderLolomoRow: function(category) {
     return (
-      <LolomoRow category={category} onSelect={this._showDetails}/>
+      <LolomoRow header={category.name} category={category} onSelect={this._showDetails}/>
     )
   },
 

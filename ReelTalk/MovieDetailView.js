@@ -51,7 +51,7 @@ var MovieDetailView = React.createClass({
         <Text>Description: {this.state.show.description}</Text>
         <Rating averageRating={this.state.show.averageRating}/>
         <Text>Viewers also Enjoyed</Text>
-        <LolomoRow category={json.categories[0]} onSelect={this._changeShow}/>
+        <LolomoRow header={"Others also enjoyed:"} category={json.categories[0]} onSelect={this._changeShow}/>
 
       </View>
     );

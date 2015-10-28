@@ -28,7 +28,7 @@ var LolomoRow = React.createClass({
   render: function() {
     return (
       <View>
-        <Text style={styles.categoryName}>{this.props.category.name}</Text>
+        <Text style={styles.categoryName}>{this.props.header}</Text>
         <ScrollView
           automaticallyAdjustContentInsets={false}
           horizontal={true}>

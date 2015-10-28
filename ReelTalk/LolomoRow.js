@@ -28,7 +28,7 @@ var LolomoRow = React.createClass({
 
   createThumbnail: function(show) {
     return (
-      <TouchableHighlight onPress={()=>this.showDetails(show)}>
+      <TouchableHighlight onPress={()=>this.props.onSelect(show)}>
         <Image
             source={{uri: show.thumbnail}}
             style={styles.image}

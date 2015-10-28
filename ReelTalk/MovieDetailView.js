@@ -13,6 +13,7 @@ var {
 } = React;
 
 var Rating = require('./Rating');
+var LolomoRow = require('./LolomoRow');
 var json = require("./Data");
 
 var MovieDetailView = React.createClass({
@@ -22,21 +23,10 @@ var MovieDetailView = React.createClass({
   	};
 	},
 
-  changeShow: function(newShow) {
+  _changeShow: function(newShow) {
     this.setState({
       show: newShow,
     });
-  },
-
-  createThumbnail: function(show) {
-    return (
-      <TouchableHighlight onPress={()=>this.changeShow(show)}>
-        <Image
-            source={{uri: show.thumbnail}}
-            style={styles.image}
-        />
-      </TouchableHighlight>
-    );
   },
 
   render: function() {
@@ -61,11 +51,8 @@ var MovieDetailView = React.createClass({
         <Text>Description: {this.state.show.description}</Text>
         <Rating averageRating={this.state.show.averageRating}/>
         <Text>Viewers also Enjoyed</Text>
-        <ScrollView
-          automaticallyAdjustContentInsets={false}
-          horizontal={true}>
-          {json.categories[0].shows.map(show => this.createThumbnail(show))}
-        </ScrollView>
+        <LolomoRow header={"Others also enjoyed:"} category={json.categories[0]} onSelect={this._changeShow}/>
+
       </View>
     );
   },

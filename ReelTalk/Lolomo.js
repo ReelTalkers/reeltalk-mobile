@@ -12,6 +12,7 @@ var {
 var json = require("./Data");
 var LolomoRow = require('./LolomoRow');
 var Billboard = require('./Billboard');
+var MovieDetailView = require('./MovieDetailView');
 
 var Lolomo = React.createClass({
 
@@ -22,9 +23,20 @@ var Lolomo = React.createClass({
     };
   },
 
+  _showDetails: function(show) {
+    this.props.navigator.push({
+      title: show.name,
+      component: MovieDetailView,
+      passProps: {
+        initialShow: show,
+        navigator: this.props.navigator,
+      },
+    });
+  },
+
   renderLolomoRow: function(category) {
     return (
-      <LolomoRow navigator={this.props.navigator} category={category}/>
+      <LolomoRow header={category.name} category={category} onSelect={this._showDetails}/>
     )
   },
 

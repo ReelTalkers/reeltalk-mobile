@@ -12,25 +12,13 @@ var {
   View,
 } = React;
 
-var MovieDetailView = require('./MovieDetailView');
-
 var LolomoRow = React.createClass({
-  showDetails: function(show) {
-    this.props.navigator.push({
-      title: show.name,
-      component: MovieDetailView,
-      passProps: {
-        initialShow: show,
-        navigator: this.props.navigator,
-      },
-    });
-  },
 
   createThumbnail: function(show) {
     return (
       <TouchableHighlight 
         style={styles.movieButton}
-        onPress={()=>this.showDetails(show)}
+        onPress={()=>this.props.onSelect(show)}
       >
         <Image
             source={{uri: show.thumbnail}}
@@ -43,7 +31,7 @@ var LolomoRow = React.createClass({
   render: function() {
     return (
       <View>
-        <Text style={styles.categoryName}>{this.props.category.name}</Text>
+        <Text style={styles.categoryName}>{this.props.header}</Text>
         <ScrollView
           automaticallyAdjustContentInsets={false}
           horizontal={true}>

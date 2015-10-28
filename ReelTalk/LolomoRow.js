@@ -2,16 +2,40 @@
 
 var React = require('react-native');
 var {
+  AlertIOS,
   AppRegistry,
   StyleSheet,
   Image,
   ScrollView,
   Text,
+  TouchableHighlight,
   View,
 } = React;
 
+var MovieDetailView = require('./MovieDetailView');
 
 var LolomoRow = React.createClass({
+  showDetails: function(show) {
+    this.props.navigator.push({
+      title: show.name,
+      component: MovieDetailView,
+      passProps: {
+        initialShow: show,
+        navigator: this.props.navigator,
+      },
+    });
+  },
+
+  createThumbnail: function(show) {
+    return (
+      <TouchableHighlight onPress={()=>this.showDetails(show)}>
+        <Image
+            source={{uri: show.thumbnail}}
+            style={styles.image}
+        />
+      </TouchableHighlight>
+    );
+  },
 
   render: function() {
     return (
@@ -20,18 +44,13 @@ var LolomoRow = React.createClass({
         <ScrollView
           automaticallyAdjustContentInsets={false}
           horizontal={true}>
-          {this.props.category.shows.map(createThumbnail)}
+          {this.props.category.shows.map(show => this.createThumbnail(show))}
           <View style={styles.endOfRow}/>
         </ScrollView>
       </View>
     );
   },
 });
-
-var createThumbnail = (show) => <Image
-  source={{uri: show.thumbnail}}
-  style={styles.image}
-/>;
 
 var styles = StyleSheet.create({
   categoryName: {

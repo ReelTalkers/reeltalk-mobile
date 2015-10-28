@@ -11,9 +11,12 @@ var {
 var Lolomo = require('./Lolomo');
 
 var RecommendHome = React.createClass({
+
   render: function() {
     return (
-      <Lolomo style={styles.lolomo}
+      <Lolomo 
+        style={styles.lolomo}
+        navigator={this.props.navigator}
         userId = {this.props.userId}
       />
     );

@@ -13,7 +13,6 @@ var json = require("./Data");
 var LolomoRow = require('./LolomoRow');
 var Billboard = require('./Billboard');
 
-
 var Lolomo = React.createClass({
 
   getInitialState: function() {
@@ -23,9 +22,9 @@ var Lolomo = React.createClass({
     };
   },
 
-  renderLolomoRow: function(show) {
+  renderLolomoRow: function(category) {
     return (
-      <LolomoRow category={show}/>
+      <LolomoRow navigator={this.props.navigator} category={category}/>
     )
   },
 

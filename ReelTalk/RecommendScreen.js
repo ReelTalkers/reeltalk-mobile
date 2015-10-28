@@ -15,7 +15,7 @@ var RecommendScreen = React.createClass({
   render: function() {
     return (
       <NavigatorIOS
-        style={styles.container}
+        style={styles.navigator}
         initialRoute={{
           title: 'Recommend',
           component: RecommendHome,
@@ -29,7 +29,7 @@ var RecommendScreen = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  container: {
+  navigator: {
     flex: 1,
     backgroundColor: 'white',
   },

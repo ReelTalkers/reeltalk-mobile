@@ -27,12 +27,22 @@ var TopChartsHome = React.createClass({
     )
   },
 
+  _onValueChange(value) {
+    console.log(value)
+    const newList = (value === 'Today') ? json.categories[0].shows : json.categories[2].shows;
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.setState({
+      dataSource: ds.cloneWithRows(newList),
+    });
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
         <SegmentedControlIOS
           values={["This Week", "Today"]}
           selectedIndex={1}
+          onValueChange={this._onValueChange}
         />
         <ListView
          dataSource={this.state.dataSource}

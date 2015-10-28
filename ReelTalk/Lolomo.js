@@ -11,6 +11,8 @@ var {
 
 var json = require("./Data");
 var LolomoRow = require('./LolomoRow');
+var Billboard = require('./Billboard');
+var MovieDetailView = require('./MovieDetailView');
 
 var Lolomo = React.createClass({
 
@@ -21,33 +23,47 @@ var Lolomo = React.createClass({
     };
   },
 
+  _showDetails: function(show) {
+    this.props.navigator.push({
+      title: show.name,
+      component: MovieDetailView,
+      passProps: {
+        initialShow: show,
+        navigator: this.props.navigator,
+      },
+    });
+  },
+
   renderLolomoRow: function(category) {
     return (
-      <LolomoRow navigator={this.props.navigator} category={category}/>
+      <LolomoRow header={category.name} category={category} onSelect={this._showDetails}/>
+    )
+  },
+
+  renderBillboard: function() {
+    return (
+      <Billboard
+        userId={this.props.userId}
+      />
     )
   },
 
   render: function() {
     return (
-      <View style={styles.container}>
-         <ListView
-          dataSource={this.state.dataSource}
-          automaticallyAdjustContentInsets={false}
-          renderRow={this.renderLolomoRow}
-          style={styles.listView}/>
-      </View>
+      <ListView
+        // TODO: not sure if I like that a header is part of a Lolomo
+        renderHeader={this.renderBillboard}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderLolomoRow}
+        style={styles.listView}
+      />
     );
   },
 });
 
 var styles = StyleSheet.create({
-    container: {
-      backgroundColor: 'white',
-    },
     listView: {
       backgroundColor: 'white',
-      width: 375,
-      height: 435,
   },
 });
 

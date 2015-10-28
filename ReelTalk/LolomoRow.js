@@ -12,23 +12,11 @@ var {
   View,
 } = React;
 
-var MovieDetailView = require('./MovieDetailView');
-
 var LolomoRow = React.createClass({
-  showDetails: function(show) {
-    this.props.navigator.push({
-      title: show.name,
-      component: MovieDetailView,
-      passProps: {
-        initialShow: show,
-        navigator: this.props.navigator,
-      },
-    });
-  },
 
   createThumbnail: function(show) {
     return (
-      <TouchableHighlight onPress={()=>this.showDetails(show)}>
+      <TouchableHighlight onPress={()=>this.props.onSelect(show)}>
         <Image
             source={{uri: show.thumbnail}}
             style={styles.image}
@@ -40,11 +28,12 @@ var LolomoRow = React.createClass({
   render: function() {
     return (
       <View>
-        <Text>{this.props.category.name}</Text>
+        <Text style={styles.categoryName}>{this.props.header}</Text>
         <ScrollView
           automaticallyAdjustContentInsets={false}
           horizontal={true}>
           {this.props.category.shows.map(show => this.createThumbnail(show))}
+          <View style={styles.endOfRow}/>
         </ScrollView>
       </View>
     );
@@ -52,11 +41,29 @@ var LolomoRow = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  image: {
-    width: 140,
-    height: 200,
-    margin: 2,
+  categoryName: {
+    fontWeight: '600',
+    fontSize: 17,
+    color: '#929292',
+    marginLeft: 5,
   },
+  image: {
+    width: 115,
+    height: 172,
+    marginLeft: 5,
+    // TODO: shadows not working right now for some reason
+    shadowColor: "#000000",
+    shadowOpacity: 0.35,
+    shadowRadius: 4,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
+  },
+  // added just so that we can have padding on the left and right of all movies
+  endOfRow: {
+    width: 5
+  }
 });
 
 module.exports = LolomoRow;

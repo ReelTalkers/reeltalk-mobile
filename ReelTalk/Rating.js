@@ -39,6 +39,7 @@ var Rating = React.createClass({
       <View style={styles.container}>
         <Text>Rating:</Text>
         {stars.map((star, i) => <Star color={star.color} value={i + 1} onSelect={this._changeScore}/>)}
+        <Text>Average Rating: {this.props.averageRating}</Text>
       </View>
     );
   },

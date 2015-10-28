@@ -30,6 +30,8 @@ var styles = StyleSheet.create({
       flex: 1,
       backgroundColor: 'white',
       alignItems: 'center',
+      justifyContent: 'center', // center
+      height: 190,
     },
     image: {
       width: 100,

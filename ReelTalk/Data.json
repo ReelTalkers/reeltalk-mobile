@@ -1,4 +1,10 @@
 {
+	"users" : {
+		'1': {
+			"name": "Andrew",
+		 	"picture": "https://pbs.twimg.com/profile_images/3491760112/d10ed92223f7c53a2f6072baf5a6c5a0_400x400.jpeg"
+		},
+	},
 	"categories" : [
 	{"name": "Top Picks",
 	 "shows": [

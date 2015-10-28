@@ -19,6 +19,9 @@ var RecommendScreen = React.createClass({
         initialRoute={{
           title: 'Recommend',
           component: RecommendHome,
+          passProps: {
+            userId: this.props.userId
+          },
         }}
       />
     );

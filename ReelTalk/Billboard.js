@@ -9,13 +9,14 @@ var {
   View,
 } = React;
 
+var json = require("./Data");
 
 var Billboard = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
         <Image
-          source={{uri: 'http://themeaparty.com/wp-content/uploads/elmo-face.jpg'}}
+          source={{uri: json.users[this.props.userId].picture}}
           style={styles.image}
         />
         <Text> Just Me </Text>

@@ -16,8 +16,11 @@ var SettingsScreen = require('./SettingsScreen');
 var ReelTalk = React.createClass({
 
 	getInitialState: function() {
-    return {selectedTab: 'recommend'};
-  },
+    	return {
+    		selectedTab: 'recommend',
+    		userId: '1',
+    	};
+  	},
 
 	render: function() {
 	return (
@@ -30,7 +33,9 @@ var ReelTalk = React.createClass({
 	              selectedTab: 'recommend',
 	          });
 	      }}>
-	        <RecommendScreen/>
+	        <RecommendScreen
+	          userId={this.state.userId}
+	        />
 	    </TabBarIOS.Item>
 
 	    <TabBarIOS.Item

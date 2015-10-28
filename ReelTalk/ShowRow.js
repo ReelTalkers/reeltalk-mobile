@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  Image,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -26,7 +27,13 @@ var ShowRow = React.createClass({
   render: function() {
     return (
       <TouchableHighlight style={styles.container} onPress={()=>this.showDetails(this.props.show)}>
-        <Text>{this.props.show.name}</Text>
+        <View style={styles.horizontal}>
+          <Image
+              source={{uri: this.props.show.thumbnail}}
+              style={styles.image}
+          />
+          <Text>{this.props.show.name}</Text>
+        </View>
       </TouchableHighlight>
     );
   },
@@ -34,8 +41,17 @@ var ShowRow = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
     height: 100,
     backgroundColor: 'white',
+  },
+  horizontal: {
+    flexDirection: 'row',
+  },
+  image: {
+    width: 70,
+    height: 100,
+    margin: 2,
   },
 });
 

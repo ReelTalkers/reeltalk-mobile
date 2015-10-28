@@ -10,13 +10,8 @@ var {
 
 var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
-var MovieDetailView = require('./MovieDetailView');
 
 var RecommendHome = React.createClass({
-
-  renderDetailView: function() {
-    this.props.navigator.push({title: "show",  component: MovieDetailView});
-  },
 
   render: function() {
     return (

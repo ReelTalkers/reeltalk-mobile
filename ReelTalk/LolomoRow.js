@@ -23,12 +23,10 @@ var LolomoRow = React.createClass({
   createThumbnail: function(show) {
     return (
       <TouchableHighlight onPress={()=>this.showDetails(show)}>
-        <View>
-          <Image
-              source={{uri: show.thumbnail}}
-              style={styles.image}
-          />
-        </View>
+        <Image
+            source={{uri: show.thumbnail}}
+            style={styles.image}
+        />
       </TouchableHighlight>
     );
   },
@@ -37,30 +35,15 @@ var LolomoRow = React.createClass({
     return (
       <View>
         <Text>{this.props.category.name}</Text>
-        <View style={styles.rowContainer}>
-          <ScrollView
-            automaticallyAdjustContentInsets={false}
-            horizontal={true}>
-            {this.props.category.shows.map(show => this.createThumbnail(show))}
-          </ScrollView>
-        </View>
+        <ScrollView
+          automaticallyAdjustContentInsets={false}
+          horizontal={true}>
+          {this.props.category.shows.map(show => this.createThumbnail(show))}
+        </ScrollView>
       </View>
     );
   },
 });
-
-// var displayDetailView = (show) =>
-//   this.props.navigator.push({title: "show",  component: MovieDetailView});
-//
-// // var createThumbnail = (show) =>
-//   <TouchableHighlight style={styles.wrapper} onPress={displayDetailView(show)}>
-//     <View>
-//     <Image
-//         source={{uri: show.thumbnail}}
-//         style={styles.image}
-//     />
-// </View>
-//   </TouchableHighlight>
 
 var styles = StyleSheet.create({
   image: {

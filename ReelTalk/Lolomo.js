@@ -22,9 +22,9 @@ var Lolomo = React.createClass({
     };
   },
 
-  renderLolomoRow: function(show) {
+  renderLolomoRow: function(category) {
     return (
-      <LolomoRow navigator={this.props.navigator} category={show}/>
+      <LolomoRow navigator={this.props.navigator} category={category}/>
     )
   },
 

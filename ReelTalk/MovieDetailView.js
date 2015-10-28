@@ -22,7 +22,10 @@ var MovieDetailView = React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-      backgroundColor: 'white',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
     },
 });
 

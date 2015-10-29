@@ -34,7 +34,12 @@ var ShowRow = React.createClass({
               source={{uri: this.props.show.thumbnail}}
               style={styles.image}
           />
-          <Text>{this.props.show.name}</Text>
+          <View style={styles.displayData}>
+            <Text>{this.props.show.name}</Text>
+            <Text>Rating: {this.props.show.rating}</Text>
+            <Text>Runtime: {this.props.show.runtime}</Text>
+            <Text>Average Rating: {this.props.show.averageRating} Stars</Text>
+          </View>
         </View>
       </TouchableHighlight>
     );
@@ -46,6 +51,9 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     height: 100,
     backgroundColor: 'white',
+  },
+  displayData: {
+    flexDirection: 'column',
   },
   horizontal: {
     flexDirection: 'row',

@@ -18,26 +18,15 @@ var RecommendScreen = React.createClass({
         style={styles.navigator}
         initialRoute={{
           name: 'Recommend',
-          index: 0,
+          component: RecommendHome,
+          props: { userId: this.props.userId }
         }}
-        renderScene={(route, navigator) =>
-          <RecommendHome
-            name={route.name}
-            onForward={() => {
-              var nextIndex = route.index + 1;
-              navigator.push({
-                name: 'Scene ' + nextIndex,
-                index: nextIndex
-              });
-            }}
-            onBack={() => {
-              if (route.index > 0) {
-                navigator.pop();
-              }
-            }}
-            userId={this.props.userId}
-          />
-        }
+        renderScene={(route, navigator) => {
+          var props = route.props;
+          if (route.component) {
+            return React.createElement(route.component, { navigator, ...props })
+          }
+        }}
       />
     );
   },

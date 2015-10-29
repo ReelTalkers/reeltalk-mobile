@@ -24,12 +24,9 @@ var Lolomo = React.createClass({
 
   _showDetails: function(show) {
     this.props.navigator.push({
-      title: show.name,
+      name: 'showDetail',
       component: MovieDetailView,
-      passProps: {
-        initialShow: show,
-        navigator: this.props.navigator,
-      },
+      props: { initialShow: show }
     });
   },
 
@@ -42,7 +39,6 @@ var Lolomo = React.createClass({
   render: function() {
     return (
       <ListView
-        // TODO: not sure if I like that a header is part of a Lolomo
         dataSource={this.state.dataSource}
         renderRow={this.renderLolomoRow}
         style={styles.listView}

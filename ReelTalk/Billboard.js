@@ -34,7 +34,11 @@ var Billboard = React.createClass({
       cancelButtonIndex: CANCEL_INDEX,
     },
     (buttonIndex) => {
-      this.setState({ currentFilter: BUTTONS[buttonIndex] });
+      if (buttonIndex != CANCEL_INDEX) {
+        this.setState({
+          currentFilter: BUTTONS[buttonIndex]
+        });
+      }
     });
   },
 
@@ -45,7 +49,7 @@ var Billboard = React.createClass({
           source={{uri: json.users[this.props.userId].picture}}
           style={styles.image}
         />
-      <Text onPress={this.showActionSheet}>{this.state.currentFilter}</Text>
+      <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
       </View>
     );
   },
@@ -58,6 +62,11 @@ var styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center', // center
       height: 190,
+    },
+    filterSelect: {
+      color: '#0066FA',
+      fontSize: 18,
+      marginTop:10,
     },
     image: {
       width: 100,

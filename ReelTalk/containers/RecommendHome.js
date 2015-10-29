@@ -12,7 +12,6 @@ var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
 
 var RecommendHome = React.createClass({
-
   render: function() {
     return (
       <View>
@@ -22,7 +21,7 @@ var RecommendHome = React.createClass({
         <Lolomo
           style={styles.lolomo}
           navigator={this.props.navigator}
-          userId = {this.props.userId}
+          userId={this.props.userId}
         />
       </View>
     );

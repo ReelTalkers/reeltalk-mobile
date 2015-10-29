@@ -7,14 +7,19 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  PixelRatio,
   StyleSheet,
   Text,
   View,
-  DrawerLayoutAndroid
+  Navigator,
+  TouchableHighlight,
+  TouchableOpacity,
 } = React;
 
+var cssVar = require('cssVar');
+
 var ToolbarAndroid = require('ToolbarAndroid');
-var RecommendScreen = require('./screens/RecommendScreen');
+var ReelTalkNavigator = require('./screens/ReelTalkNavigator');
 
 var ReelTalk = React.createClass({
   getInitialState: function() {
@@ -23,40 +28,93 @@ var ReelTalk = React.createClass({
       userId: '2'
     };
   },
-  
-  _onActionSelected: function() {
 
+  componentWillMount: function() {
+    this._navBarRouteMapper = {
+      rightContentForRoute: function(route, navigator) {
+        return null;
+      },
+      titleContentForRoute: function(route, navigator) {
+        return (
+          <TouchableOpacity
+            onPress={() => navigator.push(_getRandomRoute())}>
+            <Text style={styles.titleText}>{route.title}</Text>
+          </TouchableOpacity>
+        );
+      },
+      iconForRoute: function(route, navigator) {
+        return (
+          <TouchableOpacity
+            onPress={() => { navigator.popToRoute(route); }}
+            style={styles.crumbIconPlaceholder}
+          />
+        );
+      },
+      separatorForRoute: function(route, navigator) {
+        return (
+          <TouchableOpacity
+            onPress={navigator.pop}
+            style={styles.crumbSeparatorPlaceholder}
+          />
+        );
+      }
+    };
   },
 
   render: function() {
-    var navigationView = (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>
-          I'm in the drawer!
-        </Text>
-      </View>
-    )
     return (
-      <DrawerLayoutAndroid
-        drawerWidth={300}
-        drawerPosition={DrawerLayoutAndroid.positions.left}
-        renderNavigationView={() => navigationView}>
-        <ToolbarAndroid
-          title="ReelTalk"
-          actions={[]}
-          onActionSelected={this.onActionSelected}
-          style={styles.toolbar} />
-        <RecommendScreen userId={this.state.userId} />
-      </DrawerLayoutAndroid>
+      <ReelTalkNavigator
+        userId={this.state.userId}
+        navigationBar={
+          <Navigator.BreadcrumbNavigationBar
+            routeMapper={this._navBarRouteMapper}
+          />
+        }
+        sceneStyle={styles.scene}
+        />
     );
   }
 });
 
 var styles = StyleSheet.create({
-  toolbar: {
-    backgroundColor: 'cyan',
-    height: 56,
+  scene: {
+    paddingTop: 50,
+    flex: 1,
+  },
+  button: {
+    backgroundColor: 'white',
+    padding: 15,
+    borderBottomWidth: 1 / PixelRatio.get(),
+    borderBottomColor: '#CDCDCD',
+  },
+  buttonText: {
+    fontSize: 17,
+    fontWeight: '500',
+  },
+  titleText: {
+    fontSize: 18,
+    color: '#666666',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    lineHeight: 32,
+  },
+  crumbIconPlaceholder: {
+    flex: 1,
+    backgroundColor: '#666666',
+  },
+  crumbSeparatorPlaceholder: {
+    flex: 1,
+    backgroundColor: '#aaaaaa',
   },
 });
+
+
+/*BackAndroid.addEventListener('hardwareBackPress', function() {
+     if () {
+       this.goBack();
+       return true;
+     }
+     return false;
+});*/
 
 AppRegistry.registerComponent('ReelTalk', () => ReelTalk);

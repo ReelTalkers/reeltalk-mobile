@@ -11,20 +11,27 @@ var {
 
 var RecommendHome = require('../containers/RecommendHome');
 
-var RecommendScreen = React.createClass({
+var ReelTalkNavigator = React.createClass({
   render: function() {
     return (
       <Navigator
-        style={styles.navigator}
+        style={styles.container}
         initialRoute={{
-          name: 'Recommend',
+          title: 'Recommend',
           component: RecommendHome,
           props: { userId: this.props.userId }
         }}
+        navigationBar={this.props.navigationBar}
         renderScene={(route, navigator) => {
           var props = route.props;
           if (route.component) {
             return React.createElement(route.component, { navigator, ...props })
+          }
+        }}
+        sceneStyle={this.props.sceneStyle}
+        onBack={() => {
+          if (route.title !== 'Recommend') {
+            navigator.pop();
           }
         }}
       />
@@ -33,10 +40,12 @@ var RecommendScreen = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  navigator: {
+  container: {
+    overflow: 'hidden',
+    backgroundColor: '#dddddd',
     flex: 1,
-    backgroundColor: 'white',
   },
 });
 
-module.exports = RecommendScreen;
+
+module.exports = ReelTalkNavigator;

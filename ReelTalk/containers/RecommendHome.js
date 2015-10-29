@@ -5,7 +5,7 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
+  ScrollView
 } = React;
 
 var Billboard = require('./Billboard');
@@ -14,7 +14,7 @@ var Lolomo = require('./Lolomo');
 var RecommendHome = React.createClass({
   render: function() {
     return (
-      <View>
+      <ScrollView>
         <Billboard
           userId={this.props.userId}
         />
@@ -23,7 +23,7 @@ var RecommendHome = React.createClass({
           navigator={this.props.navigator}
           userId={this.props.userId}
         />
-      </View>
+      </ScrollView>
     );
   },
 });

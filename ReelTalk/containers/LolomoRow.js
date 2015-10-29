@@ -16,7 +16,7 @@ var LolomoRow = React.createClass({
 
   createThumbnail: function(show) {
     return (
-      <TouchableHighlight 
+      <TouchableHighlight
         style={styles.movieButton}
         onPress={()=>this.props.onSelect(show)}
       >
@@ -36,6 +36,7 @@ var LolomoRow = React.createClass({
           automaticallyAdjustContentInsets={false}
           horizontal={true}
           style={styles.row}
+          showsHorizontalScrollIndicator={false}
         >
           {this.props.category.shows.map(show => this.createThumbnail(show))}
           <View style={styles.endOfRow}/>

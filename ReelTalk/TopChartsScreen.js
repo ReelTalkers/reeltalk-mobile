@@ -3,18 +3,25 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  NavigatorIOS,
   StyleSheet,
   Text,
   View,
 } = React;
 
+var json = require("./Data");
+var TopChartsHome = require("./TopChartsHome");
 
 var TopChartsScreen = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text>Top Charts Screen</Text>
-      </View>
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'Top Charts',
+          component: TopChartsHome,
+        }}
+      />
     );
   },
 });
@@ -22,9 +29,7 @@ var TopChartsScreen = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
 });
 

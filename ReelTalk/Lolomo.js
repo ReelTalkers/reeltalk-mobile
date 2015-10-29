@@ -62,8 +62,8 @@ var Lolomo = React.createClass({
 });
 
 var styles = StyleSheet.create({
-    listView: {
-      backgroundColor: 'white',
+  listView: {
+     backgroundColor: 'white',
   },
 });
 

@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var {
+  ActionSheetIOS,
   AppRegistry,
   Image,
   StyleSheet,
@@ -9,9 +10,34 @@ var {
   View,
 } = React;
 
+var BUTTONS = [
+  'Just Me',
+  'Group',
+  'None',
+  'Cancel',
+];
+var CANCEL_INDEX = 3;
+
 var json = require("./Data");
 
 var Billboard = React.createClass({
+
+  getInitialState: function() {
+  	return {
+  		currentFilter: 'Just Me',
+  	};
+	},
+
+  showActionSheet() {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: BUTTONS,
+      cancelButtonIndex: CANCEL_INDEX,
+    },
+    (buttonIndex) => {
+      this.setState({ currentFilter: BUTTONS[buttonIndex] });
+    });
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -19,7 +45,7 @@ var Billboard = React.createClass({
           source={{uri: json.users[this.props.userId].picture}}
           style={styles.image}
         />
-        <Text> Just Me </Text>
+      <Text onPress={this.showActionSheet}>{this.state.currentFilter}</Text>
       </View>
     );
   },

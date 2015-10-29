@@ -88,6 +88,7 @@ var MovieDetailView = React.createClass({
 });
 
 // TODO: I wonder if there is a way to not need to define this._getColorStyles().textFontColor in so many places such as give all the children the color
+// TODO: Shift up summary text to ontop of triangle
 
 var styles = StyleSheet.create({
     scrollView: {
@@ -111,7 +112,7 @@ var styles = StyleSheet.create({
       // dont like that the width is hard coded
       width: 375,
       paddingLeft: 18,
-      paddingTop: 3,
+      paddingTop: 0,
       paddingBottom: 3,
       shadowOpacity: 1,
       shadowRadius: 10,

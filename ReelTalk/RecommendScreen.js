@@ -19,6 +19,7 @@ var RecommendScreen = React.createClass({
         initialRoute={{
           title: 'Recommend',
           component: RecommendHome,
+          rightButtonIcon: require('image!SearchButton'),
           passProps: {
             userId: this.props.userId
           },

@@ -33,19 +33,19 @@ var MovieDetailView = React.createClass({
   _getColorStyles: function() {
     return {
       primaryBackground: {
-        backgroundColor: this.props.initialShow.colors.primary
+        backgroundColor: this.state.show.colors.primary
       },
       primaryShadow: {
-        shadowColor: this.props.initialShow.colors.primary
+        shadowColor: this.state.show.colors.primary
       },
       detailFontColor: {
-        color: this.props.initialShow.colors.detail
+        color: this.state.show.colors.detail
       },
       textFontColor: {
-        color: this.props.initialShow.colors.text
+        color: this.state.show.colors.text
       },
       primaryBorderLeftColor: {
-        borderLeftColor: this.props.initialShow.colors.primary
+        borderLeftColor: this.state.show.colors.primary
       }
     }
   },

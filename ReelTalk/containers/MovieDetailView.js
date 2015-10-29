@@ -1,3 +1,4 @@
+// TODO break into components
 'use strict';
 
 var React = require('react-native');
@@ -12,9 +13,9 @@ var {
   View,
 } = React;
 
-var Rating = require('./Rating');
+var Rating = require('../components/Rating');
 var LolomoRow = require('./LolomoRow');
-var json = require("./Data");
+var json = require("../Data");
 
 var MovieDetailView = React.createClass({
   getInitialState: function() {

@@ -9,8 +9,8 @@ var {
   View,
 } = React;
 
-var json = require("./Data");
-var TopChartsHome = require("./TopChartsHome");
+var json = require("../Data");
+var TopChartsHome = require("../containers/TopChartsHome");
 
 var TopChartsScreen = React.createClass({
   render: function() {

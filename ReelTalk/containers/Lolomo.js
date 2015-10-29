@@ -9,7 +9,7 @@ var {
   View,
 } = React;
 
-var json = require("./Data");
+var json = require("../Data");
 var LolomoRow = require('./LolomoRow');
 var Billboard = require('./Billboard');
 var MovieDetailView = require('./MovieDetailView');

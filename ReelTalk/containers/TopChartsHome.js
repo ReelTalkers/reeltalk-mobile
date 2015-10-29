@@ -10,8 +10,8 @@ var {
   View,
 } = React;
 
-var json = require("./Data");
-var ShowRow = require("./ShowRow");
+var json = require("../Data");
+var ShowRow = require("../components/ShowRow");
 
 var TopChartsHome = React.createClass({
   getInitialState: function() {

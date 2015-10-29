@@ -9,7 +9,7 @@ var {
   View,
 } = React;
 
-var RecommendHome = require('./RecommendHome');
+var RecommendHome = require('../containers/RecommendHome');
 
 var RecommendScreen = React.createClass({
   render: function() {

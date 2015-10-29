@@ -8,10 +8,10 @@ var {
   TabBarIOS,
 } = React;
 
-var RecommendScreen = require('./RecommendScreen');
-var ListsScreen = require('./ListsScreen');
-var TopChartsScreen = require('./TopChartsScreen');
-var SettingsScreen = require('./SettingsScreen');
+var RecommendScreen = require('./screens/RecommendScreen');
+var ListsScreen = require('./screens/ListsScreen');
+var TopChartsScreen = require('./screens/TopChartsScreen');
+var SettingsScreen = require('./screens/SettingsScreen');
 
 var ReelTalk = React.createClass({
 

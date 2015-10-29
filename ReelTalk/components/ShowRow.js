@@ -10,7 +10,7 @@ var {
   View,
 } = React;
 
-var MovieDetailView = require("./MovieDetailView");
+var MovieDetailView = require("../containers/MovieDetailView");
 
 var ShowRow = React.createClass({
   showDetails: function(show) {

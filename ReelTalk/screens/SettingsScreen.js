@@ -8,7 +8,6 @@ var {
   View,
 } = React;
 
-
 var SettingsScreen = React.createClass({
   render: function() {
     return (

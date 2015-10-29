@@ -14,6 +14,7 @@ var MovieDetailView = require("./MovieDetailView");
 
 var ShowRow = React.createClass({
   showDetails: function(show) {
+    console.log(show);
     this.props.navigator.push({
       title: show.name,
       component: MovieDetailView,
@@ -28,6 +29,7 @@ var ShowRow = React.createClass({
     return (
       <TouchableHighlight style={styles.container} onPress={()=>this.showDetails(this.props.show)}>
         <View style={styles.horizontal}>
+          <Text>{this.props.rank}</Text>
           <Image
               source={{uri: this.props.show.thumbnail}}
               style={styles.image}

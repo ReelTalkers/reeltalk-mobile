@@ -21,14 +21,14 @@ var TopChartsHome = React.createClass({
     };
   },
 
-  renderShowRow: function(show){
+  renderShowRow: function(show, sectionID, rowID, highlightRow){
+    console.log(show);
     return (
-      <ShowRow navigator={this.props.navigator} show={show}/>
+      <ShowRow navigator={this.props.navigator} show={show} rank={parseInt(rowID) + 1}/>
     )
   },
 
   _onValueChange(value) {
-    console.log(value)
     const newList = (value === 'Today') ? json.categories[0].shows : json.categories[2].shows;
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({

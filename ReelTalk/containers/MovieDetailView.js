@@ -67,6 +67,8 @@ var MovieDetailView = React.createClass({
   },
 });
 
+var color = "rgba(208, 206, 184, 1)";
+
 var styles = StyleSheet.create({
     scrollView: {
       flex: 1,
@@ -108,7 +110,7 @@ var styles = StyleSheet.create({
       fontWeight: "300",
     },
     paletteBackground: {
-      backgroundColor: 'rgba(208, 206, 184, 1)',
+      backgroundColor: {color},
     },
     paletteFont: {
       color: 'rgb(57, 35, 29)',

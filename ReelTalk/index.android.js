@@ -10,42 +10,44 @@ var {
   StyleSheet,
   Text,
   View,
+  DrawerLayoutAndroid
 } = React;
 
+var ToolbarAndroid = require('ToolbarAndroid');
+
 var ReelTalk = React.createClass({
+  _onActionSelected: function() {
+
+  },
+
   render: function() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
+    var navigationView = (
+      <View style={{flex: 1, backgroundColor: '#fff'}}>
+        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>
+          I'm in the drawer!
         </Text>
       </View>
+    )
+    return (
+      <DrawerLayoutAndroid
+        drawerWidth={300}
+        drawerPosition={DrawerLayoutAndroid.positions.left}
+        renderNavigationView={() => navigationView}>
+        <ToolbarAndroid
+          title="ReelTalk"
+          actions={[]}
+          onActionSelected={this.onActionSelected}
+          style={styles.toolbar} />
+        <View><Text>Hello</Text></View>
+      </DrawerLayoutAndroid>
     );
   }
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  toolbar: {
+    backgroundColor: 'cyan',
+    height: 56,
   },
 });
 

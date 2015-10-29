@@ -14,8 +14,16 @@ var {
 } = React;
 
 var ToolbarAndroid = require('ToolbarAndroid');
+var RecommendScreen = require('./screens/RecommendScreen');
 
 var ReelTalk = React.createClass({
+  getInitialState: function() {
+    return {
+      selectedTab: 'recommend',
+      userId: '2'
+    };
+  },
+  
   _onActionSelected: function() {
 
   },
@@ -38,7 +46,7 @@ var ReelTalk = React.createClass({
           actions={[]}
           onActionSelected={this.onActionSelected}
           style={styles.toolbar} />
-        <View><Text>Hello</Text></View>
+        <RecommendScreen userId={this.state.userId} />
       </DrawerLayoutAndroid>
     );
   }

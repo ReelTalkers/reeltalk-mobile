@@ -4,7 +4,7 @@ var React = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
-  NavigatorIOS,
+  Navigator,
   Text,
   View,
 } = React;
@@ -14,16 +14,30 @@ var RecommendHome = require('../containers/RecommendHome');
 var RecommendScreen = React.createClass({
   render: function() {
     return (
-      <NavigatorIOS
+      <Navigator
         style={styles.navigator}
         initialRoute={{
-          title: 'Recommend',
-          component: RecommendHome,
-          rightButtonIcon: require('image!SearchButton'),
-          passProps: {
-            userId: this.props.userId
-          },
+          name: 'Recommend',
+          index: 0,
         }}
+        renderScene={(route, navigator) =>
+          <RecommendHome
+            name={route.name}
+            onForward={() => {
+              var nextIndex = route.index + 1;
+              navigator.push({
+                name: 'Scene ' + nextIndex,
+                index: nextIndex
+              });
+            }}
+            onBack={() => {
+              if (route.index > 0) {
+                navigator.pop();
+              }
+            }}
+            userId={this.props.userId}
+          />
+        }
       />
     );
   },

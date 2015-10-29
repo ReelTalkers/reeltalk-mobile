@@ -65,6 +65,7 @@ var styles = StyleSheet.create({
       height: 190,
     },
     line: {
+      marginTop: 10,
       width: 350,
       height: 1,
       backgroundColor: '#F1F1F1'

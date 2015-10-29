@@ -66,6 +66,8 @@ var styles = StyleSheet.create({
     },
     line: {
       marginTop: 10,
+      // TODO: this bottom margin should be added in lolomo but I couldnt get it to work there
+      marginBottom: 5, 
       width: 350,
       height: 1,
       backgroundColor: '#F1F1F1'

@@ -66,11 +66,12 @@ var styles = StyleSheet.create({
     filterSelect: {
       color: '#0066FA',
       fontSize: 18,
-      marginTop:10,
+      marginTop:15,
     },
     image: {
-      width: 100,
-      height: 100
+      width: 125,
+      height: 125,
+      borderRadius: 125/2,
     },
 });
 

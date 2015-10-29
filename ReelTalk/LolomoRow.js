@@ -34,7 +34,9 @@ var LolomoRow = React.createClass({
         <Text style={styles.categoryName}>{this.props.header}</Text>
         <ScrollView
           automaticallyAdjustContentInsets={false}
-          horizontal={true}>
+          horizontal={true}
+          style={styles.row}
+        >
           {this.props.category.shows.map(show => this.createThumbnail(show))}
           <View style={styles.endOfRow}/>
         </ScrollView>
@@ -49,23 +51,24 @@ var styles = StyleSheet.create({
     fontSize: 17,
     color: '#929292',
     marginLeft: 5,
-    marginTop: 5,
-    marginBottom: 2,
+  },
+  row: {
+    paddingTop: 2,
+    paddingBottom: 5,
   },
   image: {
     width: 115,
     height: 172,
-    // TODO: shadows not working right now for some reason
-    shadowColor: "#000000",
+  },
+  movieButton: {
+    marginLeft: 5,
+    shadowColor: "black",
     shadowOpacity: 0.35,
-    shadowRadius: 4,
+    shadowRadius: 2,
     shadowOffset: {
       height: 2,
       width: 0
     }
-  },
-  movieButton: {
-    marginLeft: 5,
   },
   // added just so that we can have padding on the left and right of all movies
   endOfRow: {

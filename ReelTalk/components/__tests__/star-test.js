@@ -1,13 +1,12 @@
 'use strict';
 
-jest.setMock('react-native', {
-    NativeModules: {}
-});
+jest.setMock('react-native', {});
 jest.dontMock('../Star');
 
-var Star = require('../Star');
 
 describe('star', function() {
+  var Star = require('../Star.js');
+
  it('Generates a gray star', function() {
    expect('Foo').toBe('Foo');
  });

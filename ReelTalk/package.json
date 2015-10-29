@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "react-native": "^0.13.2"

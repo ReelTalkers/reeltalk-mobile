@@ -13,7 +13,8 @@
     "eslint": "^1.7.3",
     "eslint-config-airbnb": "^0.1.0",
     "eslint-loader": "^1.1.0",
-    "eslint-plugin-react": "^3.6.3"
+    "eslint-plugin-react": "^3.6.3",
+    "jest-cli": "^0.6.1"
   },
   "jest": {
     "scriptPreprocessor": "node_modules/react-native/jestSupport/scriptPreprocess.js",

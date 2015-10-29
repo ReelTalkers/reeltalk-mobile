@@ -144,6 +144,10 @@ var styles = StyleSheet.create({
         {scaleX: -1}
       ]
     },
+    content: {
+      paddingTop: 20,
+      paddingLeft: 18,
+    }
 });
 
 module.exports = MovieDetailView;

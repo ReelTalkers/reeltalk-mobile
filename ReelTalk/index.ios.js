@@ -8,7 +8,7 @@ var {
   TabBarIOS,
 } = React;
 
-var RecommendScreen = require('./screens/RecommendScreen');
+var ReelTalkNavigator = require('./screens/ReelTalkNavigator');
 var ListsScreen = require('./screens/ListsScreen');
 var TopChartsScreen = require('./screens/TopChartsScreen');
 var SettingsScreen = require('./screens/SettingsScreen');
@@ -33,7 +33,8 @@ var ReelTalk = React.createClass({
 	              selectedTab: 'recommend',
 	          });
 	      }}>
-	        <RecommendScreen
+	        <ReelTalkNavigator
+            sceneStyle={styles.scene}
 	          userId={this.state.userId}
 	        />
 	    </TabBarIOS.Item>
@@ -80,6 +81,10 @@ var ReelTalk = React.createClass({
 		container: {
 			backgroundColor: 'white',
 		},
+    scene: {
+      paddingTop: 50,
+      flex: 1,
+    },
 	});
 
 	AppRegistry.registerComponent('ReelTalk', () => ReelTalk);

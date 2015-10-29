@@ -29,7 +29,12 @@
 			 "averageRating": 4,
 			 "description": "Set backstage at three iconic product launches and ending in 1998 with the unveiling of the iMac, Steve Jobs takes us behind the scenes of the digital revolution to paint an intimate portrait of the brilliant man at its epicenter.",
 			 "thumbnail": "http://resizing.flixster.com/xfHtVKzKXwR1NRRHzymgHGDtvQI=/180x267/dkpu1ddg7pbsk.cloudfront.net/movie/11/20/16/11201614_ori.jpg",
-			 "largePoster": "https://image.tmdb.org/t/p/original/mC0pf1bydVaoDypsqwDkNn4NJJm.jpg"
+			 "largePoster": "https://image.tmdb.org/t/p/original/mC0pf1bydVaoDypsqwDkNn4NJJm.jpg",
+			 "colors": {
+				 "primary": "rgba(208, 206, 184, 1)",
+				 "text": "rgb(57, 35, 29)",
+				 "detail": "rgb(169, 116, 56)"
+			 }
 		 },
 		 {
 			 "name": "Scouts Guide",

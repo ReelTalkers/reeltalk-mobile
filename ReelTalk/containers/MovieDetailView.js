@@ -67,13 +67,11 @@ var MovieDetailView = React.createClass({
   },
 });
 
-var color = "rgba(208, 206, 184, 1)";
-
 var styles = StyleSheet.create({
     scrollView: {
       flex: 1,
       marginBottom: 50,
-      backgroundColor: 'rgba(208, 206, 184, 1)',
+      backgroundColor: MovieDetailView.state.show.colors.primary,
     },
     actors: {
       textDecorationLine: 'underline',
@@ -94,7 +92,7 @@ var styles = StyleSheet.create({
       paddingLeft: 18,
       paddingTop: 3,
       paddingBottom: 3,
-      shadowColor: "rgba(208, 206, 184, 1)",
+      shadowColor: MovieDetailView.state.show.colors.primary,
       shadowOpacity: 1,
       shadowRadius: 10,
       shadowOffset: {
@@ -110,13 +108,13 @@ var styles = StyleSheet.create({
       fontWeight: "300",
     },
     paletteBackground: {
-      backgroundColor: {color},
+      backgroundColor: MovieDetailView.state.show.colors.primary,
     },
     paletteFont: {
-      color: 'rgb(57, 35, 29)',
+      color: MovieDetailView.state.show.colors.text,
     },
     paletteDetailFont: {
-      color: 'rgb(169, 116, 56)',
+      color: MovieDetailView.state.show.colors.detail,
     },
     summaryTriangle: {
       backgroundColor: 'transparent',
@@ -127,8 +125,8 @@ var styles = StyleSheet.create({
       borderTopColor: 'transparent',
       borderBottomColor: 'transparent',
       borderRightColor: 'transparent',
-      borderLeftColor: 'rgba(208, 206, 184, 1)',
-      shadowColor: "rgba(208, 206, 184, 1)",
+      borderLeftColor: MovieDetailView.state.show.colors.primary,
+      shadowColor: MovieDetailView.state.show.colors.primary,
       shadowOpacity: 1,
       shadowRadius: 5,
       shadowOffset: {

@@ -14,7 +14,7 @@ var RecommendHome = React.createClass({
 
   render: function() {
     return (
-      <Lolomo 
+      <Lolomo
         style={styles.lolomo}
         navigator={this.props.navigator}
         userId = {this.props.userId}

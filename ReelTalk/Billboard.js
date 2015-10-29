@@ -49,7 +49,8 @@ var Billboard = React.createClass({
           source={{uri: json.users[this.props.userId].picture}}
           style={styles.image}
         />
-      <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
+        <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
+        <View style={styles.line} />
       </View>
     );
   },
@@ -63,12 +64,18 @@ var styles = StyleSheet.create({
       justifyContent: 'center', // center
       height: 190,
     },
+    line: {
+      width: 350,
+      height: 1,
+      backgroundColor: '#F1F1F1'
+    },
     filterSelect: {
       color: '#0066FA',
       fontSize: 18,
       marginTop:15,
     },
     image: {
+      marginTop: 15,
       width: 125,
       height: 125,
       borderRadius: 125/2,

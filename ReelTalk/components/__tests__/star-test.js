@@ -5,9 +5,13 @@ jest.dontMock('../Star');
 
 
 describe('star', function() {
-  var Star = require('../Star.js');
+  var star = require('../Star');
 
  it('Generates a gray star', function() {
-   expect('Foo').toBe('Foo');
+   expect(star._selectStar('gray')).toBe(<Image source={require('image!GrayStar')} />);
+ });
+
+ it('Generates a gold star', function() {
+   expect(star._selectStar('gold')).toBe(<Image source={require('image!GoldStar')} />);
  });
 });

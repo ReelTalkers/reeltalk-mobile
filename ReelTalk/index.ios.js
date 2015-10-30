@@ -5,15 +5,52 @@ var {
   AppRegistry,
   StyleSheet,
   TabBarIOS,
+  Text,
   Navigator,
   NavigatorIOS,
   View,
+  TouchableOpacity,
+  TouchableHighlight
 } = React;
 
 var RecommendScreen = require('./screens/RecommendScreen');
 var ListsScreen = require('./screens/ListsScreen');
 var TopChartsScreen = require('./screens/TopChartsScreen');
 var SettingsScreen = require('./screens/SettingsScreen');
+
+import cssVar from 'cssVar';
+
+var NavigationBarRouteMapper = {
+  LeftButton: function(route, navigator, index, navState) {
+    if (index === 0) {
+      return null;
+    }
+
+    var previousRoute = navState.routeStack[index - 1];
+    return (
+      <TouchableOpacity
+        onPress={() => navigator.pop()}
+        style={styles.navBarLeftButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+          {"< " + previousRoute.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+
+  RightButton: function(route, navigator, index, navState) {
+    return null;
+  },
+
+  Title: function(route, navigator, index, navState) {
+    return (
+      <Text style={[styles.navBarText, styles.navBarTitleText]}>
+        {route.title}
+      </Text>
+    );
+  },
+
+};
 
 const Main = React.createClass({
   getInitialState: function() {
@@ -27,13 +64,18 @@ const Main = React.createClass({
   renderRecommendScreen: function() {
     return (
       <Navigator
-        sceneStyle={styles.container}
+        sceneStyle={styles.scene}
         ref="recommendRef"
         initialRoute={{
           title: 'Recommend',
           component: RecommendScreen,
           props: { userId: this.props.userId }
         }}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+            style={styles.navBar} />
+        }
         renderScene={renderScene} />
     );
   },
@@ -41,7 +83,7 @@ const Main = React.createClass({
   renderListsScreen: function() {
     return (
       <Navigator
-        style={styles.container}
+        sceneStyle={styles.scene}
         ref="listsRef"
         initialRoute={{
           title: 'Lists',
@@ -55,21 +97,26 @@ const Main = React.createClass({
   renderTopChartsScreen: function() {
     return (
       <Navigator
-        style={styles.container}
+        sceneStyle={styles.scene}
         ref="chartsRef"
         initialRoute={{
           title: 'Top Charts',
           component: TopChartsScreen,
           props: { userId: this.props.userId }
         }}
-        renderScene={renderScene} />
+        renderScene={renderScene}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+            style={styles.navBar} />
+        } />
     );
   },
 
   renderSettingsScreen: function() {
     return (
       <Navigator
-        style={styles.container}
+        sceneStyle={styles.scene}
         ref="settingsRef"
         initialRoute={{
           title: 'Settings',
@@ -160,7 +207,6 @@ var ReelTalk = React.createClass({
 	render: function() {
 	return (
     <Navigator
-      sceneStyle={styles.sceneStyle}
       ref={(navigator) => { this.navigator = navigator; }}
       renderScene={renderScene}
       initialRoute={{
@@ -195,8 +241,29 @@ const renderScene = (route, navigator) => {
       backgroundColor: '#FFFFFD',
     },
     scene: {
-      paddingTop: 50,
+      paddingTop: 65,
       flex: 1,
+    },
+    navBar: {
+      backgroundColor: 'white',
+    },
+    navBarText: {
+      fontSize: 16,
+      marginVertical: 10,
+    },
+    navBarTitleText: {
+      color: cssVar('fbui-bluegray-60'),
+      fontWeight: '500',
+      marginVertical: 9,
+    },
+    navBarLeftButton: {
+      paddingLeft: 10,
+    },
+    navBarRightButton: {
+      paddingRight: 10,
+    },
+    navBarButtonText: {
+      color: cssVar('fbui-accent-blue'),
     },
 	});
 

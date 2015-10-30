@@ -13,12 +13,9 @@ import RecommendHome from '../containers/RecommendHome';
 var RecommendScreen = React.createClass({
   render: function() {
     return (
-      <View style={styles.screen}>
-        <RecommendHome
-          userId={this.props.userId}
-          navigator={this.props.navigator}
-          />
-      </View>
+      <RecommendHome
+        userId={this.props.userId}
+        navigator={this.props.navigator} />
     );
   },
 });
@@ -30,10 +27,6 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  screen: {
-    flex: 1,
-    paddingTop: 64
-  }
 });
 
 module.exports = RecommendScreen;

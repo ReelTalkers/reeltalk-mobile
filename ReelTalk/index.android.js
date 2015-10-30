@@ -16,7 +16,7 @@ var {
 var cssVar = require('cssVar');
 
 var ToolbarAndroid = require('ToolbarAndroid');
-var RecommendHome = require('./containers/RecommendHome');
+import RecommendScreen from './screens/RecommendScreen';
 
 var _navigator;
 
@@ -66,7 +66,7 @@ var ReelTalk = React.createClass({
         style={styles.container}
         initialRoute={{
           title: 'Recommend',
-          component: RecommendHome,
+          component: RecommendScreen,
           props: { userId: this.state.userId }
         }}
         navigationBar={

@@ -14,13 +14,12 @@ var MovieDetailView = require("../containers/MovieDetailView");
 
 var ShowRow = React.createClass({
   showDetails: function(show) {
-    console.log(show);
     this.props.navigator.push({
       title: show.name,
       component: MovieDetailView,
-      passProps: {
+      props: {
         initialShow: show,
-        navigator: this.props.navigator,
+        ...this.props,
       },
     });
   },

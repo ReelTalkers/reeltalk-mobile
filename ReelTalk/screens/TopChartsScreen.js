@@ -15,13 +15,9 @@ var TopChartsHome = require("../containers/TopChartsHome");
 var TopChartsScreen = React.createClass({
   render: function() {
     return (
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Top Charts',
-          component: TopChartsHome,
-        }}
-      />
+      <TopChartsHome
+        userId={this.props.userId}
+        navigator={this.props.navigator}/>
     );
   },
 });

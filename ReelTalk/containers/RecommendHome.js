@@ -5,20 +5,27 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
+  ScrollView,
 } = React;
 
+var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
 
 var RecommendHome = React.createClass({
-
   render: function() {
     return (
-      <Lolomo
-        style={styles.lolomo}
-        navigator={this.props.navigator}
-        userId = {this.props.userId}
-      />
+      <ScrollView
+        automaticallyAdjustContentInsets={true}
+      >
+        <Billboard
+          userId={this.props.userId}
+        />
+        <Lolomo
+          style={styles.lolomo}
+          navigator={this.props.navigator}
+          userId = {this.props.userId}
+        />
+    </ScrollView>
     );
   },
 });

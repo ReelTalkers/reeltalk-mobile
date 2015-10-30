@@ -5,7 +5,8 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
-  ScrollView
+  ScrollView,
+  View,
 } = React;
 
 var Billboard = require('./Billboard');
@@ -14,10 +15,11 @@ var Lolomo = require('./Lolomo');
 var RecommendHome = React.createClass({
   render: function() {
     return (
-      <ScrollView>
-        <Billboard
-          userId={this.props.userId}
-        />
+      <ScrollView
+        automaticallyAdjustContentInsets={true}>
+        <View style={styles.billboardContainer}>
+          <Billboard userId={this.props.userId}/>
+        </View>
         <Lolomo
           style={styles.lolomo}
           navigator={this.props.navigator}
@@ -29,6 +31,9 @@ var RecommendHome = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  billboardContainer: {
+    marginBottom: 5,
+  },
   lolomo: {
     flex: 1,
   },

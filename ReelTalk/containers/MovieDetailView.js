@@ -54,7 +54,7 @@ var MovieDetailView = React.createClass({
     return (
       <ScrollView
         style={[styles.scrollView, this._getColorStyles().primaryBackground]}
-        automaticallyAdjustContentInsets={false}
+        automaticallyAdjustContentInsets={true}
       >
         <Image
             source={{uri: this.state.show.largePoster}}
@@ -102,7 +102,7 @@ var styles = StyleSheet.create({
       flex: 1,
       overflow: 'hidden',
       width: 375,
-      height: 525,
+      height: 535,
     },
     summary: {
       position: 'absolute',

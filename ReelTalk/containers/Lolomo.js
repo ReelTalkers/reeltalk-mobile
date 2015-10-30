@@ -56,6 +56,7 @@ var Lolomo = React.createClass({
         dataSource={this.state.dataSource}
         renderRow={this.renderLolomoRow}
         style={styles.listView}
+        automaticallyAdjustContentInsets={true}
         showsVerticalScrollIndicator={false}
       />
     );

@@ -22,7 +22,6 @@ var TopChartsHome = React.createClass({
   },
 
   renderShowRow: function(show, sectionID, rowID, highlightRow){
-    console.log(show);
     return (
       <ShowRow navigator={this.props.navigator} show={show} rank={parseInt(rowID) + 1}/>
     )

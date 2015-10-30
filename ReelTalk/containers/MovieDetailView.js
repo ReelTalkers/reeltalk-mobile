@@ -30,36 +30,56 @@ var MovieDetailView = React.createClass({
     });
   },
 
+  _getColorStyles: function() {
+    return {
+      primaryBackground: {
+        backgroundColor: this.state.show.colors.primary
+      },
+      primaryShadow: {
+        shadowColor: this.state.show.colors.primary
+      },
+      detailFontColor: {
+        color: this.state.show.colors.detail
+      },
+      textFontColor: {
+        color: this.state.show.colors.text
+      },
+      primaryBorderLeftColor: {
+        borderLeftColor: this.state.show.colors.primary
+      }
+    }
+  },
+
   render: function() {
     return (
       <ScrollView
-        style={styles.scrollView}
-        automaticallyAdjustContentInsets={false}
+        style={[styles.scrollView, this._getColorStyles().primaryBackground]}
+        automaticallyAdjustContentInsets={true}
       >
         <Image
             source={{uri: this.state.show.largePoster}}
             style={styles.largeImage}
         >
           <View style={styles.summary}>
-            <View style={[styles.summaryTriangle, styles.summaryTriangleLeft]} />
-            <View style={[styles.summaryTriangle, styles.summaryTriangleRight]} />
-            <View style={[styles.summaryInfo, styles.paletteBackground]}>
-              <Text style={[styles.name, styles.paletteFont]}>{this.state.show.name}</Text>
-              <Text style={[styles.summaryDetail, styles.paletteDetailFont]}>{this.state.show.year} - {this.state.show.runtime}</Text>
+            <View style={[styles.summaryTriangle, styles.summaryTriangleLeft, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
+            <View style={[styles.summaryTriangle, styles.summaryTriangleRight, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
+            <View style={[styles.summaryInfo, this._getColorStyles().primaryBackground, this._getColorStyles().primaryShadow]}>
+              <Text style={[styles.name, this._getColorStyles().textFontColor]}>{this.state.show.name}</Text>
+              <Text style={[styles.summaryDetail, this._getColorStyles().detailFontColor]}>{this.state.show.year} - {this.state.show.runtime}</Text>
             </View>
           </View>
         </Image>
-        <View style={[styles.content, styles.paletteBackground]}>
+        <View style={[styles.content, this._getColorStyles().primaryBackground]}>
           <View style={styles.metadata}>
-            <Text style={styles.paletteFont}>Rating: {this.state.show.rating}</Text>
-            <Text style={styles.paletteFont}>Genre: {this.state.show.genre}</Text>
-            <Text style={styles.paletteFont}>Director: {this.state.show.director}</Text>
-            <Text style={[styles.actors, styles.paletteFont]}>Actors</Text>
-            {this.state.show.actors.map(actor => <Text style={styles.paletteFont}>{actor}</Text>)}
+            <Text style={this._getColorStyles().textFontColor}>Rating: {this.state.show.rating}</Text>
+            <Text style={this._getColorStyles().textFontColor}>Genre: {this.state.show.genre}</Text>
+            <Text style={this._getColorStyles().textFontColor}>Director: {this.state.show.director}</Text>
+            <Text style={[styles.actors, this._getColorStyles().textFontColor]}>Actors</Text>
+            {this.state.show.actors.map(actor => <Text style={this._getColorStyles().textFontColor}>{actor}</Text>)}
           </View>
-          <Text style={styles.paletteFont}>Description: {this.state.show.description}</Text>
+          <Text style={this._getColorStyles().textFontColor}>Description: {this.state.show.description}</Text>
           <Rating averageRating={this.state.show.averageRating}/>
-          <Text style={styles.paletteFont}>Viewers also Enjoyed</Text>
+          <Text style={this._getColorStyles().textFontColor}>Viewers also Enjoyed</Text>
           <LolomoRow header={"Others also enjoyed:"} category={json.categories[0]} onSelect={this._changeShow}/>
         </View>
       </ScrollView>
@@ -67,11 +87,12 @@ var MovieDetailView = React.createClass({
   },
 });
 
+// TODO: I wonder if there is a way to not need to define this._getColorStyles().textFontColor in so many places such as give all the children the color
+// TODO: Shift up summary text to ontop of triangle
+
 var styles = StyleSheet.create({
     scrollView: {
       flex: 1,
-      marginBottom: 50,
-      backgroundColor: 'rgba(208, 206, 184, 1)',
     },
     actors: {
       textDecorationLine: 'underline',
@@ -80,7 +101,7 @@ var styles = StyleSheet.create({
       flex: 1,
       overflow: 'hidden',
       width: 375,
-      height: 525,
+      height: 535,
     },
     summary: {
       position: 'absolute',
@@ -90,9 +111,8 @@ var styles = StyleSheet.create({
       // dont like that the width is hard coded
       width: 375,
       paddingLeft: 18,
-      paddingTop: 3,
+      paddingTop: 0,
       paddingBottom: 3,
-      shadowColor: "rgba(208, 206, 184, 1)",
       shadowOpacity: 1,
       shadowRadius: 10,
       shadowOffset: {
@@ -107,15 +127,6 @@ var styles = StyleSheet.create({
       fontSize: 13,
       fontWeight: "300",
     },
-    paletteBackground: {
-      backgroundColor: 'rgba(208, 206, 184, 1)',
-    },
-    paletteFont: {
-      color: 'rgb(57, 35, 29)',
-    },
-    paletteDetailFont: {
-      color: 'rgb(169, 116, 56)',
-    },
     summaryTriangle: {
       backgroundColor: 'transparent',
       borderTopWidth: 30,
@@ -125,8 +136,7 @@ var styles = StyleSheet.create({
       borderTopColor: 'transparent',
       borderBottomColor: 'transparent',
       borderRightColor: 'transparent',
-      borderLeftColor: 'rgba(208, 206, 184, 1)',
-      shadowColor: "rgba(208, 206, 184, 1)",
+      // borderLeftColor: colors.primary,
       shadowOpacity: 1,
       shadowRadius: 5,
       shadowOffset: {

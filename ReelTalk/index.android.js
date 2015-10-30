@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   BackAndroid,
   PixelRatio,
@@ -10,17 +9,17 @@ var {
   Text,
   View,
   TouchableHighlight,
-  TouchableOpacity,
-} = React;
+  TouchableOpacity
+} from 'react-native';
 
-var cssVar = require('cssVar');
+import cssVar from 'cssVar';
 
-var ToolbarAndroid = require('ToolbarAndroid');
+import ToolbarAndroid from 'ToolbarAndroid';
 import RecommendScreen from './screens/RecommendScreen';
 
 var _navigator;
 
-var ReelTalk = React.createClass({
+const ReelTalk = React.createClass({
   getInitialState: function() {
     return {
       selectedTab: 'recommend',
@@ -76,9 +75,8 @@ var ReelTalk = React.createClass({
         }
         renderScene={(route, navigator) => {
           _navigator = navigator;
-          var props = route.props;
           if (route.component) {
-            return React.createElement(route.component, { navigator, ...props })
+            return React.createElement(route.component, { navigator, ...route.props })
           }
         }}
         sceneStyle={styles.sceneStyle}
@@ -92,7 +90,7 @@ var ReelTalk = React.createClass({
   }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   scene: {
     paddingTop: 50,
     flex: 1,

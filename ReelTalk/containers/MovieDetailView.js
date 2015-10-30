@@ -53,7 +53,7 @@ var MovieDetailView = React.createClass({
   render: function() {
     return (
       <ScrollView
-        style={[styles.scrollView, this._getColorStyles().primaryBackground]}
+        style={[styles.scrollView, this._getColorStyles().primaryBackground, styles.redDelete]}
         automaticallyAdjustContentInsets={true}
       >
         <Image
@@ -63,13 +63,13 @@ var MovieDetailView = React.createClass({
           <View style={styles.summary}>
             <View style={[styles.summaryTriangle, styles.summaryTriangleLeft, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
             <View style={[styles.summaryTriangle, styles.summaryTriangleRight, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
-            <View style={[styles.summaryInfo, this._getColorStyles().primaryBackground, this._getColorStyles().primaryShadow]}>
+            <View style={styles.summaryInfo}>
               <Text style={[styles.name, this._getColorStyles().textFontColor]}>{this.state.show.name}</Text>
               <Text style={[styles.summaryDetail, this._getColorStyles().detailFontColor]}>{this.state.show.year} - {this.state.show.runtime}</Text>
             </View>
           </View>
         </Image>
-        <View style={[styles.content, this._getColorStyles().primaryBackground]}>
+        <View style={[styles.content, this._getColorStyles().primaryBackground, this._getColorStyles().primaryShadow]}>
           <View style={styles.metadata}>
             <Text style={this._getColorStyles().textFontColor}>Rating: {this.state.show.rating}</Text>
             <Text style={this._getColorStyles().textFontColor}>Genre: {this.state.show.genre}</Text>
@@ -91,6 +91,9 @@ var MovieDetailView = React.createClass({
 // TODO: Shift up summary text to ontop of triangle
 
 var styles = StyleSheet.create({
+    redDelete: {
+      backgroundColor: "transparent",
+    },
     scrollView: {
       flex: 1,
     },
@@ -104,21 +107,24 @@ var styles = StyleSheet.create({
       height: 535,
     },
     summary: {
+      width: 375,
       position: 'absolute',
       bottom: 0,
     },
     summaryInfo: {
       // dont like that the width is hard coded
-      width: 375,
+      // width: 375,
+      backgroundColor: "transparent",
+      marginTop: -15,
       paddingLeft: 18,
-      paddingTop: 0,
       paddingBottom: 3,
-      shadowOpacity: 1,
-      shadowRadius: 10,
-      shadowOffset: {
-        height: -25,
-        width: 0,
-      }
+      // TODO: add this shadow to content
+      // shadowOpacity: 1,
+      // shadowRadius: 10,
+      // shadowOffset: {
+      //   height: -25,
+      //   width: 0,
+      // }
     },
     name: {
       fontSize: 22,
@@ -146,12 +152,12 @@ var styles = StyleSheet.create({
     },
     summaryTriangleLeft: {
       position: 'absolute',
-      top: -20,
+      bottom: 0,
       left: 0
     },
     summaryTriangleRight: {
       position: 'absolute',
-      top: -20,
+      bottom: 0,
       right: 0,
       transform: [
         {scaleX: -1}
@@ -160,6 +166,12 @@ var styles = StyleSheet.create({
     content: {
       paddingTop: 20,
       paddingLeft: 18,
+      shadowOpacity: 1,
+      shadowRadius: 10,
+      shadowOffset: {
+        height: -25,
+        width: 0,
+      }
     }
 });
 

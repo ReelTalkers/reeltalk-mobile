@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   TabBarIOS,
@@ -11,22 +10,22 @@ var {
   View,
   TouchableOpacity,
   TouchableHighlight
-} = React;
+} from 'react-native';
 
-var RecommendScreen = require('./screens/RecommendScreen');
-var ListsScreen = require('./screens/ListsScreen');
-var TopChartsScreen = require('./screens/TopChartsScreen');
-var SettingsScreen = require('./screens/SettingsScreen');
+import RecommendScreen from './screens/RecommendScreen';
+import ListsScreen from './screens/ListsScreen';
+import TopChartsScreen from './screens/TopChartsScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 import cssVar from 'cssVar';
 
-var NavigationBarRouteMapper = {
+const NavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
     if (index === 0) {
       return null;
     }
 
-    var previousRoute = navState.routeStack[index - 1];
+    const previousRoute = navState.routeStack[index - 1];
     return (
       <TouchableOpacity
         onPress={() => navigator.pop()}
@@ -223,7 +222,7 @@ var ReelTalk = React.createClass({
 });
 
 const renderScene = (route, navigator) => {
-  var Component = route.component;
+  const Component = route.component;
   return (
     <View style={styles.container}>
       <Component
@@ -235,38 +234,38 @@ const renderScene = (route, navigator) => {
   );
 };
 
-	var styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#FFFFFD',
-    },
-    scene: {
-      paddingTop: 65,
-      flex: 1,
-    },
-    navBar: {
-      backgroundColor: 'white',
-    },
-    navBarText: {
-      fontSize: 16,
-      marginVertical: 10,
-    },
-    navBarTitleText: {
-      color: cssVar('fbui-bluegray-60'),
-      fontWeight: '500',
-      marginVertical: 9,
-    },
-    navBarLeftButton: {
-      paddingLeft: 10,
-    },
-    navBarRightButton: {
-      paddingRight: 10,
-    },
-    navBarButtonText: {
-      color: cssVar('fbui-accent-blue'),
-    },
-	});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFD',
+  },
+  scene: {
+    paddingTop: 65,
+    flex: 1,
+  },
+  navBar: {
+    backgroundColor: 'white',
+  },
+  navBarText: {
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  navBarTitleText: {
+    color: cssVar('fbui-bluegray-60'),
+    fontWeight: '500',
+    marginVertical: 9,
+  },
+  navBarLeftButton: {
+    paddingLeft: 10,
+  },
+  navBarRightButton: {
+    paddingRight: 10,
+  },
+  navBarButtonText: {
+    color: cssVar('fbui-accent-blue'),
+  },
+});
 
-	AppRegistry.registerComponent('ReelTalk', () => ReelTalk);
+AppRegistry.registerComponent('ReelTalk', () => ReelTalk);
 
-	module.exports = ReelTalk;
+module.exports = ReelTalk;

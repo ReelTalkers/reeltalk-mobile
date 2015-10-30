@@ -29,7 +29,7 @@ var Rating = React.createClass({
   },
 
   render: function() {
-    var stars = _get_stars(this.state.score);
+    var stars = this._get_stars(this.state.score);
     return (
       <View style={styles.container}>
         <Text>Rating:</Text>

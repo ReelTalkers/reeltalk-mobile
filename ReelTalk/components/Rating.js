@@ -24,17 +24,12 @@ var Rating = React.createClass({
     })
   },
 
-  _selectStar: function(index) {
-    if (index <= this.state.rating) {
-      return 'image!GoldStar';
-    }
-    else {
-      return 'image!GrayStar';
-    }
+  _get_stars: function(score) {
+    return [1, 2, 3, 4, 5].map((e, i) => (i + 1 <= score) ? {color: 'gold'} : {color: 'gray'});
   },
 
   render: function() {
-    var stars = [1, 2, 3, 4, 5].map((e, i) => (i + 1 <= this.state.score) ? {color: 'gold'} : {color: 'gray'});
+    var stars = _get_stars(this.state.score);
     return (
       <View style={styles.container}>
         <Text>Rating:</Text>

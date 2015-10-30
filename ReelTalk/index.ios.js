@@ -126,6 +126,16 @@ const Main = React.createClass({
     );
   },
 
+  _onPressTab: function (tabTitle) {
+    if (this.state.selectedTab !== tabTitle) {
+      this.setState({
+        selectedTab: tabTitle
+      });
+    } else if (this.state.selectedTab === 'recommend') {
+      this.refs[tabTitle + 'Ref'].popToTop();
+    }
+  },
+
   render: function() {
     return (
       <TabBarIOS>
@@ -133,15 +143,7 @@ const Main = React.createClass({
   	      selected={this.state.selectedTab === 'recommend'}
           ref="recommendTabRef"
   	      systemIcon="favorites"
-  	      onPress={() => {
-            if (this.state.selectedTab !== 'recommend') {
-              this.setState({
-                selectedTab: 'recommend'
-              });
-            } else if (this.state.selectedTab === 'recommend') {
-              this.refs.recommendRef.popToTop();
-            }
-  	      }}>
+  	      onPress={() => this._onPressTab('recommend')}>
           {this.renderRecommendScreen()}
 
   	    </TabBarIOS.Item>
@@ -149,45 +151,21 @@ const Main = React.createClass({
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'lists'}
   	      systemIcon="bookmarks"
-  	      onPress={() => {
-            if (this.state.selectedTab !== 'lists') {
-              this.setState({
-                selectedTab: 'lists'
-              });
-            } else if (this.state.selectedTab === 'lists') {
-              this.refs.listsRef.popToTop();
-            }
-  	      }}>
+  	      onPress={() => this._onPressTab('lists')}>
           {this.renderListsScreen()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'charts'}
   	      systemIcon="most-viewed"
-  	      onPress={() => {
-            if (this.state.selectedTab !== 'charts') {
-              this.setState({
-                selectedTab: 'charts'
-              });
-            } else if (this.state.selectedTab === 'charts') {
-              this.refs.chartsRef.popToTop();
-            }
-  	      }}>
+  	      onPress={() => this._onPressTab('charts')}>
           {this.renderTopChartsScreen()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'settings'}
   	      systemIcon="more"
-  	      onPress={() => {
-            if (this.state.selectedTab !== 'settings') {
-              this.setState({
-                selectedTab: 'settings'
-              });
-            } else if (this.state.selectedTab === 'settings') {
-              this.refs.chartsRef.popToTop();
-            }
-  	      }}>
+  	      onPress={() => this._onPressTab('settings')}>
   	      {this.renderSettingsScreen()}
   	    </TabBarIOS.Item>
 
@@ -196,7 +174,7 @@ const Main = React.createClass({
   }
 })
 
-var ReelTalk = React.createClass({
+const ReelTalk = React.createClass({
 	getInitialState: function() {
     	return {
     		userId: '2',

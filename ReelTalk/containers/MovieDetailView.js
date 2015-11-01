@@ -46,8 +46,8 @@ var MovieDetailView = React.createClass({
       },
       primaryBorderLeftColor: {
         borderLeftColor: this.state.show.colors.primary
-      }
-    }
+      },
+    };
   },
 
   render: function() {

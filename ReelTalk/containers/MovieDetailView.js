@@ -93,6 +93,7 @@ var MovieDetailView = React.createClass({
 var styles = StyleSheet.create({
     scrollView: {
       flex: 1,
+      marginBottom: 50
     },
     actors: {
       textDecorationLine: 'underline',

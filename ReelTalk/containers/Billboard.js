@@ -42,6 +42,7 @@ var Billboard = React.createClass({
     });
   },
 
+
   render: function() {
     return (
       <View style={styles.container}>

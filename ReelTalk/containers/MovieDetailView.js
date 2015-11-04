@@ -150,7 +150,7 @@ var styles = StyleSheet.create({
       shadowOpacity: 1,
       shadowRadius: 10,
       shadowOffset: {
-        height: -25,
+        height: -23,
         width: 0,
       }
     },

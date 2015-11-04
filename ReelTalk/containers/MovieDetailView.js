@@ -77,17 +77,19 @@ var MovieDetailView = React.createClass({
               <Text style={[styles.name, this._getColorStyles().textFontColor]}>{this.state.show.name}</Text>
               <Text style={[styles.specs, this._getColorStyles().detailFontColor]}>{this.state.show.year} - {this.state.show.runtime}</Text>
             </View>
-            <View style={styles.metadata}>
-              <Text style={this._getColorStyles().textFontColor}>Rating: {this.state.show.rating}</Text>
-              <Text style={this._getColorStyles().textFontColor}>Genre: {this.state.show.genre}</Text>
-              <Text style={this._getColorStyles().textFontColor}>Director: {this.state.show.director}</Text>
-              <Text style={[styles.actors, this._getColorStyles().textFontColor]}>Actors</Text>
-              {this.state.show.actors.map(actor => <Text style={this._getColorStyles().textFontColor}>{actor}</Text>)}
+            <View>
+              <View style={styles.metadata}>
+                <Text style={this._getColorStyles().textFontColor}>Rating: {this.state.show.rating}</Text>
+                <Text style={this._getColorStyles().textFontColor}>Genre: {this.state.show.genre}</Text>
+                <Text style={this._getColorStyles().textFontColor}>Director: {this.state.show.director}</Text>
+                <Text style={[styles.actors, this._getColorStyles().textFontColor]}>Actors</Text>
+                {this.state.show.actors.map(actor => <Text style={this._getColorStyles().textFontColor}>{actor}</Text>)}
+              </View>
+              <Text style={this._getColorStyles().textFontColor}>Description: {this.state.show.description}</Text>
+              <Rating averageRating={this.state.show.averageRating}/>
+              <Text style={this._getColorStyles().textFontColor}>Viewers also Enjoyed</Text>
+              <LolomoRow header={"Others also enjoyed:"} category={json.categories[0]} onSelect={this._changeShow}/>
             </View>
-            <Text style={this._getColorStyles().textFontColor}>Description: {this.state.show.description}</Text>
-            <Rating averageRating={this.state.show.averageRating}/>
-            <Text style={this._getColorStyles().textFontColor}>Viewers also Enjoyed</Text>
-            <LolomoRow header={"Others also enjoyed:"} category={json.categories[0]} onSelect={this._changeShow}/>
           </View>
         </View>
       </ScrollView>
@@ -151,6 +153,11 @@ var styles = StyleSheet.create({
         height: -25,
         width: 0,
       }
+    },
+    header: {
+      backgroundColor: "transparent",
+      marginTop: -triangleHeight,
+      marginBottom: triangleHeight,
     },
     name: {
       fontSize: 22,

@@ -98,7 +98,8 @@ var MovieDetailView = React.createClass({
 });
 
 // TODO: I wonder if there is a way to not need to define this._getColorStyles().textFontColor in so many places such as give all the children the color
-// TODO: Shift up summary text to ontop of triangle
+// TODO: Maybe create a block with transparent backgroundcolor but non transparent shadow at the bottom of the image
+// TODO: Maybe see how shadows are made and adjust them so you can stretch them
 var triangleHeight = 30;
 
 var styles = StyleSheet.create({

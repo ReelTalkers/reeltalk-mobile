@@ -99,7 +99,6 @@ var styles = StyleSheet.create({
     largeImage: {
       flex: 1,
       overflow: 'hidden',
-      width: 375,
       height: 470,
     },
     content: {

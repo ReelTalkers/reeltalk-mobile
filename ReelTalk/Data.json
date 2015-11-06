@@ -34,7 +34,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Scouts Guide",
@@ -58,7 +62,11 @@
 				 "primary": "rgb(107, 78, 90)",
 				 "text": "rgb(205, 165, 148)",
 				 "detail": "rgb(147, 167, 164)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "The Wonders",
@@ -82,7 +90,11 @@
 				 "primary": "rgb(32, 163, 250)",
 				 "text": "rgb(216, 198, 114)",
 				 "detail": "rgb(117, 89, 54)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Our Brand is Crisis",
@@ -106,7 +118,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Oklahoma!",
@@ -130,7 +146,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 }
 	 	]
 	 },
@@ -158,7 +178,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Goosebumps",
@@ -182,7 +206,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Bridge of Spies",
@@ -206,7 +234,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Hotel Translyvania",
@@ -230,7 +262,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Steve Jobs",
@@ -254,7 +290,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 }
 	 	]
 	 },
@@ -282,7 +322,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "The Intern",
@@ -306,7 +350,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Spectre",
@@ -330,7 +378,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "The Peanuts Movie",
@@ -354,7 +406,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 },
 		 {
 			 "name": "Brooklyn",
@@ -378,7 +434,11 @@
 				 "primary": "rgba(208, 206, 184, 1)",
 				 "text": "rgb(57, 35, 29)",
 				 "detail": "rgb(169, 116, 56)"
-			 }
+			 },
+			 "lists": [
+				 "Loved",
+				 "Creepy Funny",
+			 ]
 		 }
 	 	]
 	 },

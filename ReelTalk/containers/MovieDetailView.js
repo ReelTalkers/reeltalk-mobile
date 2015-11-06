@@ -14,6 +14,7 @@ var {
 } = React;
 
 var Rating = require('../components/Rating');
+var RatingSlider = require('../components/RatingSlider');
 var LolomoRow = require('./LolomoRow');
 var json = require("../Data");
 
@@ -33,7 +34,6 @@ var MovieDetailView = React.createClass({
   _getColorStyles: function() {
     return {
       primaryBackground: {
-        //backgroundColor: "transparent",
         backgroundColor: this.state.show.colors.primary
       },
       primaryShadow: {
@@ -61,7 +61,7 @@ var MovieDetailView = React.createClass({
       >
         <Image source={{uri: this.state.show.largePoster}} style={styles.largeImage} />
         <View style={styles.content}>
-          <View style={styles.headerLine}/>
+          <View style={[styles.headerLine, this._getColorStyles().primaryBackground]}/>
           <View style={styles.header}>
             <Text style={styles.title}>{this.state.show.name}</Text>
             <View style={styles.detail}>
@@ -74,9 +74,17 @@ var MovieDetailView = React.createClass({
               {this.state.show.lists.map(list => <Text style={styles.listName}>{list}</Text>)}
             </View>
           </View>
-          <View style={styles.ratingSlider}>
-            <Text style={styles.sliderText}>Slide to rate</Text>
-          </View>
+          <RatingSlider
+            style={styles.ratingSlider}
+            defaultText="Slide to rate"
+            options={[
+              "Terrible",
+              "Bad",
+              "Ok",
+              "Good",
+              "Fantastic"
+            ]}
+          />
           <Text style={styles.description}>{this.state.show.description}</Text>
         </View>
       </ScrollView>
@@ -99,7 +107,6 @@ var styles = StyleSheet.create({
     },
     headerLine: {
       height: 3,
-      backgroundColor: 'rgba(208, 206, 184, 1)',
     },
     header: {
       alignItems: 'center',
@@ -133,13 +140,7 @@ var styles = StyleSheet.create({
     },
     ratingSlider: {
       height: 79,
-      backgroundColor: 'BAB7AE',
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    sliderText: {
-      fontSize: 17,
-      fontWeight: '300'
+      backgroundColor: '#BAB7AE',
     },
     description: {
       paddingTop: 30,

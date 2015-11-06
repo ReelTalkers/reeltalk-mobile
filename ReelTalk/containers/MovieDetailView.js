@@ -51,56 +51,38 @@ var MovieDetailView = React.createClass({
     };
   },
 
-  // image
-  // info (shifted up to be ontop of image)
-    // triangles
-    // content
-      // title shifted up?
-
+// TODO: Lists should not be stored within movies, there should be lists containing movies but I want to focus on design now
+// TODO: make <RatingSlider style={styles.ratingSlider}/>
   render: function() {
     return (
       <ScrollView
         style={styles.scrollView}
         automaticallyAdjustContentInsets={true}
       >
-        <Image
-            source={{uri: this.state.show.largePoster}}
-            style={styles.largeImage}
-        />
-      <View style={styles.content}>
-          <View style={styles.triangleRow}>
-            <View style={[styles.triangle, styles.triangleLeft, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
-            <View style={[styles.triangle, styles.triangleRight, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
-          </View>
-          <View style={[styles.info, this._getColorStyles().primaryBackground, this._getColorStyles().primaryShadow]}>
-            <View style={styles.header}>
-              <Text style={[styles.name, this._getColorStyles().textFontColor]}>{this.state.show.name}</Text>
-              <Text style={[styles.specs, this._getColorStyles().detailFontColor]}>{this.state.show.year} - {this.state.show.runtime}</Text>
+        <Image source={{uri: this.state.show.largePoster}} style={styles.largeImage} />
+        <View style={styles.content}>
+          <View style={styles.headerLine}/>
+          <View style={styles.header}>
+            <Text style={styles.title}>{this.state.show.name}</Text>
+            <View style={styles.detail}>
+              <Text style={styles.detailText}>{this.state.show.runtime}</Text>
+              <Text style={styles.detailText}>{this.state.show.genre}</Text>
+              <Text style={styles.detailText}>{this.state.show.year}</Text>
+              <Text style={styles.detailText}>{this.state.show.rating}</Text>
             </View>
-            <View>
-              <View style={styles.metadata}>
-                <Text style={this._getColorStyles().textFontColor}>Rating: {this.state.show.rating}</Text>
-                <Text style={this._getColorStyles().textFontColor}>Genre: {this.state.show.genre}</Text>
-                <Text style={this._getColorStyles().textFontColor}>Director: {this.state.show.director}</Text>
-                <Text style={[styles.actors, this._getColorStyles().textFontColor]}>Actors</Text>
-                {this.state.show.actors.map(actor => <Text style={this._getColorStyles().textFontColor}>{actor}</Text>)}
-              </View>
-              <Text style={this._getColorStyles().textFontColor}>Description: {this.state.show.description}</Text>
-              <Rating averageRating={this.state.show.averageRating}/>
-              <Text style={this._getColorStyles().textFontColor}>Viewers also Enjoyed</Text>
-              <LolomoRow header={"Others also enjoyed:"} category={json.categories[0]} onSelect={this._changeShow}/>
+            <View style={styles.listsContainer}>
+              {this.state.show.lists.map(list => <Text style={styles.listName}>{list}</Text>)}
             </View>
           </View>
+          <View style={styles.ratingSlider}>
+            <Text style={styles.sliderText}>Slide to rate</Text>
+          </View>
+          <Text style={styles.description}>{this.state.show.description}</Text>
         </View>
       </ScrollView>
     );
   },
 });
-
-// TODO: I wonder if there is a way to not need to define this._getColorStyles().textFontColor in so many places such as give all the children the color
-// TODO: Maybe create a block with transparent backgroundcolor but non transparent shadow at the bottom of the image
-// TODO: Maybe see how shadows are made and adjust them so you can stretch them
-var triangleHeight = 30;
 
 var styles = StyleSheet.create({
     scrollView: {
@@ -110,66 +92,63 @@ var styles = StyleSheet.create({
       flex: 1,
       overflow: 'hidden',
       width: 375,
-      height: 535,
-    },
-    triangleRow: {
-      height: triangleHeight,
-    },
-    triangle: {
-      backgroundColor: 'transparent',
-      borderTopWidth: triangleHeight,
-      borderRightWidth: 0,
-      borderBottomWidth: 0,
-      borderLeftWidth: 150,
-      borderTopColor: 'transparent',
-      borderBottomColor: 'transparent',
-      borderRightColor: 'transparent',
-      shadowOpacity: 1,
-      shadowRadius: 5,
-      shadowOffset: {
-        height: -11,
-        width: -8,
-      }
-    },
-    triangleLeft: {
-      position: 'absolute',
-      left: 0
-    },
-    triangleRight: {
-      position: 'absolute',
-      right: 0,
-      transform: [
-        {scaleX: -1}
-      ]
+      height: 470,
     },
     content: {
-      backgroundColor: "transparent",
-      marginTop: -triangleHeight,
+      backgroundColor: '#B6AEA3',
     },
-    info: {
-      paddingLeft: 18,
-      shadowOpacity: 1,
-      shadowRadius: 10,
-      shadowOffset: {
-        height: -23,
-        width: 0,
-      }
+    headerLine: {
+      height: 3,
+      backgroundColor: 'rgba(208, 206, 184, 1)',
     },
     header: {
-      backgroundColor: "transparent",
-      marginTop: -triangleHeight,
-      marginBottom: triangleHeight,
+      alignItems: 'center',
+      marginTop: 24,
+      marginBottom: 24,
     },
-    name: {
+    title: {
       fontSize: 22,
+      fontWeight: '300',
+      marginBottom: 5,
     },
-    specs: {
+    detail: {
+      flexDirection: 'row',
+      marginBottom: 5,
+    },
+    detailText: {
       fontSize: 13,
-      fontWeight: "300",
+      fontWeight: '300',
+      paddingLeft: 5,
+      paddingRight: 5,
     },
-    actors: {
-      textDecorationLine: 'underline',
+    listsContainer: {
+      flexDirection: 'row',
     },
+    listName: {
+      color: '#5583B6',
+      fontSize: 13,
+      fontWeight: '300',
+      paddingLeft: 2,
+      paddingRight: 2,
+    },
+    ratingSlider: {
+      height: 79,
+      backgroundColor: 'BAB7AE',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    sliderText: {
+      fontSize: 17,
+      fontWeight: '300'
+    },
+    description: {
+      paddingTop: 30,
+      paddingBottom: 30,
+      paddingLeft: 20,
+      paddingRight: 20,
+      fontSize: 14,
+      fontWeight: '300'
+    }
 });
 
 module.exports = MovieDetailView;

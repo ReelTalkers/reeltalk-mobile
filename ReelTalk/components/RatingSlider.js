@@ -15,20 +15,17 @@ var RatingSlider = React.createClass({
   	return {
   		text: this.props.defaultText,
       bucketWidth: null,
+      // TODO: change to transparentish
+      color: "#BAB7AE",
   	};
 	},
 
+  // TODO: is it bad style to change the states around? Are they supposed to be static?
   _setBucketWidth: function(bucketWidth) {
     this.setState({
       text: this.state.text,
       bucketWidth: bucketWidth,
-    });
-  },
-
-  _setText: function(text) {
-    this.setState({
-      text: text,
-      bucketWidth: this.state.bucketWidth,
+      color: this.state.color,
     });
   },
 
@@ -49,8 +46,15 @@ var RatingSlider = React.createClass({
   _alterRating: function(locationX) {
     // We take the floor since index starts at 0
     var bucketIndex = Math.floor(locationX / this.state.bucketWidth);
-    var text = this.props.options[bucketIndex];
-    this._setText(text);
+    var option = this.props.options[bucketIndex];
+
+    // We dont have a method to do this since changing the state triggers
+    //  re-rendering and we dont want to render twice
+    this.setState({
+      text: option.text,
+      bucketWidth: this.state.bucketWidth,
+      color: option.color,
+    });
   },
 
   componentWillMount() {
@@ -78,7 +82,7 @@ var RatingSlider = React.createClass({
 // then I wouldnt need to worry about what the width size was
   render: function() {
     return (
-      <View style={[styles.ratingSlider, this.props.style]} onLayout={this._onLayout} {...this._panResponder.panHandlers}>
+      <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]} onLayout={this._onLayout} {...this._panResponder.panHandlers}>
         <Text style={styles.sliderText}>{this.state.text}</Text>
       </View>
     );

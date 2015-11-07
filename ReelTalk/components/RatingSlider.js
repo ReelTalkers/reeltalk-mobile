@@ -7,13 +7,44 @@ var {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  PanResponder,
 } = React;
 
 var RatingSlider = React.createClass({
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+
+      onPanResponderGrant: (evt, gestureState) => {
+        this.setState({
+          text: evt.nativeEvent.locationX,
+          color: "rgb("+evt.nativeEvent.locationX+",255,255)"
+        });
+      },
+
+      onPanResponderMove: (evt, gestureState) => {
+        this.setState({
+          text: evt.nativeEvent.locationX,
+          color: "rgb("+evt.nativeEvent.locationX+",255,255)"
+        });
+      },
+
+      onPanResponderRelease: (evt, gestureState) => {
+        this.setState({
+          text: evt.nativeEvent.locationX,
+          color: "rgb("+evt.nativeEvent.locationX+",255,255)"
+        });
+      }
+    })
+  },
+
   getInitialState: function() {
   	return {
   		text: this.props.defaultText,
+      color: "rgb(255,255,255)"
   	};
 	},
   // Specifies the type prop must be
@@ -21,21 +52,13 @@ var RatingSlider = React.createClass({
     style: View.propTypes.style,
   },
 
-  _onPressIn: function(evt) {
-    this.setState({
-      text: evt.nativeEvent.locationX,
-    });
-  },
-
 // what if I just had x amount of boxes then justified them and made the color change depending on where you are relative to those boxes/
 // then I wouldnt need to worry about what the width size was
   render: function() {
     return (
-      <TouchableHighlight onPressIn={this._onPressIn}>
-        <View style={[styles.ratingSlider, this.props.style]}>
-          <Text style={styles.sliderText}>{this.state.text}</Text>
-        </View>
-      </TouchableHighlight>
+      <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]} {...this._panResponder.panHandlers}>
+        <Text style={styles.sliderText}>{this.state.text}</Text>
+      </View>
     );
   },
 });

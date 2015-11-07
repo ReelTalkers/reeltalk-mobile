@@ -7,12 +7,13 @@ var {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight,
 } = React;
 
 var RatingSlider = React.createClass({
   getInitialState: function() {
   	return {
-  		show: this.props.initialShow,
+  		text: this.props.defaultText,
   	};
 	},
   // Specifies the type prop must be
@@ -20,11 +21,21 @@ var RatingSlider = React.createClass({
     style: View.propTypes.style,
   },
 
+  _onPressIn: function(evt) {
+    this.setState({
+      text: evt.nativeEvent.locationX,
+    });
+  },
+
+// what if I just had x amount of boxes then justified them and made the color change depending on where you are relative to those boxes/
+// then I wouldnt need to worry about what the width size was
   render: function() {
     return (
-      <View style={[styles.ratingSlider, this.props.style]}>
-        <Text style={styles.sliderText}>{this.props.defaultText}</Text>
-      </View>
+      <TouchableHighlight onPressIn={this._onPressIn}>
+        <View style={[styles.ratingSlider, this.props.style]}>
+          <Text style={styles.sliderText}>{this.state.text}</Text>
+        </View>
+      </TouchableHighlight>
     );
   },
 });

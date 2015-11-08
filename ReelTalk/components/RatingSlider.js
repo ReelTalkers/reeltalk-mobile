@@ -71,6 +71,7 @@ var RatingSlider = React.createClass({
       //       but necessary to avoid touching the text messing things up
       onResponderGrant: (evt) => {
         this._alterRating(evt.nativeEvent.pageX);
+        this.props.disableScroll && this.props.disableScroll();
       },
 
       onResponderMove: (evt) => {
@@ -78,6 +79,7 @@ var RatingSlider = React.createClass({
       },
 
       onResponderRelease: (evt) => {
+        this.props.enableScroll && this.props.enableScroll();
         // TODO: send the final rating to the db
       },
 

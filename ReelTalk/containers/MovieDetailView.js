@@ -22,14 +22,12 @@ var MovieDetailView = React.createClass({
   getInitialState: function() {
   	return {
   		show: this.props.initialShow,
-      scrollEnabled: true,
   	};
 	},
 
   _changeShow: function(newShow) {
     this.setState({
       show: newShow,
-      scrollEnabled: true,
     });
   },
 
@@ -53,22 +51,6 @@ var MovieDetailView = React.createClass({
     };
   },
 
-  // TODO: not sure about the this.state.show... Do I even need it?
-  _setScrollEnabled: function(scrollEnabled) {
-    this.setState({
-      show: this.state.show,
-      scrollEnabled: scrollEnabled,
-    });
-  },
-
-  _disableScroll: function() {
-    this._setScrollEnabled(false);
-  },
-
-  _enableScroll: function() {
-    this._setScrollEnabled(true);
-  },
-
 // TODO: Lists should not be stored within movies, there should be lists containing movies but I want to focus on design now
 // TODO: make <RatingSlider style={styles.ratingSlider}/>
   render: function() {
@@ -76,7 +58,6 @@ var MovieDetailView = React.createClass({
       <ScrollView
         style={styles.scrollView}
         automaticallyAdjustContentInsets={true}
-        scrollEnabled={this.state.scrollEnabled}
       >
         <Image source={{uri: this.state.show.largePoster}} style={styles.largeImage} />
         <View style={styles.content}>
@@ -103,8 +84,6 @@ var MovieDetailView = React.createClass({
               {text: "Good", color: "rgba(253, 199, 12, .7)"},
               {text: "Fantastic", color: "rgba(255, 243, 12, .7)"}
             ]}
-            disableScroll={this._disableScroll.bind(this)}
-            enableScroll={this._enableScroll.bind(this)}
           />
           <Text style={styles.description}>{this.state.show.description}</Text>
         </View>

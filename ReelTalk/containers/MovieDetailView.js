@@ -61,7 +61,7 @@ var MovieDetailView = React.createClass({
       >
         <Image source={{uri: this.state.show.largePoster}} style={styles.largeImage} />
         <View style={styles.content}>
-          <View style={[styles.headerLine, this._getColorStyles().primaryBackground]}/>
+          <View style={[styles.headerLine, this._getColorStyles().primaryBackground]} />
           <View style={styles.header}>
             <Text style={styles.title}>{this.state.show.name}</Text>
             <View style={styles.detail}>
@@ -82,7 +82,7 @@ var MovieDetailView = React.createClass({
               {text: "Bad", color: "rgba(241, 171, 92, 80)"},
               {text: "Ok", color: "rgba(179, 229, 252, 80)"},
               {text: "Good", color: "rgba(87, 193, 219, 80)"},
-              {text: "Fantastic", color: "rgba(76, 175, 80, 80)"}
+              {text: "Fantastic", color: "rgba(76, 172, 80, 80)"}
             ]}
           />
           <Text style={styles.description}>{this.state.show.description}</Text>

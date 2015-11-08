@@ -102,9 +102,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  section: {
-    flex: 1,
-  },
   sliderText: {
     fontSize: 17,
     fontWeight: '300'

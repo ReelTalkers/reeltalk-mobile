@@ -8,6 +8,7 @@ var {
   Text,
   View,
   PanResponder,
+  Animated,
 } = React;
 
 var RatingSlider = React.createClass({
@@ -43,9 +44,9 @@ var RatingSlider = React.createClass({
     this._setBucketWidth(bucketWidth);
   },
 
-  _alterRating: function(locationX) {
+  _alterRating: function(x) {
     // We take the floor since index starts at 0
-    var bucketIndex = Math.floor(locationX / this.state.bucketWidth);
+    var bucketIndex = Math.floor(x / this.state.bucketWidth);
     var option = this.props.options[bucketIndex];
 
     // We dont have a method to do this since changing the state triggers
@@ -63,13 +64,17 @@ var RatingSlider = React.createClass({
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      // allows the gesture to continue even if accidentally scrolled
+      onPanResponderTerminationRequest: (e, gestureState) => false,
 
+      // TODO: not crazy that we are using pageX, then it will only work well for full page width
+      //       but necessary to avoid touching the text messing things up
       onPanResponderGrant: (evt, gestureState) => {
-        this._alterRating(evt.nativeEvent.locationX)
+        this._alterRating(evt.nativeEvent.pageX)
       },
 
       onPanResponderMove: (evt, gestureState) => {
-        this._alterRating(evt.nativeEvent.locationX)
+        this._alterRating(evt.nativeEvent.pageX)
       },
 
       onPanResponderRelease: (evt, gestureState) => {
@@ -82,7 +87,10 @@ var RatingSlider = React.createClass({
 // then I wouldnt need to worry about what the width size was
   render: function() {
     return (
-      <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]} onLayout={this._onLayout} {...this._panResponder.panHandlers}>
+      <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]}
+            onLayout={this._onLayout}
+            {...this._panResponder.panHandlers}
+      >
         <Text style={styles.sliderText}>{this.state.text}</Text>
       </View>
     );

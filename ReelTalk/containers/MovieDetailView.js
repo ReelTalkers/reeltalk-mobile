@@ -78,11 +78,11 @@ var MovieDetailView = React.createClass({
             style={styles.ratingSlider}
             defaultText="Slide to rate"
             options={[
-              {text: "Terrible", color: "rgba(219, 79, 81, 80)"},
-              {text: "Bad", color: "rgba(241, 171, 92, 80)"},
-              {text: "Ok", color: "rgba(179, 229, 252, 80)"},
-              {text: "Good", color: "rgba(87, 193, 219, 80)"},
-              {text: "Fantastic", color: "rgba(76, 172, 80, 80)"}
+              {text: "Terrible", color: "rgba(233, 62, 58, .7)"},
+              {text: "Bad", color: "rgba(237, 104, 60, .7)"},
+              {text: "Ok", color: "rgba(243, 144, 63, .7)"},
+              {text: "Good", color: "rgba(253, 199, 12, .7)"},
+              {text: "Fantastic", color: "rgba(255, 243, 12, .7)"}
             ]}
           />
           <Text style={styles.description}>{this.state.show.description}</Text>

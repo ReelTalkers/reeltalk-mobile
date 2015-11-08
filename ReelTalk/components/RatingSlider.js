@@ -58,28 +58,30 @@ var RatingSlider = React.createClass({
   },
 
   componentWillMount() {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+    this._responder = {
+      onStartShouldSetResponder: (evt) => true,
+      onMoveShouldSetResponder: (evt) => true,
+      // TODO: not sure that the following two are necessary
+      onStartShouldSetResponderCapture: (evt) => true,
+      onMoveShouldSetResponderCapture: (evt) => true,
       // allows the gesture to continue even if accidentally scrolled
-      onPanResponderTerminationRequest: (e, gestureState) => false,
+      onResponderTerminationRequest: (evt) => false,
 
       // TODO: not crazy that we are using pageX, then it will only work well for full page width
       //       but necessary to avoid touching the text messing things up
-      onPanResponderGrant: (evt, gestureState) => {
-        this._alterRating(evt.nativeEvent.pageX)
+      onResponderGrant: (evt) => {
+        this._alterRating(evt.nativeEvent.pageX);
       },
 
-      onPanResponderMove: (evt, gestureState) => {
-        this._alterRating(evt.nativeEvent.pageX)
+      onResponderMove: (evt) => {
+        this._alterRating(evt.nativeEvent.pageX);
       },
 
-      onPanResponderRelease: (evt, gestureState) => {
+      onResponderRelease: (evt) => {
         // TODO: send the final rating to the db
-      }
-    })
+      },
+
+    };
   },
 
 // what if I just had x amount of boxes then justified them and made the color change depending on where you are relative to those boxes/
@@ -88,7 +90,7 @@ var RatingSlider = React.createClass({
     return (
       <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]}
             onLayout={this._onLayout}
-            {...this._panResponder.panHandlers}
+            {...this._responder}
       >
         <Text style={styles.sliderText}>{this.state.text}</Text>
       </View>

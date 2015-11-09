@@ -95,6 +95,7 @@ var MovieDetailView = React.createClass({
 var styles = StyleSheet.create({
     scrollView: {
       flex: 1,
+      backgroundColor: '#B6AEA3',
     },
     largeImage: {
       flex: 1,

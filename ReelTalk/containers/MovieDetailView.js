@@ -13,6 +13,8 @@ var {
   View,
 } = React;
 
+var ParallaxView = require('react-native-parallax-view');
+
 var Rating = require('../components/Rating');
 var RatingSlider = require('../components/RatingSlider');
 var LolomoRow = require('./LolomoRow');
@@ -73,12 +75,13 @@ var MovieDetailView = React.createClass({
 // TODO: make <RatingSlider style={styles.ratingSlider}/>
   render: function() {
     return (
-      <ScrollView
+      <ParallaxView
         style={styles.scrollView}
-        automaticallyAdjustContentInsets={true}
+        automaticallyAdjustContentInsets={false}
         scrollEnabled={this.state.scrollEnabled}
+        backgroundSource={{uri: this.state.show.largePoster}}
+        windowHeight={470}
       >
-        <Image source={{uri: this.state.show.largePoster}} style={styles.largeImage} />
         <View style={styles.content}>
           <View style={[styles.headerLine, this._getColorStyles().primaryBackground]} />
           <View style={styles.header}>
@@ -108,7 +111,7 @@ var MovieDetailView = React.createClass({
           />
           <Text style={styles.description}>{this.state.show.description}</Text>
         </View>
-      </ScrollView>
+      </ParallaxView>
     );
   },
 });
@@ -117,11 +120,6 @@ var styles = StyleSheet.create({
     scrollView: {
       flex: 1,
       backgroundColor: '#B6AEA3',
-    },
-    largeImage: {
-      flex: 1,
-      overflow: 'hidden',
-      height: 470,
     },
     content: {
       backgroundColor: '#B6AEA3',

@@ -16,6 +16,7 @@ var RecommendScreen = React.createClass({
     return (
       <NavigatorIOS
         style={styles.navigator}
+        translucent={true}
         initialRoute={{
           title: 'Recommend',
           component: RecommendHome,

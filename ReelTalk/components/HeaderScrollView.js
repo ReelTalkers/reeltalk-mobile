@@ -68,6 +68,27 @@ var HeaderScrollView = React.createClass({
         );
     },
 
+    renderHeader: function () {
+        var { windowHeight, backgroundSource } = this.props;
+        var { scrollY } = this.state;
+        if (!windowHeight || !backgroundSource) {
+            return null;
+        }
+        return (
+            <Animated.View style={{
+                position: 'relative',
+                height: windowHeight,
+                backgroundColor: 'black',
+                opacity: scrollY.interpolate({
+                    inputRange: [-windowHeight, 0, windowHeight * 1.2],
+                    outputRange: [0, 0, 1]
+                }),
+            }}>
+                {this.props.header}
+            </Animated.View>
+        );
+    },
+
     render: function () {
         var { style, ...props } = this.props;
         return (
@@ -80,6 +101,7 @@ var HeaderScrollView = React.createClass({
                     onScroll={Animated.event(
                       [{ nativeEvent: { contentOffset: { y: this.state.scrollY }}}]
                     )}>
+                    {this.renderHeader()}
                     <View style={styles.content}>
                         {this.props.children}
                     </View>

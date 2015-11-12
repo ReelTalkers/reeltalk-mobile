@@ -6,6 +6,7 @@ var {
   Image,
   StyleSheet,
   Text,
+  ListView,
   ScrollView,
   View,
 } = React;
@@ -14,19 +15,40 @@ var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
 
 var json = require("../Data");
+var lists = [{"name": "Favs", "count": 5}, {"name": "Funny", "count": 10}, {"name": "Mom's Favs", "count": 2}, {"name": "Horrible", "count": 8}];
 
 var ListsHome = React.createClass({
+  getInitialState: function() {
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    return {
+      dataSource: ds.cloneWithRows(lists),
+    };
+  },
+
+  renderListRow: function(list) {
+    return (
+      <View>
+        <Text>{list.name}</Text>
+        <Text>{list.count}</Text>
+      </View>
+    )
+  },
+
   render: function() {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
-          
+           <Image
+             source={{uri: json.users[this.props.userId].picture}}
+             style={styles.image}
+           />
         </View>
-        <Lolomo
-          style={styles.lolomo}
-          navigator={this.props.navigator}
-          userId={this.props.userId}
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderListRow}
+          style={styles.listView}
+          showsVerticalScrollIndicator={false}
         />
       </ScrollView>
     );

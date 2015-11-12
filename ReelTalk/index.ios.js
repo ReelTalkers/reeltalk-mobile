@@ -93,7 +93,7 @@ const Main = React.createClass({
           <Navigator.NavigationBar
             routeMapper={NavigationBarRouteMapper}
             style={styles.navBar} />
-        }
+        }Z
         renderScene={renderScene} />
     );
   },

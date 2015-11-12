@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  Image,
   StyleSheet,
   Text,
   ScrollView,
@@ -12,13 +13,18 @@ var {
 var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
 
+var json = require("../Data");
+
 var ListsHome = React.createClass({
   render: function() {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
-          <Billboard userId={this.props.userId}/>
+          <Image
+            source={{uri: json.users[this.props.userId].picture}}
+            style={styles.image}
+          />
         </View>
         <Lolomo
           style={styles.lolomo}
@@ -33,9 +39,17 @@ var ListsHome = React.createClass({
 var styles = StyleSheet.create({
   billboardContainer: {
     marginBottom: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   lolomo: {
     flex: 1,
+  },
+  image: {
+    marginTop: 15,
+    width: 125,
+    height: 125,
+    borderRadius: 125/2,
   },
 });
 

@@ -15,17 +15,15 @@ var MovieGrid = require("./MovieGrid");
 
 var TopChartsHome = React.createClass({
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows(json.categories[0].shows),
+      shows: json.categories[0].shows,
     };
   },
 
   _onValueChange(value) {
     const newList = (value === 'Today') ? json.categories[0].shows : json.categories[2].shows;
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({
-      dataSource: ds.cloneWithRows(newList),
+      shows: newList,
     });
   },
 
@@ -38,8 +36,9 @@ var TopChartsHome = React.createClass({
           onValueChange={this._onValueChange}
         />
       <MovieGrid
-        shows={json.categories[0].shows}
+        shows={this.state.shows}
         style={styles.grid}
+        navigator={this.props.navigator}
       />
       </View>
     );

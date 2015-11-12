@@ -7,10 +7,13 @@ var {
   ListView,
   Image,
   Text,
+  TouchableHighlight,
   View,
 } = React;
 
-var Lolomo = React.createClass({
+var MovieDetailView = require("./MovieDetailView");
+
+var MovieGrid = React.createClass({
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -25,14 +28,28 @@ var Lolomo = React.createClass({
     };
   },
 
-  createThumbnail: function(show) {
-    console.log(show.name);
-    return (
+  _showDetails: function(show) {
+    this.props.navigator.push({
+      title: show.name,
+      component: MovieDetailView,
+      props: {
+        initialShow: show,
+        ...this.props,
+      },
+    });
+  },
 
+  createThumbnail: function(show) {
+    return (
+      <TouchableHighlight
+        style={styles.movieButton}
+        onPress={()=>this._showDetails(show)}
+      >
         <Image
             source={{uri: show.thumbnail}}
             style={styles.image}
         />
+      </TouchableHighlight>
     );
   },
 
@@ -71,4 +88,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Lolomo;
+module.exports = MovieGrid;

@@ -5,11 +5,10 @@ var {
     StyleSheet,
     View,
     ScrollView,
-    Animated
+    Animated,
     } = React;
 
 var ScrollableMixin = require('react-native-scrollable-mixin');
-
 var screen = require('Dimensions').get('window');
 var ScrollViewPropTypes = ScrollView.propTypes;
 
@@ -20,6 +19,7 @@ var HeaderScrollView = React.createClass({
         ...ScrollViewPropTypes,
         windowHeight: React.PropTypes.number,
         backgroundSource: React.PropTypes.object,
+        header: React.PropTypes.node,
     },
 
     getDefaultProps: function () {
@@ -30,7 +30,7 @@ var HeaderScrollView = React.createClass({
 
     getInitialState: function () {
         return {
-            scrollingUp: true,
+            scrollY: new Animated.Value(0)
         };
     },
 
@@ -46,10 +46,7 @@ var HeaderScrollView = React.createClass({
       this._scrollView.setNativeProps(props);
     },
 
-    renderBackground: function (isHidden) {
-        if (isHidden) {
-          return null;
-        }
+    renderBackground: function () {
         var { windowHeight, backgroundSource } = this.props;
         var { scrollY } = this.state;
         if (!windowHeight || !backgroundSource) {
@@ -59,26 +56,16 @@ var HeaderScrollView = React.createClass({
             <Animated.Image
                 style={[styles.background, {
                     height: windowHeight,
-                    // transform: [{
-                    //     translateY: scrollY.interpolate({
-                    //         inputRange: [-windowHeight, 0, windowHeight],
-                    //         outputRange: [0, 0, windowHeight]
-                    //     })
-                    // }],
+                    transform: [{
+                        translateY: scrollY.interpolate({
+                            inputRange: [ -windowHeight, 0, windowHeight],
+                            outputRange: [0, 0, -windowHeight/3]
+                        })
+                    }]
                 }]}
-                source={backgroundSource}
-            />
+                source={backgroundSource}>
+            </Animated.Image>
         );
-    },
-
-    renderScrollBackground: function() {
-      // when you are scrolling up, this should be hidden
-      return this.renderBackground(this.state.scrollingUp);
-    },
-
-    renderStuckBackground: function() {
-      // when you are scrolling up this should be shown
-      return this.renderBackground(!this.state.scrollingUp);
     },
 
     renderHeader: function () {
@@ -90,48 +77,53 @@ var HeaderScrollView = React.createClass({
         return (
             <Animated.View style={{
                 position: 'relative',
-                height: windowHeight,
-                // backgroundColor: 'black',
-                // opacity: scrollY.interpolate({
-                //     inputRange: [-windowHeight, 0, windowHeight * 1.2],
-                //     outputRange: [0, 0, 1]
-                // }),
+                height: scrollY.interpolate({
+                  inputRange: [-1, 0],
+                  outputRange: [windowHeight-1, windowHeight]
+                }),
+                opacity: scrollY.interpolate({
+                    inputRange: [-windowHeight, 0, windowHeight / 1.2],
+                    outputRange: [1, 1, 0]
+                }),
             }}>
                 {this.props.header}
             </Animated.View>
         );
     },
 
-    handleScroll: function(event: Object) {
-      var scrollY = event.nativeEvent.contentOffset.y;
-      var scrollingUp = this.state.scrollingUp;
-      if (scrollY > 0) {
-        scrollingUp = true;
-      } else {
-        scrollingUp = false;
-      }
-      // only change it if you need to - avoids unnecessary rerendering
-      if (scrollingUp != this.state.scrollingUp) {
-        this.setState({
-          scrollingUp: scrollingUp,
-        })
-      }
+    renderDivider: function () {
+      var { scrollY } = this.state;
+      return (
+        <View>
+          <View style={[styles.dividerLine, {background: this.props.dividerColor}]} />
+          <Animated.View style={{
+              backgroundColor: "transparent",
+              flex: 1,
+              height: scrollY.interpolate({
+                inputRange: [-1,0,1],
+                outputRange: [1,0,0]
+              })
+            }}/>
+        </View>
+      );
     },
 
     render: function () {
         var { style, ...props } = this.props;
         return (
             <View style={[styles.container, style]}>
-                {this.renderStuckBackground()}
+                {this.renderBackground()}
                 <ScrollView
                     ref={component => { this._scrollView = component; }}
                     {...props}
                     style={styles.scrollView}
-                    onScroll={this.handleScroll}
+                    onScroll={Animated.event(
+                      [{ nativeEvent: { contentOffset: { y: this.state.scrollY }}}]
+                    )}
                     scrollEventThrottle={16}>
                     {this.renderHeader()}
-                    {this.renderScrollBackground()}
                     <View style={styles.content}>
+                        {this.renderDivider()}
                         {this.props.children}
                     </View>
                 </ScrollView>
@@ -149,12 +141,18 @@ var styles = StyleSheet.create({
     },
     background: {
         position: 'absolute',
-        top: 0,
-        //backgroundColor: '#2e2f31',
+        backgroundColor: '#2e2f31',
         width: screen.width,
         resizeMode: 'cover'
     },
+    dividerLine: {
+      height: 3,
+    },
     content: {
+        // shadowColor: '#222',
+        // shadowOpacity: 0.3,
+        // shadowRadius: 2,
+        backgroundColor: '#fff',
         flex: 1,
         flexDirection: 'column'
     }

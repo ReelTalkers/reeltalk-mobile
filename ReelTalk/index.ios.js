@@ -48,7 +48,53 @@ const NavigationBarRouteMapper = {
       </Text>
     );
   },
+};
 
+const ListsNavigationBarRouteMapper = {
+  LeftButton: function(route, navigator, index, navState) {
+    if (index === 0) {
+      return (
+      <TouchableOpacity
+        onPress={() => console.log("Add list")}
+        style={styles.navBarLeftButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+          {"+"}
+        </Text>
+      </TouchableOpacity>
+    );
+    }
+
+    const previousRoute = navState.routeStack[index - 1];
+    return (
+      <TouchableOpacity
+        onPress={() => navigator.pop()}
+        style={styles.navBarLeftButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+          {"< " + previousRoute.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+
+  RightButton: function(route, navigator, index, navState) {
+    return (
+    <TouchableOpacity
+      onPress={() => console.log("Edit list")}
+      style={styles.navBarLeftButton}>
+      <Text style={[styles.navBarText, styles.navBarButtonText]}>
+        {"Edit"}
+      </Text>
+    </TouchableOpacity>
+  );
+  },
+
+  Title: function(route, navigator, index, navState) {
+    return (
+      <Text style={[styles.navBarText, styles.navBarTitleText]}>
+        {route.title}
+      </Text>
+    );
+  },
 };
 
 const Main = React.createClass({
@@ -87,13 +133,15 @@ const Main = React.createClass({
         initialRoute={{
           title: 'Lists',
           component: ListsScreen,
-          props: { userId: this.props.userId }
+          props: { userId: this.props.userId },
+          rightButtonTitle: 'Edit',
         }}
         navigationBar={
           <Navigator.NavigationBar
-            routeMapper={NavigationBarRouteMapper}
-            style={styles.navBar} />
-        }Z
+            routeMapper={ListsNavigationBarRouteMapper}
+            style={styles.navBar}
+             />
+        }
         renderScene={renderScene} />
     );
   },

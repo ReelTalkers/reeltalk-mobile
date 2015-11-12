@@ -21,10 +21,7 @@ var ListsHome = React.createClass({
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
-          <Image
-            source={{uri: json.users[this.props.userId].picture}}
-            style={styles.image}
-          />
+          
         </View>
         <Lolomo
           style={styles.lolomo}

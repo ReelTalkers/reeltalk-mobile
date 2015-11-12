@@ -11,7 +11,7 @@ var {
 } = React;
 
 var json = require("../Data");
-var ShowRow = require("../components/ShowRow");
+var MovieGrid = require("./MovieGrid");
 
 var TopChartsHome = React.createClass({
   getInitialState: function() {
@@ -19,12 +19,6 @@ var TopChartsHome = React.createClass({
     return {
       dataSource: ds.cloneWithRows(json.categories[0].shows),
     };
-  },
-
-  renderShowRow: function(show, sectionID, rowID, highlightRow){
-    return (
-      <ShowRow navigator={this.props.navigator} show={show} rank={parseInt(rowID) + 1}/>
-    )
   },
 
   _onValueChange(value) {
@@ -43,11 +37,10 @@ var TopChartsHome = React.createClass({
           selectedIndex={1}
           onValueChange={this._onValueChange}
         />
-        <ListView
-         dataSource={this.state.dataSource}
-         automaticallyAdjustContentInsets={false}
-         renderRow={this.renderShowRow}
-         style={styles.listView}/>
+      <MovieGrid
+        shows={json.categories[0].shows}
+        style={styles.grid}
+      />
       </View>
     );
   },

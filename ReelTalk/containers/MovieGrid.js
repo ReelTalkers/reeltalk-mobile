@@ -17,7 +17,7 @@ var MovieGrid = React.createClass({
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var movies = this.props.shows;
+    var movies = this.props.shows.slice(0);
     var moviesSplit = [];
     var size = 3;
     while (movies.length > 0) {

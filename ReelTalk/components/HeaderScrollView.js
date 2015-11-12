@@ -47,7 +47,7 @@ var HeaderScrollView = React.createClass({
     },
 
     renderBackground: function () {
-        var { windowHeight, backgroundSource, blur } = this.props;
+        var { windowHeight, backgroundSource } = this.props;
         var { scrollY } = this.state;
         if (!windowHeight || !backgroundSource) {
             return null;

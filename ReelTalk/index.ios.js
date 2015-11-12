@@ -89,6 +89,11 @@ const Main = React.createClass({
           component: ListsScreen,
           props: { userId: this.props.userId }
         }}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+            style={styles.navBar} />
+        }
         renderScene={renderScene} />
     );
   },

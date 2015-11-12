@@ -8,13 +8,14 @@ var {
   View,
 } = React;
 
+import ListsHome from '../containers/ListsHome';
 
 var ListsScreen = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text>Lists Screen</Text>
-      </View>
+      <ListsHome
+        userId={this.props.userId}
+        navigator={this.props.navigator} />
     );
   },
 });

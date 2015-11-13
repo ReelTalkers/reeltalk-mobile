@@ -13,7 +13,11 @@ var {
   View,
 } = React;
 
+var ParallaxView = require('react-native-parallax-view');
+
 var Rating = require('../components/Rating');
+var RatingSlider = require('../components/RatingSlider');
+var HeaderScrollView = require('../components/HeaderScrollView');
 var LolomoRow = require('./LolomoRow');
 var json = require("../Data");
 
@@ -21,12 +25,14 @@ var MovieDetailView = React.createClass({
   getInitialState: function() {
   	return {
   		show: this.props.initialShow,
+      scrollEnabled: true,
   	};
 	},
 
   _changeShow: function(newShow) {
     this.setState({
       show: newShow,
+      scrollEnabled: true,
     });
   },
 
@@ -46,121 +52,123 @@ var MovieDetailView = React.createClass({
       },
       primaryBorderLeftColor: {
         borderLeftColor: this.state.show.colors.primary
-      }
-    }
+      },
+    };
   },
 
+  // TODO: not sure about the this.state.show... Do I even need it?
+  _setScrollEnabled: function(scrollEnabled) {
+    this.setState({
+      show: this.state.show,
+      scrollEnabled: scrollEnabled,
+    });
+  },
+
+  _disableScroll: function() {
+    this._setScrollEnabled(false);
+  },
+
+  _enableScroll: function() {
+    this._setScrollEnabled(true);
+  },
+
+// TODO: Lists should not be stored within movies, there should be lists containing movies but I want to focus on design now
+// TODO: make <RatingSlider style={styles.ratingSlider}/>
   render: function() {
     return (
-      <ScrollView
-        style={[styles.scrollView, this._getColorStyles().primaryBackground]}
-        automaticallyAdjustContentInsets={true}
+      <HeaderScrollView
+        style={styles.scrollView}
+        automaticallyAdjustContentInsets={false}
+        scrollEnabled={this.state.scrollEnabled}
+        backgroundSource={{uri: this.state.show.largePoster}}
+        windowHeight={470}
       >
-        <Image
-            source={{uri: this.state.show.largePoster}}
-            style={styles.largeImage}
-        >
-          <View style={styles.summary}>
-            <View style={[styles.summaryTriangle, styles.summaryTriangleLeft, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
-            <View style={[styles.summaryTriangle, styles.summaryTriangleRight, this._getColorStyles().primaryShadow, this._getColorStyles().primaryBorderLeftColor]} />
-            <View style={[styles.summaryInfo, this._getColorStyles().primaryBackground, this._getColorStyles().primaryShadow]}>
-              <Text style={[styles.name, this._getColorStyles().textFontColor]}>{this.state.show.name}</Text>
-              <Text style={[styles.summaryDetail, this._getColorStyles().detailFontColor]}>{this.state.show.year} - {this.state.show.runtime}</Text>
+        <View style={styles.content}>
+          <View style={[styles.headerLine, this._getColorStyles().primaryBackground]} />
+          <View style={styles.header}>
+            <Text style={styles.title}>{this.state.show.name}</Text>
+            <View style={styles.detail}>
+              <Text style={styles.detailText}>{this.state.show.runtime}</Text>
+              <Text style={styles.detailText}>{this.state.show.genre}</Text>
+              <Text style={styles.detailText}>{this.state.show.year}</Text>
+              <Text style={styles.detailText}>{this.state.show.rating}</Text>
+            </View>
+            <View style={styles.listsContainer}>
+              {json.lists.map(list => <Text style={styles.listName}>{list.name}</Text>)}
             </View>
           </View>
-        </Image>
-        <View style={[styles.content, this._getColorStyles().primaryBackground]}>
-          <View style={styles.metadata}>
-            <Text style={this._getColorStyles().textFontColor}>Rating: {this.state.show.rating}</Text>
-            <Text style={this._getColorStyles().textFontColor}>Genre: {this.state.show.genre}</Text>
-            <Text style={this._getColorStyles().textFontColor}>Director: {this.state.show.director}</Text>
-            <Text style={[styles.actors, this._getColorStyles().textFontColor]}>Actors</Text>
-            {this.state.show.actors.map(actor => <Text style={this._getColorStyles().textFontColor}>{actor}</Text>)}
-          </View>
-          <Text style={this._getColorStyles().textFontColor}>Description: {this.state.show.description}</Text>
-          <Rating averageRating={this.state.show.averageRating}/>
-          <Text style={this._getColorStyles().textFontColor}>Viewers also Enjoyed</Text>
-          <LolomoRow header={"Others also enjoyed:"} category={json.categories[0]} onSelect={this._changeShow}/>
+          <RatingSlider
+            style={styles.ratingSlider}
+            defaultText="Slide to rate"
+            options={[
+              {text: "Terrible", color: "rgba(233, 62, 58, .7)"},
+              {text: "Bad", color: "rgba(237, 104, 60, .7)"},
+              {text: "Ok", color: "rgba(243, 144, 63, .7)"},
+              {text: "Good", color: "rgba(253, 199, 12, .7)"},
+              {text: "Fantastic", color: "rgba(255, 243, 12, .7)"}
+            ]}
+            disableScroll={this._disableScroll.bind(this)}
+            enableScroll={this._enableScroll.bind(this)}
+          />
+          <Text style={styles.description}>{this.state.show.description}</Text>
         </View>
-      </ScrollView>
+      </HeaderScrollView>
     );
   },
 });
 
-// TODO: I wonder if there is a way to not need to define this._getColorStyles().textFontColor in so many places such as give all the children the color
-// TODO: Shift up summary text to ontop of triangle
-
 var styles = StyleSheet.create({
     scrollView: {
       flex: 1,
-      marginBottom: 50
-    },
-    actors: {
-      textDecorationLine: 'underline',
-    },
-    largeImage: {
-      flex: 1,
-      overflow: 'hidden',
-      width: 375,
-      height: 535,
-    },
-    summary: {
-      position: 'absolute',
-      bottom: 0,
-    },
-    summaryInfo: {
-      // dont like that the width is hard coded
-      width: 375,
-      paddingLeft: 18,
-      paddingTop: 0,
-      paddingBottom: 3,
-      shadowOpacity: 1,
-      shadowRadius: 10,
-      shadowOffset: {
-        height: -25,
-        width: 0,
-      }
-    },
-    name: {
-      fontSize: 22,
-    },
-    summaryDetail: {
-      fontSize: 13,
-      fontWeight: "300",
-    },
-    summaryTriangle: {
-      backgroundColor: 'transparent',
-      borderTopWidth: 30,
-      borderRightWidth: 0,
-      borderBottomWidth: 0,
-      borderLeftWidth: 150,
-      borderTopColor: 'transparent',
-      borderBottomColor: 'transparent',
-      borderRightColor: 'transparent',
-      // borderLeftColor: colors.primary,
-      shadowOpacity: 1,
-      shadowRadius: 5,
-      shadowOffset: {
-        height: -15,
-        width: -8,
-      }
-    },
-    summaryTriangleLeft: {
-      position: 'absolute',
-      top: -20,
-      left: 0
-    },
-    summaryTriangleRight: {
-      position: 'absolute',
-      top: -20,
-      right: 0,
-      transform: [
-        {scaleX: -1}
-      ]
+      backgroundColor: '#B6AEA3',
     },
     content: {
-      paddingTop: 20,
-      paddingLeft: 18,
+      backgroundColor: '#B6AEA3',
+    },
+    headerLine: {
+      height: 3,
+    },
+    header: {
+      alignItems: 'center',
+      marginTop: 24,
+      marginBottom: 24,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: '300',
+      marginBottom: 5,
+    },
+    detail: {
+      flexDirection: 'row',
+      marginBottom: 5,
+    },
+    detailText: {
+      fontSize: 13,
+      fontWeight: '300',
+      paddingLeft: 5,
+      paddingRight: 5,
+    },
+    listsContainer: {
+      flexDirection: 'row',
+    },
+    listName: {
+      color: '#5583B6',
+      fontSize: 13,
+      fontWeight: '300',
+      paddingLeft: 2,
+      paddingRight: 2,
+    },
+    ratingSlider: {
+      height: 79,
+      backgroundColor: '#BAB7AE',
+    },
+    description: {
+      paddingTop: 30,
+      paddingBottom: 30,
+      paddingLeft: 20,
+      paddingRight: 20,
+      fontSize: 14,
+      fontWeight: '300'
     }
 });
 

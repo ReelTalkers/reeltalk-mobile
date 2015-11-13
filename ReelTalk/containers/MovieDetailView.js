@@ -13,6 +13,8 @@ var {
   View,
 } = React;
 
+var ParallaxView = require('react-native-parallax-view');
+
 var Rating = require('../components/Rating');
 var RatingSlider = require('../components/RatingSlider');
 var HeaderScrollView = require('../components/HeaderScrollView');
@@ -74,7 +76,7 @@ var MovieDetailView = React.createClass({
 // TODO: make <RatingSlider style={styles.ratingSlider}/>
   render: function() {
     return (
-      <HeaderScrollView
+      <ParallaxView
         style={styles.scrollView}
         automaticallyAdjustContentInsets={false}
         scrollEnabled={this.state.scrollEnabled}
@@ -110,7 +112,7 @@ var MovieDetailView = React.createClass({
           />
           <Text style={styles.description}>{this.state.show.description}</Text>
         </View>
-      </HeaderScrollView>
+      </ParallaxView>
     );
   },
 });

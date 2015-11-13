@@ -12,18 +12,30 @@ var {
 
 var UserRow = React.createClass({
 
+  getInitialState: function() {
+    return {
+      selected: false,
+    };
+  },
+
   render: function() {
     return (
-      <TouchableHighlight style={styles.container} onPress={()=>console.log("Row pressed")}>
+      <TouchableHighlight style={styles.container} onPress={()=>this.setState({
+        selected: !this.state.selected,
+      })}>
+      <View style={{
+      backgroundColor: this.state.selected ? 'green' : 'white',
+    }}>
         <View style={styles.horizontal}>
           <Image
               source={{uri: this.props.user.picture}}
               style={styles.image}
           />
           <View style={styles.displayData}>
-            <Text>{this.props.user.name}</Text>
+              <Text>{this.props.user.name}</Text>
           </View>
         </View>
+      </View>
       </TouchableHighlight>
     );
   },

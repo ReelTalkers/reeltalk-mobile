@@ -62,17 +62,18 @@ var ListsHome = React.createClass({
 
   renderListRow: function(list) {
     return (
-      <TouchableHighlight
-        style={styles.container}
-        onPress={()=>this._showList(list)}>
-       <View style={styles.listRow}>
-         {this._getListImage(list.shows)}
-         <View>
-           <Text style={styles.listTitle}>{list.name}</Text>
-           <Text style={styles.listSubheading}>{list.shows.length} items</Text>
-         </View>
-       </View>
-     </TouchableHighlight>
+      <TouchableHighlight onPress={()=>this._showList(list)}>
+        <View style={styles.container}>
+          <View style={styles.listRow}>
+            {this._getListImage(list.shows)}
+            <View>
+              <Text style={styles.listTitle}>{list.name}</Text>
+              <Text style={styles.listSubheading}>{list.shows.length} items</Text>
+            </View>
+          </View>
+          <View style={styles.rowDivider}/>
+        </View>
+      </TouchableHighlight>
     )
   },
 
@@ -110,13 +111,29 @@ var styles = StyleSheet.create({
     height: 125,
     borderRadius: 125/2,
   },
+  container: {
+    backgroundColor: 'white',
+  },
   listRow: {
     backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 5,
+    paddingLeft: 10,
     paddingTop: 2,
     paddingBottom: 2,
+  },
+  rowDivider: {
+    height: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#F1F1F1'
+  },
+  listTitle: {
+    fontSize: 17,
+  },
+  listSubheading: {
+    fontSize: 15,
+    color: '#929292',
   },
   square: {
     flexWrap: 'wrap',
@@ -132,13 +149,6 @@ var styles = StyleSheet.create({
   image: {
     flex: 1,
   },
-  listTitle: {
-    fontSize: 17,
-  },
-  listSubheading: {
-    fontSize: 15,
-    color: '#929292',
-  }
 });
 
 module.exports = ListsHome;

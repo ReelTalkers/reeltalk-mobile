@@ -29,7 +29,7 @@ var TopChartsHome = React.createClass({
 
   render: function() {
     return (
-      <View style={styles.container}>
+      <View>
         <SegmentedControlIOS
           values={["This Week", "Today"]}
           selectedIndex={1}
@@ -37,7 +37,6 @@ var TopChartsHome = React.createClass({
         />
         <MovieGrid
           shows={this.state.shows}
-          style={styles.grid}
           navigator={this.props.navigator}
         />
       </View>

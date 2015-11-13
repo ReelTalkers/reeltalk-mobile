@@ -77,6 +77,8 @@ var ListsHome = React.createClass({
     )
   },
 
+  // TODO: This circular image should pulled from billboard. Billboard should take an argument of what to display beneath,
+  //        in this case it would just be the users name. This is like the users 'profile'
   render: function() {
     return (
       <ScrollView

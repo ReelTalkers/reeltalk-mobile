@@ -1,12 +1,11 @@
-'use strict';
-jest.setMock('react-native', {
-    NativeModules: {}
-});
-jest.dontMock('../Rating');
+jest.dontMock('../Star');
+
+var Star = require('../Star');
 
 describe('Star', function() {
-  it('Passes', function() {
-    var Star = require('../Star');
-    expect(1).toBe(1);
+  describe('checkColor', function() {
+    it('is the right color on press', function() {
+      "1" == "1"
+    });
   });
 });

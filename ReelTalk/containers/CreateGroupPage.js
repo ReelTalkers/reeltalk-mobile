@@ -10,6 +10,7 @@ var {
 } = React;
 
 var json = require("../Data");
+var UserRow = require("../components/UserRow");
 
 var CreateGroupPage = React.createClass({
 
@@ -20,9 +21,9 @@ var CreateGroupPage = React.createClass({
     };
   },
 
-  renderUserRow: function(category) {
+  renderUserRow: function(user) {
     return (
-      <Text> Hello </Text>
+      <UserRow user={user}/>
     )
   },
 

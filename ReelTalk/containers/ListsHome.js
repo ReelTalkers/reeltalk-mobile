@@ -32,14 +32,39 @@ var ListsHome = React.createClass({
     });
   },
 
+  // TODO: Add cases where there are less than 4 films
+  _getListImage: function(listShows) {
+    return (
+      <View style={styles.square}>
+        <View style={styles.squareRow}>
+          <Image
+              source={{uri: json.shows[listShows[0]].thumbnail}}
+              style={styles.image}
+          />
+          <Image
+              source={{uri: json.shows[listShows[1]].thumbnail}}
+              style={styles.image}
+          />
+        </View>
+        <View style={styles.squareRow}>
+          <Image
+              source={{uri: json.shows[listShows[2]].thumbnail}}
+              style={styles.image}
+          />
+          <Image
+              source={{uri: json.shows[listShows[3]].thumbnail}}
+              style={styles.image}
+          />
+        </View>
+      </View>
+    );
+  },
+
   renderListRow: function(list) {
     return (
       <TouchableHighlight style={styles.container} onPress={()=>this._showList(list)}>
        <View style={styles.horizontal}>
-         <Image
-             source={{uri: json.shows[list.shows[0]].thumbnail}}
-             style={styles.image}
-         />
+         {this._getListImage(list.shows)}
          <View style={styles.displayData}>
            <Text>{list.name}</Text>
            <Text>{list.shows.length}</Text>
@@ -87,16 +112,24 @@ var styles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
   },
-  image: {
-    width: 70,
-    height: 100,
-    margin: 2,
-  },
   circularImage: {
     marginTop: 15,
     width: 125,
     height: 125,
     borderRadius: 125/2,
+  },
+  square: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    height: 75,
+    width: 75,
+  },
+  squareRow: {
+    flexDirection: 'column',
+    flex: 1,
+  },
+  image: {
+    flex: 1,
   },
 });
 

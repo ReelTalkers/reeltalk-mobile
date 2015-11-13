@@ -24,12 +24,9 @@ var Lolomo = React.createClass({
 
   _showDetails: function(show) {
     this.props.navigator.push({
-      title: show.name,
+      title: 'Show',
       component: MovieDetailView,
-      passProps: {
-        initialShow: show,
-        navigator: this.props.navigator,
-      },
+      props: { initialShow: show, userId: this.props.userId }
     });
   },
 

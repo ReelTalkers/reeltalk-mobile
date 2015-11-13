@@ -4,36 +4,28 @@ var React = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
-  NavigatorIOS,
   Text,
   View,
 } = React;
 
-var RecommendHome = require('../containers/RecommendHome');
+import RecommendHome from '../containers/RecommendHome';
 
 var RecommendScreen = React.createClass({
   render: function() {
     return (
-      <NavigatorIOS
-        style={styles.navigator}
-        translucent={true}
-        initialRoute={{
-          title: 'Recommend',
-          component: RecommendHome,
-          rightButtonIcon: require('image!SearchButton'),
-          passProps: {
-            userId: this.props.userId
-          },
-        }}
-      />
+      <RecommendHome
+        userId={this.props.userId}
+        navigator={this.props.navigator} />
     );
   },
 });
 
 var styles = StyleSheet.create({
-  navigator: {
+  container: {
     flex: 1,
-    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
 });
 

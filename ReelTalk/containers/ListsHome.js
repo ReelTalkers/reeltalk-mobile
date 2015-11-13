@@ -67,7 +67,7 @@ var ListsHome = React.createClass({
         onPress={()=>this._showList(list)}>
        <View style={styles.listRow}>
          {this._getListImage(list.shows)}
-         <View style={styles.displayData}>
+         <View style={styles.listData}>
            <Text>{list.name}</Text>
            <Text>{list.shows.length}</Text>
          </View>
@@ -111,8 +111,8 @@ var styles = StyleSheet.create({
     height: 125,
     borderRadius: 125/2,
   },
-  displayData: {
-    flexDirection: 'column',
+  listData: {
+    justifyContent: 'center'
   },
   container: {
     marginLeft: 5,

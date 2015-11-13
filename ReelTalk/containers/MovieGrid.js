@@ -77,16 +77,28 @@ var MovieGrid = React.createClass({
 
 var styles = StyleSheet.create({
   listView: {
-     backgroundColor: 'white',
-     height: 500,
+    flex: 1,
+    backgroundColor: 'white',
   },
   container: {
+    flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
   },
+  movieButton: {
+    margin: 5,
+    shadowColor: "black",
+    shadowOpacity: 0.35,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
+  },
+  // TODO: un hard code the widths and take into account less than 3 in a row
   image: {
-    width: 138,
-    height: 206,
+    width: 115,
+    height: 172,
   },
 });
 

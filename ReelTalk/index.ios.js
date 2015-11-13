@@ -38,7 +38,15 @@ const NavigationBarRouteMapper = {
   },
 
   RightButton: function(route, navigator, index, navState) {
-    return null;
+    return (
+      <TouchableOpacity
+        onPress={() => console.log('add group')}
+        style={styles.navBarLeftButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+          {"+"}
+        </Text>
+      </TouchableOpacity>
+    );
   },
 
   Title: function(route, navigator, index, navState) {
@@ -278,8 +286,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   navBarText: {
-    fontSize: 16,
+    fontSize: 22,
     marginVertical: 10,
+    marginRight: 10,
   },
   navBarTitleText: {
     color: cssVar('fbui-bluegray-60'),

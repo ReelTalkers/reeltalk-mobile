@@ -8,11 +8,12 @@ var {
   Text,
   ListView,
   ScrollView,
+  TouchableHighlight,
   View,
 } = React;
 
 var Billboard = require('./Billboard');
-var Lolomo = require('./Lolomo');
+var ListDetailView = require('./ListDetailView');
 
 var json = require("../Data");
 
@@ -24,12 +25,27 @@ var ListsHome = React.createClass({
     };
   },
 
+  _showList: function(list) {
+    this.props.navigator.push({
+      title: list.name,
+      component: ListDetailView
+    });
+  },
+
   renderListRow: function(list) {
     return (
-      <View>
-        <Text>{list.name}</Text>
-        <Text>{list.shows.length}</Text>
-      </View>
+      <TouchableHighlight style={styles.container} onPress={()=>this._showList(list)}>
+       <View style={styles.horizontal}>
+         <Image
+             source={{uri: json.shows[list.shows[0]].thumbnail}}
+             style={styles.image}
+         />
+         <View style={styles.displayData}>
+           <Text>{list.name}</Text>
+           <Text>{list.shows.length}</Text>
+         </View>
+       </View>
+     </TouchableHighlight>
     )
   },
 
@@ -40,7 +56,7 @@ var ListsHome = React.createClass({
         <View style={styles.billboardContainer}>
            <Image
              source={{uri: json.users[this.props.userId].picture}}
-             style={styles.image}
+             style={styles.circularImage}
            />
         </View>
         <ListView
@@ -60,10 +76,23 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  lolomo: {
-    flex: 1,
+  container: {
+    flexDirection: 'row',
+    height: 100,
+    backgroundColor: 'white',
+  },
+  displayData: {
+    flexDirection: 'column',
+  },
+  horizontal: {
+    flexDirection: 'row',
   },
   image: {
+    width: 70,
+    height: 100,
+    margin: 2,
+  },
+  circularImage: {
     marginTop: 15,
     width: 125,
     height: 125,

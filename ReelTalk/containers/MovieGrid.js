@@ -11,11 +11,13 @@ var {
   View,
 } = React;
 
+var json = require("../Data");
 var MovieDetailView = require("./MovieDetailView");
 
 var MovieGrid = React.createClass({
 
   getInitialState: function() {
+    console.log(this.props.shows);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var movies = this.props.shows.slice(0);
     var moviesSplit = [];
@@ -39,7 +41,8 @@ var MovieGrid = React.createClass({
     });
   },
 
-  createThumbnail: function(show) {
+  createThumbnail: function(showID) {
+    const show =json.shows[showID];
     return (
       <TouchableHighlight
         style={styles.movieButton}
@@ -56,7 +59,7 @@ var MovieGrid = React.createClass({
   renderGridRow: function(shows) {
     return (
     <View style={styles.container}>
-      {shows.map(show => this.createThumbnail(show))}
+      {shows.map(showID => this.createThumbnail(showID))}
     </View>
     )
   },

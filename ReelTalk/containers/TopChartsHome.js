@@ -16,12 +16,12 @@ var MovieGrid = require("./MovieGrid");
 var TopChartsHome = React.createClass({
   getInitialState: function() {
     return {
-      shows: json.categories[0].shows,
+      shows: json.categories[0]["shows"],
     };
   },
 
   _onValueChange(value) {
-    const newList = (value === 'Today') ? json.categories[0].shows : json.categories[2].shows;
+    const newList = (value === 'Today') ? json.categories[0]["shows"] : json.categories[1]["shows"];
     this.setState({
       shows: newList,
     });

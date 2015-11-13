@@ -12,9 +12,12 @@ var {
   View,
 } = React;
 
+var json = require("../Data");
+
 var LolomoRow = React.createClass({
 
-  createThumbnail: function(show) {
+  createThumbnail: function(showID) {
+    const show =json.shows[showID];
     return (
       <TouchableHighlight
         style={styles.movieButton}
@@ -38,7 +41,7 @@ var LolomoRow = React.createClass({
           style={styles.row}
           showsHorizontalScrollIndicator={false}
         >
-          {this.props.category.shows.map(show => this.createThumbnail(show))}
+          {this.props.category.shows.map(showID => this.createThumbnail(showID))}
           <View style={styles.endOfRow}/>
         </ScrollView>
       </View>

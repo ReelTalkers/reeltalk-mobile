@@ -24,11 +24,16 @@ var RecommendHome = React.createClass({
       return {name: category.name, shows: category.shows.reverse()}
   },
 
+  defaultCategories:function() {
+    this.setState({
+      categories: json.categories
+    });
+  },
+
   amendCategories: function() {
     this.setState({
       categories: this.state.categories.reverse().map(category => this.reversedDict(category))
     });
-    console.log(this.state.categories)
   },
 
   render: function() {
@@ -38,7 +43,8 @@ var RecommendHome = React.createClass({
         <View style={styles.billboardContainer}>
           <Billboard userId={this.props.userId}
             navigator={this.props.navigator}
-            amendCategories={this.amendCategories}/>
+            amendCategories={this.amendCategories}
+            defaultCategories={this.defaultCategories}/>
         </View>
         <Lolomo
           style={styles.lolomo}

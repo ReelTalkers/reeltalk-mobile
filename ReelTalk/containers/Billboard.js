@@ -41,6 +41,12 @@ var Billboard = React.createClass({
           currentFilter: BUTTONS[buttonIndex]
         });
       }
+      if (buttonIndex === 0) {
+        this.setState({
+          userId: "2",
+        });
+        this.props.defaultCategories();
+      }
       if (buttonIndex === 1) {
         this.props.navigator.push({
           title: "Group",

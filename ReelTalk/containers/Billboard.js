@@ -46,6 +46,7 @@ var Billboard = React.createClass({
           currentFilter: "Friends",
           userId: String((parseInt(this.state.userId) % 3) + 1),
         });
+        this.props.amendCategories();
         this.props.navigator.push({
           title: "Group",
           component: CreateGroupPage,

@@ -20,13 +20,20 @@ var RecommendHome = React.createClass({
     };
   },
 
+  amendCategories: function() {
+    this.setState({
+      categories: this.state.categories.reverse().map(category => {category.name, category.shows.reverse()})
+    });
+  },
+
   render: function() {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
           <Billboard userId={this.props.userId}
-            navigator={this.props.navigator}/>
+            navigator={this.props.navigator}
+            amendCategories={this.amendCategories}/>
         </View>
         <Lolomo
           style={styles.lolomo}

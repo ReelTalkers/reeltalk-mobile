@@ -15,13 +15,6 @@ var MovieDetailView = require('./MovieDetailView');
 
 var Lolomo = React.createClass({
 
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      dataSource: ds.cloneWithRows(this.props.categories),
-    };
-  },
-
   _showDetails: function(show) {
     this.props.navigator.push({
       title: show.name,
@@ -37,9 +30,11 @@ var Lolomo = React.createClass({
   },
 
   render: function() {
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var dataSource = ds.cloneWithRows(this.props.categories)
     return (
       <ListView
-        dataSource={this.state.dataSource}
+        dataSource={dataSource}
         renderRow={this.renderLolomoRow}
         style={styles.listView}
         showsVerticalScrollIndicator={false}

@@ -20,20 +20,22 @@ var RecommendHome = React.createClass({
     };
   },
 
-  reversedDict: function(category) {
-      return {name: category.name, shows: category.shows.reverse()}
-  },
-
   defaultCategories:function() {
     this.setState({
       categories: json.categories
     });
   },
 
+  reversedDict: function(category) {
+      return {name: category.name, shows: category.shows.reverse()}
+  },
+
   amendCategories: function() {
+    var updatedCategories = this.state.categories.reverse().map(category => this.reversedDict(category))
     this.setState({
-      categories: this.state.categories.reverse().map(category => this.reversedDict(category))
+      categories: updatedCategories
     });
+    console.log(updatedCategories)
   },
 
   render: function() {

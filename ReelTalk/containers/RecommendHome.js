@@ -11,8 +11,15 @@ var {
 
 var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
+var json = require("../Data");
 
 var RecommendHome = React.createClass({
+  getInitialState: function() {
+    return {
+      categories: json.categories,
+    };
+  },
+
   render: function() {
     return (
       <ScrollView
@@ -25,6 +32,7 @@ var RecommendHome = React.createClass({
           style={styles.lolomo}
           navigator={this.props.navigator}
           userId={this.props.userId}
+          categories={this.state.categories}
         />
       </ScrollView>
     );

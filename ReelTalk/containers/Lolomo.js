@@ -18,7 +18,7 @@ var Lolomo = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows(json.categories),
+      dataSource: ds.cloneWithRows(this.props.categories),
     };
   },
 

@@ -94,7 +94,7 @@ var MovieDetailView = React.createClass({
               <Text style={styles.detailText}>{this.state.show.rating}</Text>
             </View>
             <View style={styles.listsContainer}>
-              {this.state.show.lists.map(list => <Text style={styles.listName}>{list}</Text>)}
+              {json.lists.map(list => <Text style={styles.listName}>{list.name}</Text>)}
             </View>
           </View>
           <RatingSlider

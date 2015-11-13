@@ -369,6 +369,10 @@
 		'2': {
 			"name": "Elmo",
 		 	"picture": "http://picturesforcoloring.com/wp-content/uploads/2012/04/elmo-picture.gif"
+		},
+		'3': {
+			"name": "Andy",
+		 	"picture": "http://www.case.edu/magazine/springsummer2009/images/records03.jpg"
 		}
 	},
 	"categories" : [
@@ -384,13 +388,19 @@
  ],
 	"lists" : [
 	{"name": "Top Picks",
-	 "shows": ['1', '2', '3', '4', '5']
+	 "shows": ['1', '2', '3', '4', '5'],
+	 "followers": ['1', '2', '3'],
+	 "owner": '1'
 	 },
 	{"name": "Romance",
-	 "shows": ['6', '7', '8', '9', '10']
+	 "shows": ['6', '7', '8', '9', '10'],
+	 "followers": ['2'],
+	 "owner": '2'
 	 },
 	 {"name": "Horror",
-	 "shows": ['11', '12', '13', '14', '15']
+	 "shows": ['11', '12', '13', '14', '15'],
+	 "followers": ['1', '3'],
+	 "owner": '3'
 	 },
 	]
 }

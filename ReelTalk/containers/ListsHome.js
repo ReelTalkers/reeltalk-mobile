@@ -27,8 +27,8 @@ var ListsHome = React.createClass({
 
   _showList: function(list) {
     this.props.navigator.push({
-      title: list.name,
-      component: ListDetailView
+      component: ListDetailView,
+      props: { list: list}
     });
   },
 

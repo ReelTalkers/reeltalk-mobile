@@ -7,7 +7,6 @@ var {
   StyleSheet,
   Text,
   View,
-  PanResponder,
 } = React;
 
 var RatingSlider = React.createClass({

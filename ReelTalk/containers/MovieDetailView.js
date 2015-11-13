@@ -105,8 +105,8 @@ var MovieDetailView = React.createClass({
               {text: "Good", color: "rgba(253, 199, 12, .7)"},
               {text: "Fantastic", color: "rgba(255, 243, 12, .7)"}
             ]}
-            disableScroll={this._disableScroll.bind(this)}
-            enableScroll={this._enableScroll.bind(this)}
+            disableScroll={this._disableScroll}
+            enableScroll={this._enableScroll}
           />
           <Text style={styles.description}>{this.state.show.description}</Text>
         </View>

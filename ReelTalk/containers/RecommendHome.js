@@ -18,7 +18,8 @@ var RecommendHome = React.createClass({
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
-          <Billboard userId={this.props.userId}/>
+          <Billboard userId={this.props.userId}
+            navigator={this.props.navigator}/>
         </View>
         <Lolomo
           style={styles.lolomo}

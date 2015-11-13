@@ -16,7 +16,6 @@ import RecommendScreen from './screens/RecommendScreen';
 import ListsScreen from './screens/ListsScreen';
 import TopChartsScreen from './screens/TopChartsScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import CreateGroupPage from './containers/CreateGroupPage';
 
 import cssVar from 'cssVar';
 
@@ -71,18 +70,7 @@ const RecommendBarRouteMapper = {
 
   RightButton: function(route, navigator, index, navState) {
     if (index === 0) {
-      return (
-        <TouchableOpacity
-          onPress={() => navigator.push({
-            title: "Group",
-            component: CreateGroupPage,
-          })}
-          style={styles.navBarLeftButton}>
-          <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
-            {"+"}
-          </Text>
-        </TouchableOpacity>
-      );
+      return (null)
     }
     else {
       return (

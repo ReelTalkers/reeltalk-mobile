@@ -67,9 +67,9 @@ var ListsHome = React.createClass({
         onPress={()=>this._showList(list)}>
        <View style={styles.listRow}>
          {this._getListImage(list.shows)}
-         <View style={styles.listData}>
-           <Text>{list.name}</Text>
-           <Text>{list.shows.length}</Text>
+         <View>
+           <Text style={styles.listTitle}>{list.name}</Text>
+           <Text style={styles.listSubheading}>{list.shows.length} items</Text>
          </View>
        </View>
      </TouchableHighlight>
@@ -90,14 +90,13 @@ var ListsHome = React.createClass({
           dataSource={this.state.dataSource}
           renderRow={this.renderListRow}
           style={styles.listView}
-          showsVerticalScrollIndicator={false}
         />
       </ScrollView>
     );
   },
 });
 
-const rowHeight = 75;
+const rowHeight = 55;
 
 var styles = StyleSheet.create({
   billboardContainer: {
@@ -111,17 +110,13 @@ var styles = StyleSheet.create({
     height: 125,
     borderRadius: 125/2,
   },
-  listData: {
-    justifyContent: 'center'
-  },
-  container: {
-    marginLeft: 5,
-    marginBottom: 5,
-  },
   listRow: {
-    height: rowHeight,
     backgroundColor: 'white',
     flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 5,
+    paddingTop: 2,
+    paddingBottom: 2,
   },
   square: {
     flexWrap: 'wrap',
@@ -137,6 +132,13 @@ var styles = StyleSheet.create({
   image: {
     flex: 1,
   },
+  listTitle: {
+    fontSize: 17,
+  },
+  listSubheading: {
+    fontSize: 15,
+    color: '#929292',
+  }
 });
 
 module.exports = ListsHome;

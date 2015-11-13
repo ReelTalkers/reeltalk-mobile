@@ -13,8 +13,6 @@ var {
   View,
 } = React;
 
-var ParallaxView = require('react-native-parallax-view');
-
 var Rating = require('../components/Rating');
 var RatingSlider = require('../components/RatingSlider');
 var HeaderScrollView = require('../components/HeaderScrollView');

@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Component,
   Image,
@@ -9,13 +8,13 @@ var {
   Text,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
 
-export default class Star extends React.Component {
+class Star extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
+  constructor() {
+  super();
+ }
 
   _selectStar(color) {
     return (color === 'gold') ? <Image source={require('image!GoldStar')} /> : <Image source={require('image!GrayStar')} />;
@@ -38,3 +37,4 @@ var styles = StyleSheet.create({
     container: {
     },
 });
+module.exports = Star;

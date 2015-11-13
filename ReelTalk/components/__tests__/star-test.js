@@ -1,3 +1,6 @@
+jest.setMock('react-native', {
+    NativeModules: {}
+});
 jest.dontMock('../Star');
 
 var Star = require('../Star');

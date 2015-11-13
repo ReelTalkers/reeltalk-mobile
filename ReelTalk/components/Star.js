@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  Component,
   Image,
   StyleSheet,
   Text,
@@ -10,28 +11,30 @@ var {
   View,
 } = React;
 
-var Star = React.createClass({
+export default class Star extends React.Component {
 
-  _selectStar: function(color) {
+  constructor(props) {
+    super(props);
+  }
+
+  _selectStar(color) {
     return (color === 'gold') ? <Image source={require('image!GoldStar')} /> : <Image source={require('image!GrayStar')} />;
-  },
+  }
 
-  _onPress: function() {
+  _onPress() {
     this.props.onSelect(this.props.value);
-  },
+  }
 
-  render: function() {
+  render() {
     return (
         <TouchableHighlight onPress={this._onPress}>
           {this._selectStar(this.props.color)}
         </TouchableHighlight>
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
     container: {
     },
 });
-
-module.exports = Star;

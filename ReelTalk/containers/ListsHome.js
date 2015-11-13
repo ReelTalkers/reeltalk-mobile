@@ -120,13 +120,13 @@ var styles = StyleSheet.create({
   },
   square: {
     flexWrap: 'wrap',
-    flexDirection: 'row',
+    flexDirection: 'column',
     height: rowHeight,
     width: rowHeight,
     marginRight: 5,
   },
   squareRow: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     flex: 1,
   },
   image: {

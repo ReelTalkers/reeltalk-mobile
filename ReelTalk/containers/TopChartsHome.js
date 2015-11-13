@@ -35,11 +35,11 @@ var TopChartsHome = React.createClass({
           selectedIndex={1}
           onValueChange={this._onValueChange}
         />
-      <MovieGrid
-        shows={this.state.shows}
-        style={styles.grid}
-        navigator={this.props.navigator}
-      />
+        <MovieGrid
+          shows={this.state.shows}
+          style={styles.grid}
+          navigator={this.props.navigator}
+        />
       </View>
     );
   },

@@ -14,7 +14,9 @@ Targeted platforms:
 
 ## React Native Modifications
 
-For the time being until a more permanent solution is achieved, change two lines of `RCTScrollView.m`.
+For the time being until a more permanent solution is achieved, change the content style in `react-native-parallax-view/lib/ParralxView.js`.
 
-    CGFloat const ZINDEX_DEFAULT = 1; // Andrew Hamm Changed from 0
-    CGFloat const ZINDEX_STICKY_HEADER = 0; // Andrew Hamm Changed from 50
+    content: {
+        flex: 1,
+        flexDirection: 'column'
+    }

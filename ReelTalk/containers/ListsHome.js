@@ -62,8 +62,8 @@ var ListsHome = React.createClass({
 
   renderListRow: function(list) {
     return (
-      <TouchableHighlight style={styles.container} onPress={()=>this._showList(list)}>
-       <View style={styles.horizontal}>
+      <TouchableHighlight onPress={()=>this._showList(list)}>
+       <View style={styles.listRow}>
          {this._getListImage(list.shows)}
          <View style={styles.displayData}>
            <Text>{list.name}</Text>
@@ -95,21 +95,20 @@ var ListsHome = React.createClass({
   },
 });
 
+const rowHeight = 75;
+
 var styles = StyleSheet.create({
   billboardContainer: {
     marginBottom: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container: {
-    flexDirection: 'row',
-    height: 100,
-    backgroundColor: 'white',
-  },
   displayData: {
     flexDirection: 'column',
   },
-  horizontal: {
+  listRow: {
+    height: rowHeight,
+    backgroundColor: 'white',
     flexDirection: 'row',
   },
   circularImage: {
@@ -121,8 +120,8 @@ var styles = StyleSheet.create({
   square: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    height: 75,
-    width: 75,
+    height: rowHeight,
+    width: rowHeight,
   },
   squareRow: {
     flexDirection: 'column',

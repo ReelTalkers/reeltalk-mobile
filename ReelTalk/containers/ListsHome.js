@@ -15,13 +15,12 @@ var Billboard = require('./Billboard');
 var Lolomo = require('./Lolomo');
 
 var json = require("../Data");
-var lists = [{"name": "Favs", "count": 5}, {"name": "Funny", "count": 10}, {"name": "Mom's Favs", "count": 2}, {"name": "Horrible", "count": 8}];
 
 var ListsHome = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows(lists),
+      dataSource: ds.cloneWithRows(json.lists),
     };
   },
 
@@ -29,7 +28,7 @@ var ListsHome = React.createClass({
     return (
       <View>
         <Text>{list.name}</Text>
-        <Text>{list.count}</Text>
+        <Text>{list.shows.length}</Text>
       </View>
     )
   },

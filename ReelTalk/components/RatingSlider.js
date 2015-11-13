@@ -85,8 +85,6 @@ var RatingSlider = React.createClass({
     };
   },
 
-// what if I just had x amount of boxes then justified them and made the color change depending on where you are relative to those boxes/
-// then I wouldnt need to worry about what the width size was
   render: function() {
     return (
       <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]}

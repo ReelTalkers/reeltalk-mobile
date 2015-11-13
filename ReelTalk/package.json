@@ -7,8 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "babel-core": "^6.1.19",
+    "babel-jest": "^6.0.1",
     "react-native": "^0.13.2",
-    "react-native-parallax-view": "^2.0.2"
+    "react-native-parallax-view": "^2.0.2",
+    "react-native-scrollable-mixin": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^1.7.3",

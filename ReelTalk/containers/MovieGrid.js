@@ -78,7 +78,8 @@ var MovieGrid = React.createClass({
 var styles = StyleSheet.create({
   listView: {
     flex: 1,
-    backgroundColor: 'white',
+    // TODO: Thi is just a hot fix, remove this.
+    height: 667,
   },
   container: {
     flex: 1,

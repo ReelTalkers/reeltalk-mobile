@@ -62,7 +62,9 @@ var ListsHome = React.createClass({
 
   renderListRow: function(list) {
     return (
-      <TouchableHighlight onPress={()=>this._showList(list)}>
+      <TouchableHighlight
+        style={styles.container}
+        onPress={()=>this._showList(list)}>
        <View style={styles.listRow}>
          {this._getListImage(list.shows)}
          <View style={styles.displayData}>
@@ -103,25 +105,30 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  displayData: {
-    flexDirection: 'column',
-  },
-  listRow: {
-    height: rowHeight,
-    backgroundColor: 'white',
-    flexDirection: 'row',
-  },
   circularImage: {
     marginTop: 15,
     width: 125,
     height: 125,
     borderRadius: 125/2,
   },
+  displayData: {
+    flexDirection: 'column',
+  },
+  container: {
+    marginLeft: 5,
+    marginBottom: 5,
+  },
+  listRow: {
+    height: rowHeight,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+  },
   square: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     height: rowHeight,
     width: rowHeight,
+    marginRight: 5,
   },
   squareRow: {
     flexDirection: 'column',

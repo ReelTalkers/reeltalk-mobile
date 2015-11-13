@@ -18,6 +18,7 @@ var json = require("../Data");
 var ListDetailView = React.createClass({
 
   render: function() {
+    
     return (
       <View>
         <View style={styles.billboardContainer}>

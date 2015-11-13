@@ -78,14 +78,14 @@ const ListsNavigationBarRouteMapper = {
 
   RightButton: function(route, navigator, index, navState) {
     return (
-    <TouchableOpacity
-      onPress={() => console.log("Edit list")}
-      style={styles.navBarLeftButton}>
-      <Text style={[styles.navBarText, styles.navBarButtonText]}>
-        {"Edit"}
-      </Text>
-    </TouchableOpacity>
-  );
+      <TouchableOpacity
+        onPress={() => console.log("Edit list")}
+        style={styles.navBarLeftButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+          {index === 0 ? "Edit" : "..."}
+        </Text>
+      </TouchableOpacity>
+    );
   },
 
   Title: function(route, navigator, index, navState) {

@@ -70,7 +70,6 @@ var MovieGrid = React.createClass({
         dataSource={this.state.dataSource}
         renderRow={this.renderGridRow}
         style={styles.listView}
-        showsVerticalScrollIndicator={false}
       />
     );
   },

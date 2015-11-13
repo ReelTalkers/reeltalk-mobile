@@ -39,18 +39,62 @@ const NavigationBarRouteMapper = {
   },
 
   RightButton: function(route, navigator, index, navState) {
+    return (null);
+  },
+
+  Title: function(route, navigator, index, navState) {
+    return (
+      <Text style={[styles.navBarText, styles.navBarTitleText]}>
+        {route.title}
+      </Text>
+    );
+  },
+};
+
+const RecommendBarRouteMapper = {
+  LeftButton: function(route, navigator, index, navState) {
+    if (index === 0) {
+      return null;
+    }
+
+    const previousRoute = navState.routeStack[index - 1];
     return (
       <TouchableOpacity
-        onPress={() => navigator.push({
-          title: "Group",
-          component: CreateGroupPage,
-        })}
+        onPress={() => navigator.pop()}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          {"+"}
+        <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
+          {"<"}
         </Text>
       </TouchableOpacity>
     );
+  },
+
+  RightButton: function(route, navigator, index, navState) {
+    if (index === 0) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigator.push({
+            title: "Group",
+            component: CreateGroupPage,
+          })}
+          style={styles.navBarLeftButton}>
+          <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
+            {"+"}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+    else {
+      return (
+        <TouchableOpacity
+          onPress={() => navigator.pop()}
+          style={styles.navBarLeftButton}>
+          <Text style={[styles.navBarText, styles.navBarButtonText]}>
+            {"Create"}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
   },
 
   Title: function(route, navigator, index, navState) {
@@ -130,7 +174,7 @@ const Main = React.createClass({
         }}
         navigationBar={
           <Navigator.NavigationBar
-            routeMapper={NavigationBarRouteMapper}
+            routeMapper={RecommendBarRouteMapper}
             style={styles.navBar} />
         }
         renderScene={renderScene} />
@@ -290,6 +334,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   navBarText: {
+    fontSize: 16,
+    marginVertical: 10,
+    marginRight: 10,
+  },
+  navBarSymbolText: {
     fontSize: 22,
     marginVertical: 10,
     marginRight: 10,

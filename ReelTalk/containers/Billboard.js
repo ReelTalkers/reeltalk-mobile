@@ -25,6 +25,7 @@ var Billboard = React.createClass({
   getInitialState: function() {
   	return {
   		currentFilter: 'Just Me',
+      userId: this.props.userId,
   	};
 	},
 
@@ -39,6 +40,12 @@ var Billboard = React.createClass({
           currentFilter: BUTTONS[buttonIndex]
         });
       }
+      if (buttonIndex === 1) {
+        this.setState({
+          currentFilter: "Friends",
+          userId: String((parseInt(this.state.userId) % 3) + 1),
+        });
+      }
     });
   },
 
@@ -47,7 +54,7 @@ var Billboard = React.createClass({
     return (
       <View style={styles.container}>
         <Image
-          source={{uri: json.users[this.props.userId].picture}}
+          source={{uri: json.users[this.state.userId].picture}}
           style={styles.image}
         />
         <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>

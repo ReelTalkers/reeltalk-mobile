@@ -16,6 +16,7 @@ import RecommendScreen from './screens/RecommendScreen';
 import ListsScreen from './screens/ListsScreen';
 import TopChartsScreen from './screens/TopChartsScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import CreateGroupPage from './containers/CreateGroupPage';
 
 import cssVar from 'cssVar';
 
@@ -40,7 +41,10 @@ const NavigationBarRouteMapper = {
   RightButton: function(route, navigator, index, navState) {
     return (
       <TouchableOpacity
-        onPress={() => console.log('add group')}
+        onPress={() => navigator.push({
+          title: "Group",
+          component: CreateGroupPage,
+        })}
         style={styles.navBarLeftButton}>
         <Text style={[styles.navBarText, styles.navBarButtonText]}>
           {"+"}

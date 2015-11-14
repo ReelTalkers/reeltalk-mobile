@@ -55,7 +55,8 @@ var MovieGrid = React.createClass({
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderGridComponent}
-        contentContainerStyle={styles.listView}
+        style={this.listView}
+        contentContainerStyle={styles.listViewContainer}
       />
     );
   },
@@ -64,6 +65,8 @@ var MovieGrid = React.createClass({
 var styles = StyleSheet.create({
   listView: {
     flex: 1,
+  },
+  listViewContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap'
   },

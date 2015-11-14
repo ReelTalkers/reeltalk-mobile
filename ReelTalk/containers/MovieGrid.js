@@ -19,14 +19,8 @@ var MovieGrid = React.createClass({
   getInitialState: function() {
     console.log(this.props.shows);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var movies = this.props.shows.slice(0);
-    var moviesSplit = [];
-    var size = 3;
-    while (movies.length > 0) {
-      moviesSplit.push(movies.splice(0, size));
-    }
     return {
-      dataSource: ds.cloneWithRows(moviesSplit),
+      dataSource: ds.cloneWithRows(this.props.shows),
     };
   },
 
@@ -41,8 +35,8 @@ var MovieGrid = React.createClass({
     });
   },
 
-  createThumbnail: function(showID) {
-    const show =json.shows[showID];
+  renderGridComponent: function(showID) {
+    const show = json.shows[showID];
     return (
       <TouchableHighlight
         style={styles.movieButton}
@@ -56,20 +50,12 @@ var MovieGrid = React.createClass({
     );
   },
 
-  renderGridRow: function(shows) {
-    return (
-    <View style={styles.container}>
-      {shows.map(showID => this.createThumbnail(showID))}
-    </View>
-    )
-  },
-
   render: function() {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderGridRow}
-        style={styles.listView}
+        renderRow={this.renderGridComponent}
+        contentContainerStyle={styles.listView}
       />
     );
   },
@@ -78,13 +64,8 @@ var MovieGrid = React.createClass({
 var styles = StyleSheet.create({
   listView: {
     flex: 1,
-    // TODO: Thi is just a hot fix, remove this.
-    height: 667,
-  },
-  container: {
-    flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    flexWrap: 'wrap'
   },
   movieButton: {
     margin: 5,
@@ -96,7 +77,6 @@ var styles = StyleSheet.create({
       width: 0
     }
   },
-  // TODO: un hard code the widths and take into account less than 3 in a row
   image: {
     width: 115,
     height: 172,

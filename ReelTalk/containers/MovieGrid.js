@@ -57,6 +57,7 @@ var MovieGrid = React.createClass({
         renderRow={this.renderGridComponent}
         style={this.listView}
         contentContainerStyle={styles.listViewContainer}
+        automaticallyAdjustContentInsets={false}
       />
     );
   },

@@ -121,7 +121,7 @@ const Main = React.createClass({
         initialRoute={{
           title: 'Recommend',
           Component: RecommendScreen,
-          queryConfig: new RootQueryConfig(),
+          queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId }
         }}
         navigationBar={
@@ -141,7 +141,7 @@ const Main = React.createClass({
         initialRoute={{
           title: 'Lists',
           Component: ListsScreen,
-          queryConfig: new RootQueryConfig(),
+          queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId },
           rightButtonTitle: 'Edit'
         }}
@@ -163,7 +163,7 @@ const Main = React.createClass({
         initialRoute={{
           title: 'Top Charts',
           Component: TopChartsScreen,
-          queryConfig: new RootQueryConfig(),
+          queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId }
         }}
         renderScene={relayRenderScene}
@@ -183,7 +183,7 @@ const Main = React.createClass({
         initialRoute={{
           title: 'Settings',
           Component: SettingsScreen,
-          queryConfig: new RootQueryConfig(),
+          queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId }
         }}
         renderScene={relayRenderScene} />
@@ -249,42 +249,31 @@ const ReelTalk = React.createClass({
   	},
 
 	render: function() {
-	return (
-    /*
-    <Navigator
-      ref={(navigator) => { this.navigator = navigator; }}
-      renderScene={(route, navigator) => {
-        const { Component } = route;
-        return (
-          <View style={styles.container}>
-            <Component
-              route={route}
-              navigator={navigator}
-              topNavigator={navigator}
-              {...route.props} />
-          </View>
-        );
-      }}
-      initialRoute={{
-        title: 'ReelTalk',
-        Component: Main,
-        props: {
-          userId: this.state.userId,
-          activeTab: 'recommend'
-        }
-      }}
-    />*/
-    <Navigator
-      sceneStyle={styles.scene}
-      ref="settingsRef"
-      initialRoute={{
-        title: 'Settings',
-        Component: SettingsScreen,
-        queryConfig: getRootQueryConfig(),
-        props: { userId: 2 }
-      }}
-      renderScene={relayRenderScene} />
-	);
+  	return (
+      <Navigator
+        ref={(navigator) => { this.navigator = navigator; }}
+        renderScene={(route, navigator) => {
+          const { Component } = route;
+          return (
+            <View style={styles.container}>
+              <Component
+                route={route}
+                navigator={navigator}
+                topNavigator={navigator}
+                {...route.props} />
+            </View>
+          );
+        }}
+        initialRoute={{
+          title: 'ReelTalk',
+          Component: Main,
+          props: {
+            userId: this.state.userId,
+            activeTab: 'recommend'
+          }
+        }}
+      />
+  	);
 	}
 });
 

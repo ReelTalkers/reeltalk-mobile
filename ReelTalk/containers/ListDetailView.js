@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Image,
   StyleSheet,
@@ -10,15 +9,14 @@ var {
   ScrollView,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
 
-var MovieGrid = require("./MovieGrid");
+import MovieGrid from "./MovieGrid";
 var json = require("../Data");
 
-var ListDetailView = React.createClass({
+export default class ListDetailView extends React.Component {
 
-  render: function() {
-    
+  render() {
     return (
       <View>
         <View style={styles.billboardContainer}>
@@ -33,15 +31,13 @@ var ListDetailView = React.createClass({
         />
       </View>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   billboardContainer: {
     marginBottom: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
-
-module.exports = ListDetailView;

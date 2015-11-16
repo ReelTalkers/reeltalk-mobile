@@ -1,48 +1,48 @@
 // TODO break into components
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   Text,
   View,
-} = React;
+} from 'react-native';
 
-var RatingSlider = React.createClass({
-  getInitialState: function() {
-  	return {
+export default class RatingSlider extends React.Component {
+  constructor(props) {
+    super(props);
+  	this.state = {
   		text: this.props.defaultText,
       bucketWidth: null,
       // TODO: change to transparentish
       color: "#BAB7AE",
   	};
-	},
+	}
 
   // TODO: is it bad style to change the states around? Are they supposed to be static?
-  _setBucketWidth: function(bucketWidth) {
+  _setBucketWidth(bucketWidth) {
     this.setState({
       text: this.state.text,
       bucketWidth: bucketWidth,
       color: this.state.color,
     });
-  },
+  }
 
   // Specifies the type prop must be
   propTypes: {
     style: View.propTypes.style,
-  },
+  }
 
   // TODO: is there a way to do it without storing width in the state?
-  _onLayout: function(evt) {
+  _onLayout(evt) {
     var numOptions = this.props.options.length;
     var width = evt.nativeEvent.layout.width;
 
     var bucketWidth = width / numOptions;
     this._setBucketWidth(bucketWidth);
-  },
+  }
 
-  _alterRating: function(x) {
+  _alterRating(x) {
     // We take the floor since index starts at 0
     var bucketIndex = Math.floor(x / this.state.bucketWidth);
     var option = this.props.options[bucketIndex];
@@ -54,7 +54,7 @@ var RatingSlider = React.createClass({
       bucketWidth: this.state.bucketWidth,
       color: option.color,
     });
-  },
+  }
 
   componentWillMount() {
     this._responder = {
@@ -83,9 +83,9 @@ var RatingSlider = React.createClass({
       },
 
     };
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]}
             onLayout={this._onLayout}
@@ -94,10 +94,10 @@ var RatingSlider = React.createClass({
         <Text style={styles.sliderText}>{this.state.text}</Text>
       </View>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   ratingSlider: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -108,5 +108,3 @@ var styles = StyleSheet.create({
     fontWeight: '300'
   },
 });
-
-module.exports = RatingSlider;

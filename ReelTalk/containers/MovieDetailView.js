@@ -1,8 +1,7 @@
 // TODO break into components
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Image,
   StyleSheet,
@@ -11,32 +10,33 @@ var {
   Text,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
 
-var ParallaxView = require('react-native-parallax-view');
+import ParallaxView from 'react-native-parallax-view';
 
-var Rating = require('../components/Rating');
-var RatingSlider = require('../components/RatingSlider');
-var HeaderScrollView = require('../components/HeaderScrollView');
-var LolomoRow = require('./LolomoRow');
-var json = require("../Data");
+import Rating from '../components/Rating';
+import RatingSlider from '../components/RatingSlider';
+import HeaderScrollView from '../components/HeaderScrollView';
+import LolomoRow from './LolomoRow';
+import json from '../Data';
 
-var MovieDetailView = React.createClass({
-  getInitialState: function() {
-  	return {
-  		show: this.props.initialShow,
+export default class MovieDetailView extends React.Component {
+  constructor(props) {
+    super(props);
+  	this.state = {
+  		show: props.initialShow,
       scrollEnabled: true,
   	};
-	},
+	}
 
-  _changeShow: function(newShow) {
+  _changeShow(newShow) {
     this.setState({
       show: newShow,
       scrollEnabled: true,
     });
-  },
+  }
 
-  _getColorStyles: function() {
+  _getColorStyles() {
     return {
       primaryBackground: {
         backgroundColor: this.state.show.colors.primary
@@ -54,27 +54,27 @@ var MovieDetailView = React.createClass({
         borderLeftColor: this.state.show.colors.primary
       },
     };
-  },
+  }
 
   // TODO: not sure about the this.state.show... Do I even need it?
-  _setScrollEnabled: function(scrollEnabled) {
+  _setScrollEnabled(scrollEnabled) {
     this.setState({
       show: this.state.show,
       scrollEnabled: scrollEnabled,
     });
-  },
+  }
 
-  _disableScroll: function() {
+  _disableScroll() {
     this._setScrollEnabled(false);
-  },
+  }
 
-  _enableScroll: function() {
+  _enableScroll() {
     this._setScrollEnabled(true);
-  },
+  }
 
 // TODO: Lists should not be stored within movies, there should be lists containing movies but I want to focus on design now
 // TODO: make <RatingSlider style={styles.ratingSlider}/>
-  render: function() {
+  render() {
     return (
       <ParallaxView
         style={styles.scrollView}
@@ -114,10 +114,10 @@ var MovieDetailView = React.createClass({
         </View>
       </ParallaxView>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     scrollView: {
       flex: 1,
       backgroundColor: '#B6AEA3',
@@ -171,5 +171,3 @@ var styles = StyleSheet.create({
       fontWeight: '300'
     }
 });
-
-module.exports = MovieDetailView;

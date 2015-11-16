@@ -8,14 +8,35 @@ var {
   View,
 } = React;
 
-var SettingsScreen = React.createClass({
-  render: function() {
+import Relay from 'react-relay';
+
+class SettingsScreen extends React.Component {
+  render() {
     return (
       <View style={styles.container}>
-        <Text>Settings Screen</Text>
+        {this.props.viewer.allShows.edges.map(edge => (
+          <Text>{edge.node.title}</Text>
+        ))}
       </View>
     );
-  },
+  }
+}
+
+export default Relay.createContainer(SettingsScreen, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        allShows(first: 10) {
+          edges {
+            node {
+              id
+              title
+            }
+          }
+        }
+      }
+    `
+  }
 });
 
 var styles = StyleSheet.create({
@@ -26,5 +47,3 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
-
-module.exports = SettingsScreen;

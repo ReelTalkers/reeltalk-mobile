@@ -3,12 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node_modules/react-native/packager/packager.sh",
+    "start": "node_modules/react-native/packager/packager.sh --transformer ./lib/babelTransform.js",
     "test": "jest"
   },
   "dependencies": {
+    "babel-core": "^5.8.34",
+    "babel-relay-plugin": "^0.2.4",
+    "fbjs-scripts": "^0.5.0",
     "react-native": "^0.13.2",
-    "react-native-parallax-view": "^2.0.2"
+    "react-native-parallax-view": "^2.0.2",
+    "react-relay": "shopify/relay"
   },
   "devDependencies": {
     "eslint": "^1.7.3",

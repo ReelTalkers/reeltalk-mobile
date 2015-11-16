@@ -17,7 +17,14 @@ import ListsScreen from './screens/ListsScreen';
 import TopChartsScreen from './screens/TopChartsScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
+import Relay from 'react-relay';
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('http://localhost:8000/graphql')
+);
+
 import cssVar from 'cssVar';
+
+import { RootQueryConfig } from './queryConfigs';
 
 const NavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
@@ -113,7 +120,8 @@ const Main = React.createClass({
         ref="recommendRef"
         initialRoute={{
           title: 'Recommend',
-          component: RecommendScreen,
+          Component: RecommendScreen,
+          queryConfig: new RootQueryConfig(),
           props: { userId: this.props.userId }
         }}
         navigationBar={
@@ -121,7 +129,7 @@ const Main = React.createClass({
             routeMapper={NavigationBarRouteMapper}
             style={styles.navBar} />
         }
-        renderScene={renderScene} />
+        renderScene={relayRenderScene} />
     );
   },
 
@@ -132,9 +140,10 @@ const Main = React.createClass({
         ref="listsRef"
         initialRoute={{
           title: 'Lists',
-          component: ListsScreen,
+          Component: ListsScreen,
+          queryConfig: new RootQueryConfig(),
           props: { userId: this.props.userId },
-          rightButtonTitle: 'Edit',
+          rightButtonTitle: 'Edit'
         }}
         navigationBar={
           <Navigator.NavigationBar
@@ -142,7 +151,7 @@ const Main = React.createClass({
             style={styles.navBar}
              />
         }
-        renderScene={renderScene} />
+        renderScene={relayRenderScene} />
     );
   },
 
@@ -153,10 +162,11 @@ const Main = React.createClass({
         ref="chartsRef"
         initialRoute={{
           title: 'Top Charts',
-          component: TopChartsScreen,
+          Component: TopChartsScreen,
+          queryConfig: new RootQueryConfig(),
           props: { userId: this.props.userId }
         }}
-        renderScene={renderScene}
+        renderScene={relayRenderScene}
         navigationBar={
           <Navigator.NavigationBar
             routeMapper={NavigationBarRouteMapper}
@@ -172,10 +182,11 @@ const Main = React.createClass({
         ref="settingsRef"
         initialRoute={{
           title: 'Settings',
-          component: SettingsScreen,
+          Component: SettingsScreen,
+          queryConfig: new RootQueryConfig(),
           props: { userId: this.props.userId }
         }}
-        renderScene={renderScene} />
+        renderScene={relayRenderScene} />
     );
   },
 
@@ -184,7 +195,7 @@ const Main = React.createClass({
       this.setState({
         selectedTab: tabTitle
       });
-    } else if (this.state.selectedTab === 'recommend') {
+    } else {
       this.refs[tabTitle + 'Ref'].popToTop();
     }
   },
@@ -203,6 +214,7 @@ const Main = React.createClass({
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'lists'}
+          ref="listsTabRef"
   	      systemIcon="bookmarks"
   	      onPress={() => this._onPressTab('lists')}>
           {this.renderListsScreen()}
@@ -210,6 +222,7 @@ const Main = React.createClass({
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'charts'}
+          ref="chartsTabRef"
   	      systemIcon="most-viewed"
   	      onPress={() => this._onPressTab('charts')}>
           {this.renderTopChartsScreen()}
@@ -217,6 +230,7 @@ const Main = React.createClass({
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'settings'}
+          ref="settingsTabRef"
   	      systemIcon="more"
   	      onPress={() => this._onPressTab('settings')}>
   	      {this.renderSettingsScreen()}
@@ -225,7 +239,7 @@ const Main = React.createClass({
   	  </TabBarIOS>
     );
   }
-})
+});
 
 const ReelTalk = React.createClass({
 	getInitialState: function() {
@@ -236,34 +250,69 @@ const ReelTalk = React.createClass({
 
 	render: function() {
 	return (
+    /*
     <Navigator
       ref={(navigator) => { this.navigator = navigator; }}
-      renderScene={renderScene}
+      renderScene={(route, navigator) => {
+        const { Component } = route;
+        return (
+          <View style={styles.container}>
+            <Component
+              route={route}
+              navigator={navigator}
+              topNavigator={navigator}
+              {...route.props} />
+          </View>
+        );
+      }}
       initialRoute={{
         title: 'ReelTalk',
-        component: Main,
+        Component: Main,
         props: {
           userId: this.state.userId,
           activeTab: 'recommend'
         }
       }}
-    />
+    />*/
+    <Navigator
+      sceneStyle={styles.scene}
+      ref="settingsRef"
+      initialRoute={{
+        title: 'Settings',
+        Component: SettingsScreen,
+        queryConfig: getRootQueryConfig(),
+        props: { userId: 2 }
+      }}
+      renderScene={relayRenderScene} />
 	);
 	}
 });
 
-const renderScene = (route, navigator) => {
-  const Component = route.component;
+const getRootQueryConfig = () => {
+  return { queries: { viewer: () => Relay.QL`query { viewer }` }, name: 'RootQueryConfig', params: {}};
+}
+
+const relayRenderScene = (route, navigator) => {
+  const { title, Component, queryConfig } = route;
+  console.log(route)
   return (
     <View style={styles.container}>
-      <Component
-        route={route}
-        navigator={navigator}
-        topNavigator={navigator}
-        {...route.props} />
+      <Relay.RootContainer
+        Component={Component}
+        route={queryConfig}
+        renderFetched={(data) => (
+          <Component
+            route={route}
+            navigator={navigator}
+            topNavigator={navigator}
+            {...data}
+            {...route.props} />
+        )}
+      />
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

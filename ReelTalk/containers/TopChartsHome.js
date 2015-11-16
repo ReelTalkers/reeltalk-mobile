@@ -1,33 +1,33 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   ListView,
   SegmentedControlIOS,
   StyleSheet,
   Text,
   View,
-} = React;
+} from 'react-native';
 
-var json = require("../Data");
-var MovieGrid = require("./MovieGrid");
+import json from "../Data";
+import MovieGrid from "./MovieGrid";
 
-var TopChartsHome = React.createClass({
-  getInitialState: function() {
-    return {
+export default class TopChartsHome extends React.Component {
+  constructor() {
+    super();
+    this.state = {
       shows: json.categories[0]["shows"],
     };
-  },
+  }
 
   _onValueChange(value) {
     const newList = (value === 'Today') ? json.categories[0]["shows"] : json.categories[1]["shows"];
     this.setState({
       shows: newList,
     });
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View>
         <SegmentedControlIOS
@@ -41,10 +41,8 @@ var TopChartsHome = React.createClass({
         />
       </View>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
 });
-
-module.exports = TopChartsHome;

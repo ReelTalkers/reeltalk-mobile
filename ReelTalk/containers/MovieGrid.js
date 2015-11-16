@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   ListView,
@@ -9,22 +8,22 @@ var {
   Text,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
 
 var json = require("../Data");
-var MovieDetailView = require("./MovieDetailView");
+import MovieDetailView from "./MovieDetailView";
 
-var MovieGrid = React.createClass({
+class MovieGrid extends React.Component {
 
-  getInitialState: function() {
-    console.log(this.props.shows);
+  constructor(props) {
+    super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      dataSource: ds.cloneWithRows(this.props.shows),
+    this.state = {
+      dataSource: ds.cloneWithRows(props.shows),
     };
-  },
+  }
 
-  _showDetails: function(show) {
+  _showDetails(show) {
     this.props.navigator.push({
       title: show.name,
       component: MovieDetailView,
@@ -33,9 +32,9 @@ var MovieGrid = React.createClass({
         ...this.props,
       },
     });
-  },
+  }
 
-  renderGridComponent: function(showID) {
+  renderGridComponent(showID) {
     const show = json.shows[showID];
     return (
       <TouchableHighlight
@@ -48,9 +47,9 @@ var MovieGrid = React.createClass({
         />
       </TouchableHighlight>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <ListView
         dataSource={this.state.dataSource}
@@ -60,10 +59,10 @@ var MovieGrid = React.createClass({
         automaticallyAdjustContentInsets={false}
       />
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   listView: {
     flex: 1,
   },
@@ -86,5 +85,3 @@ var styles = StyleSheet.create({
     height: 172,
   },
 });
-
-module.exports = MovieGrid;

@@ -1,19 +1,18 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   Text,
   ScrollView,
   View,
-} = React;
+} from 'react-native';
 
-var Billboard = require('./Billboard');
-var Lolomo = require('./Lolomo');
+import Billboard from './Billboard';
+import Lolomo from './Lolomo';
 
-var RecommendHome = React.createClass({
-  render: function() {
+export default class RecommendHome extends React.Component {
+  render() {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
@@ -27,10 +26,10 @@ var RecommendHome = React.createClass({
         />
       </ScrollView>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   billboardContainer: {
     marginBottom: 5,
   },
@@ -38,5 +37,3 @@ var styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-module.exports = RecommendHome;

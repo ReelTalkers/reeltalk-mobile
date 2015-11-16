@@ -1,14 +1,13 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   ActionSheetIOS,
   AppRegistry,
   Image,
   StyleSheet,
   Text,
   View,
-} = React;
+} from 'react-native';
 
 var BUTTONS = [
   'Just Me',
@@ -20,13 +19,14 @@ var CANCEL_INDEX = 3;
 
 var json = require("../Data");
 
-var Billboard = React.createClass({
+export default class Billboard extends React.Component {
 
-  getInitialState: function() {
-  	return {
+  constructor() {
+    super();
+  	this.state = {
   		currentFilter: 'Just Me',
   	};
-	},
+	}
 
   showActionSheet() {
     ActionSheetIOS.showActionSheetWithOptions({
@@ -40,10 +40,9 @@ var Billboard = React.createClass({
         });
       }
     });
-  },
+  }
 
-
-  render: function() {
+  render() {
     return (
       <View style={styles.container}>
         <Image
@@ -54,10 +53,10 @@ var Billboard = React.createClass({
         <View style={styles.line} />
       </View>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'white',
@@ -83,5 +82,3 @@ var styles = StyleSheet.create({
       borderRadius: 125/2,
     },
 });
-
-module.exports = Billboard;

@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AlertIOS,
   AppRegistry,
   StyleSheet,
@@ -10,13 +9,13 @@ var {
   Text,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
 
-var json = require("../Data");
+const json = require("../Data");
 
-var LolomoRow = React.createClass({
+export default class LolomoRow extends React.Component {
 
-  createThumbnail: function(showID) {
+  createThumbnail(showID) {
     const show =json.shows[showID];
     return (
       <TouchableHighlight
@@ -29,9 +28,9 @@ var LolomoRow = React.createClass({
         />
       </TouchableHighlight>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View>
         <Text style={styles.categoryName}>{this.props.header}</Text>
@@ -46,10 +45,10 @@ var LolomoRow = React.createClass({
         </ScrollView>
       </View>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   categoryName: {
     fontWeight: '600',
     fontSize: 17,
@@ -79,5 +78,3 @@ var styles = StyleSheet.create({
     width: 5
   }
 });
-
-module.exports = LolomoRow;

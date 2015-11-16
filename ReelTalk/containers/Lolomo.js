@@ -1,57 +1,55 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   ListView,
   Text,
   View,
-} = React;
+} from 'react-native';
 
-var json = require("../Data");
-var LolomoRow = require('./LolomoRow');
-var MovieDetailView = require('./MovieDetailView');
+const json = require("../Data");
+import LolomoRow from './LolomoRow';
+import MovieDetailView from './MovieDetailView';
 
-var Lolomo = React.createClass({
+export default class Lolomo extends React.Component {
 
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
       dataSource: ds.cloneWithRows(json.categories),
     };
-  },
+  }
 
-  _showDetails: function(show) {
+  _showDetails(show) {
     this.props.navigator.push({
       title: show.name,
       component: MovieDetailView,
       props: { initialShow: show, userId: this.props.userId }
     });
-  },
+  }
 
-  renderLolomoRow: function(category) {
+  renderLolomoRow(category) {
     return (
-      <LolomoRow header={category.name} category={category} onSelect={this._showDetails}/>
+      <LolomoRow header={category.name} category={category} onSelect={(show) => this._showDetails(show)}/>
     )
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderLolomoRow}
+        renderRow={(category) => this.renderLolomoRow(category)}
         style={styles.listView}
         showsVerticalScrollIndicator={false}
       />
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   listView: {
      backgroundColor: 'white',
   },
 });
-
-module.exports = Lolomo;

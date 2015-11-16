@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Image,
   StyleSheet,
@@ -10,30 +9,31 @@ var {
   ScrollView,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
 
-var Billboard = require('./Billboard');
-var ListDetailView = require('./ListDetailView');
+import Billboard from './Billboard';
+import ListDetailView from './ListDetailView';
 
 var json = require("../Data");
 
-var ListsHome = React.createClass({
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
+export default class ListsHome extends React.Component {
+  constructor() {
+    super();
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
       dataSource: ds.cloneWithRows(json.lists),
     };
-  },
+  }
 
-  _showList: function(list) {
+  _showList(list) {
     this.props.navigator.push({
       component: ListDetailView,
       props: { list: list}
     });
-  },
+  }
 
   // TODO: Add cases where there are less than 4 films
-  _getListImage: function(listShows) {
+  _getListImage(listShows) {
     return (
       <View style={styles.square}>
         <View style={styles.squareRow}>
@@ -58,9 +58,9 @@ var ListsHome = React.createClass({
         </View>
       </View>
     );
-  },
+  }
 
-  renderListRow: function(list) {
+  renderListRow(list) {
     return (
       <TouchableHighlight onPress={()=>this._showList(list)}>
         <View style={styles.container}>
@@ -75,11 +75,11 @@ var ListsHome = React.createClass({
         </View>
       </TouchableHighlight>
     )
-  },
+  }
 
   // TODO: This circular image should pulled from billboard. Billboard should take an argument of what to display beneath,
   //        in this case it would just be the users name. This is like the users 'profile'
-  render: function() {
+  render() {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
@@ -96,12 +96,12 @@ var ListsHome = React.createClass({
         />
       </ScrollView>
     );
-  },
-});
+  }
+}
 
 const rowHeight = 55;
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   billboardContainer: {
     marginBottom: 5,
     alignItems: 'center',
@@ -152,5 +152,3 @@ var styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-module.exports = ListsHome;

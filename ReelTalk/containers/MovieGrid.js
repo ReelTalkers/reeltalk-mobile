@@ -19,14 +19,8 @@ var MovieGrid = React.createClass({
   getInitialState: function() {
     console.log(this.props.shows);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var movies = this.props.shows.slice(0);
-    var moviesSplit = [];
-    var size = 3;
-    while (movies.length > 0) {
-      moviesSplit.push(movies.splice(0, size));
-    }
     return {
-      dataSource: ds.cloneWithRows(moviesSplit),
+      dataSource: ds.cloneWithRows(this.props.shows),
     };
   },
 
@@ -41,8 +35,8 @@ var MovieGrid = React.createClass({
     });
   },
 
-  createThumbnail: function(showID) {
-    const show =json.shows[showID];
+  renderGridComponent: function(showID) {
+    const show = json.shows[showID];
     return (
       <TouchableHighlight
         style={styles.movieButton}
@@ -56,21 +50,14 @@ var MovieGrid = React.createClass({
     );
   },
 
-  renderGridRow: function(shows) {
-    return (
-    <View style={styles.container}>
-      {shows.map(showID => this.createThumbnail(showID))}
-    </View>
-    )
-  },
-
   render: function() {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderGridRow}
-        style={styles.listView}
-        showsVerticalScrollIndicator={false}
+        renderRow={this.renderGridComponent}
+        style={this.listView}
+        contentContainerStyle={styles.listViewContainer}
+        automaticallyAdjustContentInsets={false}
       />
     );
   },
@@ -78,16 +65,25 @@ var MovieGrid = React.createClass({
 
 var styles = StyleSheet.create({
   listView: {
-     backgroundColor: 'white',
-     height: 500,
+    flex: 1,
   },
-  container: {
+  listViewContainer: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    flexWrap: 'wrap'
+  },
+  movieButton: {
+    margin: 5,
+    shadowColor: "black",
+    shadowOpacity: 0.35,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
   },
   image: {
-    width: 138,
-    height: 206,
+    width: 115,
+    height: 172,
   },
 });
 

@@ -32,23 +32,53 @@ var ListsHome = React.createClass({
     });
   },
 
+  // TODO: Add cases where there are less than 4 films
+  _getListImage: function(listShows) {
+    return (
+      <View style={styles.square}>
+        <View style={styles.squareRow}>
+          <Image
+              source={{uri: json.shows[listShows[0]].thumbnail}}
+              style={styles.image}
+          />
+          <Image
+              source={{uri: json.shows[listShows[1]].thumbnail}}
+              style={styles.image}
+          />
+        </View>
+        <View style={styles.squareRow}>
+          <Image
+              source={{uri: json.shows[listShows[2]].thumbnail}}
+              style={styles.image}
+          />
+          <Image
+              source={{uri: json.shows[listShows[3]].thumbnail}}
+              style={styles.image}
+          />
+        </View>
+      </View>
+    );
+  },
+
   renderListRow: function(list) {
     return (
-      <TouchableHighlight style={styles.container} onPress={()=>this._showList(list)}>
-       <View style={styles.horizontal}>
-         <Image
-             source={{uri: json.shows[list.shows[0]].thumbnail}}
-             style={styles.image}
-         />
-         <View style={styles.displayData}>
-           <Text>{list.name}</Text>
-           <Text>{list.shows.length}</Text>
-         </View>
-       </View>
-     </TouchableHighlight>
+      <TouchableHighlight onPress={()=>this._showList(list)}>
+        <View style={styles.container}>
+          <View style={styles.listRow}>
+            {this._getListImage(list.shows)}
+            <View>
+              <Text style={styles.listTitle}>{list.name}</Text>
+              <Text style={styles.listSubheading}>{list.shows.length} items</Text>
+            </View>
+          </View>
+          <View style={styles.rowDivider}/>
+        </View>
+      </TouchableHighlight>
     )
   },
 
+  // TODO: This circular image should pulled from billboard. Billboard should take an argument of what to display beneath,
+  //        in this case it would just be the users name. This is like the users 'profile'
   render: function() {
     return (
       <ScrollView
@@ -63,12 +93,13 @@ var ListsHome = React.createClass({
           dataSource={this.state.dataSource}
           renderRow={this.renderListRow}
           style={styles.listView}
-          showsVerticalScrollIndicator={false}
         />
       </ScrollView>
     );
   },
 });
+
+const rowHeight = 55;
 
 var styles = StyleSheet.create({
   billboardContainer: {
@@ -76,27 +107,49 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container: {
-    flexDirection: 'row',
-    height: 100,
-    backgroundColor: 'white',
-  },
-  displayData: {
-    flexDirection: 'column',
-  },
-  horizontal: {
-    flexDirection: 'row',
-  },
-  image: {
-    width: 70,
-    height: 100,
-    margin: 2,
-  },
   circularImage: {
     marginTop: 15,
     width: 125,
     height: 125,
     borderRadius: 125/2,
+  },
+  container: {
+    backgroundColor: 'white',
+  },
+  listRow: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
+    paddingTop: 2,
+    paddingBottom: 2,
+  },
+  rowDivider: {
+    height: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#F1F1F1'
+  },
+  listTitle: {
+    fontSize: 17,
+  },
+  listSubheading: {
+    fontSize: 15,
+    color: '#929292',
+  },
+  square: {
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    height: rowHeight,
+    width: rowHeight,
+    marginRight: 5,
+  },
+  squareRow: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  image: {
+    flex: 1,
   },
 });
 

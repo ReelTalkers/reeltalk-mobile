@@ -12,18 +12,18 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
+import Relay from 'react-relay';
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('http://localhost:8000/graphql')
+);
+import cssVar from 'cssVar';
+
 import RecommendHome from './containers/RecommendHome';
 import ListsHome from './containers/ListsHome';
 import TopChartsHome from './containers/TopChartsHome';
 import SettingsHome from './containers/SettingsHome';
 
-import Relay from 'react-relay';
-Relay.injectNetworkLayer(
-  new Relay.DefaultNetworkLayer('http://localhost:8000/graphql')
-);
-
-import cssVar from 'cssVar';
-
+import { relayRenderScene } from './utils';
 import { getRootQueryConfig } from './queryConfigs';
 
 const NavigationBarRouteMapper = {
@@ -270,27 +270,6 @@ export default class ReelTalk extends React.Component {
   	);
 	}
 }
-
-const relayRenderScene = (route, navigator) => {
-  const { title, Component, queryConfig } = route;
-  return (
-    <View style={styles.container}>
-      <Relay.RootContainer
-        Component={Component}
-        route={queryConfig}
-        renderFetched={(data) => (
-          <Component
-            route={route}
-            navigator={navigator}
-            topNavigator={navigator}
-            {...data}
-            {...route.props} />
-        )}
-      />
-    </View>
-  );
-};
-
 
 const styles = StyleSheet.create({
   container: {

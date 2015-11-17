@@ -12,22 +12,28 @@ import React, {
   TouchableOpacity
 } from 'react-native';
 
-import cssVar from 'cssVar';
+import Relay from 'react-relay';
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('http://localhost:8000/graphql')
+)
 
-import ToolbarAndroid from 'ToolbarAndroid';
-import RecommendScreen from './screens/RecommendScreen';
+import { relayRenderScene } from './utils';
+import { getRootQueryConfig } from './queryConfigs';
+import RecommendHome from './containers/RecommendHome';
+import SettingsHome from './containers/SettingsHome';
 
 var _navigator;
 
-const ReelTalk = React.createClass({
-  getInitialState: function() {
-    return {
+export default class ReelTalk extends React.Component {
+  constructor() {
+    super();
+    this.state = {
       selectedTab: 'recommend',
       userId: '2'
     };
-  },
+  }
 
-  componentWillMount: function() {
+  componentWillMount() {
     this._navBarRouteMapper = {
       rightContentForRoute: function(route, navigator) {
         return null;
@@ -57,15 +63,15 @@ const ReelTalk = React.createClass({
         );
       }
     };
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <Navigator
-        style={styles.container}
         initialRoute={{
           title: 'Recommend',
-          component: RecommendScreen,
+          Component: SettingsHome,
+          queryConfig: getRootQueryConfig(),
           props: { userId: this.state.userId }
         }}
         navigationBar={
@@ -73,13 +79,11 @@ const ReelTalk = React.createClass({
             routeMapper={this._navBarRouteMapper}
           />
         }
+        sceneStyle={styles.scene}
         renderScene={(route, navigator) => {
           _navigator = navigator;
-          if (route.component) {
-            return React.createElement(route.component, { navigator, ...route.props })
-          }
+          return relayRenderScene(route, navigator);
         }}
-        sceneStyle={styles.sceneStyle}
         onBack={() => {
           if (route.title !== 'Recommend') {
             navigator.pop();
@@ -88,7 +92,7 @@ const ReelTalk = React.createClass({
       />
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   scene: {

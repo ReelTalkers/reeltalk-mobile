@@ -12,10 +12,10 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import RecommendScreen from './containers/RecommendHome';
-import ListsScreen from './containers/ListsHome';
-import TopChartsScreen from './containers/TopChartsHome';
-import SettingsScreen from './containers/Billboard';
+import RecommendHome from './containers/RecommendHome';
+import ListsHome from './containers/ListsHome';
+import TopChartsHome from './containers/TopChartsHome';
+import SettingsHome from './containers/Billboard';
 
 import Relay from 'react-relay';
 Relay.injectNetworkLayer(
@@ -113,14 +113,14 @@ const Main = React.createClass({
     this.refs.recommendTabRef.setState({hasBeenSelected: true})
   },
 
-  renderRecommendScreen: function() {
+  renderRecommendHome: function() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="recommendRef"
         initialRoute={{
           title: 'Recommend',
-          Component: RecommendScreen,
+          Component: RecommendHome,
           queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId }
         }}
@@ -133,14 +133,14 @@ const Main = React.createClass({
     );
   },
 
-  renderListsScreen: function() {
+  renderListsHome: function() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="listsRef"
         initialRoute={{
           title: 'Lists',
-          Component: ListsScreen,
+          Component: ListsHome,
           queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId },
           rightButtonTitle: 'Edit'
@@ -155,14 +155,14 @@ const Main = React.createClass({
     );
   },
 
-  renderTopChartsScreen: function() {
+  renderTopChartsHome: function() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="chartsRef"
         initialRoute={{
           title: 'Top Charts',
-          Component: TopChartsScreen,
+          Component: TopChartsHome,
           queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId }
         }}
@@ -175,14 +175,14 @@ const Main = React.createClass({
     );
   },
 
-  renderSettingsScreen: function() {
+  renderSettingsHome: function() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="settingsRef"
         initialRoute={{
           title: 'Settings',
-          Component: SettingsScreen,
+          Component: SettingsHome,
           queryConfig: getRootQueryConfig(),
           props: { userId: this.props.userId }
         }}
@@ -208,7 +208,7 @@ const Main = React.createClass({
           ref="recommendTabRef"
   	      systemIcon="favorites"
   	      onPress={() => this._onPressTab('recommend')}>
-          {this.renderRecommendScreen()}
+          {this.renderRecommendHome()}
 
   	    </TabBarIOS.Item>
 
@@ -217,7 +217,7 @@ const Main = React.createClass({
           ref="listsTabRef"
   	      systemIcon="bookmarks"
   	      onPress={() => this._onPressTab('lists')}>
-          {this.renderListsScreen()}
+          {this.renderListsHome()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
@@ -225,7 +225,7 @@ const Main = React.createClass({
           ref="chartsTabRef"
   	      systemIcon="most-viewed"
   	      onPress={() => this._onPressTab('charts')}>
-          {this.renderTopChartsScreen()}
+          {this.renderTopChartsHome()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
@@ -233,7 +233,7 @@ const Main = React.createClass({
           ref="settingsTabRef"
   	      systemIcon="more"
   	      onPress={() => this._onPressTab('settings')}>
-  	      {this.renderSettingsScreen()}
+  	      {this.renderSettingsHome()}
   	    </TabBarIOS.Item>
 
   	  </TabBarIOS>

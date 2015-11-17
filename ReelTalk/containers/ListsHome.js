@@ -10,18 +10,21 @@ import React, {
   TouchableHighlight,
   View,
 } from 'react-native';
+import Relay from 'react-relay';
 
 import Billboard from './Billboard';
 import ListDetailView from './ListDetailView';
 
-var json = require("../Data");
+import json from '../Data.json';
 
-export default class ListsHome extends React.Component {
-  constructor() {
-    super();
+class ListsHome extends React.Component {
+  constructor(props) {
+    super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const viewer = this.props.viewer;
+    const listNames = Object.keys(props.viewer).filter(name => !name.startsWith('__'));
     this.state = {
-      dataSource: ds.cloneWithRows(json.lists),
+      dataSource: ds.cloneWithRows(listNames),
     };
   }
 
@@ -38,21 +41,21 @@ export default class ListsHome extends React.Component {
       <View style={styles.square}>
         <View style={styles.squareRow}>
           <Image
-              source={{uri: json.shows[listShows[0]].thumbnail}}
+              source={{uri: listShows[0].node.poster}}
               style={styles.image}
           />
           <Image
-              source={{uri: json.shows[listShows[1]].thumbnail}}
+              source={{uri: listShows[1].node.poster}}
               style={styles.image}
           />
         </View>
         <View style={styles.squareRow}>
           <Image
-              source={{uri: json.shows[listShows[2]].thumbnail}}
+              source={{uri: listShows[2].node.poster}}
               style={styles.image}
           />
           <Image
-              source={{uri: json.shows[listShows[3]].thumbnail}}
+              source={{uri: listShows[3].node.poster}}
               style={styles.image}
           />
         </View>
@@ -60,15 +63,16 @@ export default class ListsHome extends React.Component {
     );
   }
 
-  renderListRow(list) {
+  renderListRow(listName) {
+    const { viewer } = this.props;
     return (
       <TouchableHighlight onPress={()=>this._showList(list)}>
         <View style={styles.container}>
           <View style={styles.listRow}>
-            {this._getListImage(list.shows)}
+            {this._getListImage(viewer[listName].edges)}
             <View>
-              <Text style={styles.listTitle}>{list.name}</Text>
-              <Text style={styles.listSubheading}>{list.shows.length} items</Text>
+              <Text style={styles.listTitle}>{listName}</Text>
+              <Text style={styles.listSubheading}>{viewer[listName].totalCount} items</Text>
             </View>
           </View>
           <View style={styles.rowDivider}/>
@@ -91,13 +95,38 @@ export default class ListsHome extends React.Component {
         </View>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderListRow}
+          renderRow={(name) => this.renderListRow(name)}
           style={styles.listView}
         />
       </ScrollView>
     );
   }
 }
+
+export default Relay.createContainer(ListsHome, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        Favorites: allShows(first: 4) {
+          totalCount
+          edges {
+            node {
+              poster
+            }
+          }
+        }
+        MyFavoriteComedies: allShows(last: 4) {
+          totalCount
+          edges {
+            node {
+              poster
+            }
+          }
+        }
+      }
+    `
+  }
+});
 
 const rowHeight = 55;
 

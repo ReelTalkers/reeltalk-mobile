@@ -8,20 +8,22 @@ import React, {
   Text,
   View,
 } from 'react-native';
+import Relay from 'react-relay';
 
-import json from "../Data";
 import MovieGrid from "./MovieGrid";
 
-export default class TopChartsHome extends React.Component {
-  constructor() {
-    super();
+class TopChartsHome extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      shows: json.categories[0]["shows"],
+      shows: props.viewer.topWeek,
     };
   }
 
   _onValueChange(value) {
-    const newList = (value === 'Today') ? json.categories[0]["shows"] : json.categories[1]["shows"];
+    const { viewer } = this.props;
+    const newList = (value === 'Today') ? viewer.topToday : viewer.topWeek;
+    // TODO: does not update. need real queries
     this.setState({
       shows: newList,
     });
@@ -32,8 +34,8 @@ export default class TopChartsHome extends React.Component {
       <View>
         <SegmentedControlIOS
           values={["This Week", "Today"]}
-          selectedIndex={1}
-          onValueChange={this._onValueChange}
+          selectedIndex={0}
+          onValueChange={(value) => this._onValueChange(value)}
         />
         <MovieGrid
           shows={this.state.shows}
@@ -43,6 +45,21 @@ export default class TopChartsHome extends React.Component {
     );
   }
 }
+
+export default Relay.createContainer(TopChartsHome, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        topWeek: allShows(first: 10) {
+          ${MovieGrid.getFragment('shows')}
+        }
+        topToday: allShows(last: 5) {
+          ${MovieGrid.getFragment('shows')}
+        }
+      }
+    `
+  }
+})
 
 const styles = StyleSheet.create({
 });

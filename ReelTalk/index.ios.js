@@ -104,16 +104,13 @@ const ListsNavigationBarRouteMapper = {
   },
 };
 
-const Main = React.createClass({
-  getInitialState: function() {
-    return { state: this.props.activeTab }
-  },
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedTab: props.activeTab }
+  }
 
-  componentDidMount: function() {
-    this.refs.recommendTabRef.setState({hasBeenSelected: true})
-  },
-
-  renderRecommendHome: function() {
+  renderRecommendHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
@@ -131,9 +128,9 @@ const Main = React.createClass({
         }
         renderScene={relayRenderScene} />
     );
-  },
+  }
 
-  renderListsHome: function() {
+  renderListsHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
@@ -153,9 +150,9 @@ const Main = React.createClass({
         }
         renderScene={relayRenderScene} />
     );
-  },
+  }
 
-  renderTopChartsHome: function() {
+  renderTopChartsHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
@@ -173,9 +170,9 @@ const Main = React.createClass({
             style={styles.navBar} />
         } />
     );
-  },
+  }
 
-  renderSettingsHome: function() {
+  renderSettingsHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
@@ -188,9 +185,9 @@ const Main = React.createClass({
         }}
         renderScene={relayRenderScene} />
     );
-  },
+  }
 
-  _onPressTab: function (tabTitle) {
+  _onPressTab(tabTitle) {
     if (this.state.selectedTab !== tabTitle) {
       this.setState({
         selectedTab: tabTitle
@@ -198,14 +195,13 @@ const Main = React.createClass({
     } else {
       this.refs[tabTitle + 'Ref'].popToTop();
     }
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <TabBarIOS>
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'recommend'}
-          ref="recommendTabRef"
   	      systemIcon="favorites"
   	      onPress={() => this._onPressTab('recommend')}>
           {this.renderRecommendHome()}
@@ -214,7 +210,6 @@ const Main = React.createClass({
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'lists'}
-          ref="listsTabRef"
   	      systemIcon="bookmarks"
   	      onPress={() => this._onPressTab('lists')}>
           {this.renderListsHome()}
@@ -222,7 +217,6 @@ const Main = React.createClass({
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'charts'}
-          ref="chartsTabRef"
   	      systemIcon="most-viewed"
   	      onPress={() => this._onPressTab('charts')}>
           {this.renderTopChartsHome()}
@@ -230,7 +224,6 @@ const Main = React.createClass({
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'settings'}
-          ref="settingsTabRef"
   	      systemIcon="more"
   	      onPress={() => this._onPressTab('settings')}>
   	      {this.renderSettingsHome()}
@@ -239,16 +232,17 @@ const Main = React.createClass({
   	  </TabBarIOS>
     );
   }
-});
+}
 
-const ReelTalk = React.createClass({
-	getInitialState: function() {
-    	return {
-    		userId: '2',
-    	};
-  	},
+export default class ReelTalk extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+    	userId: '2',
+    };
+  }
 
-	render: function() {
+	render() {
   	return (
       <Navigator
         ref={(navigator) => { this.navigator = navigator; }}
@@ -275,7 +269,7 @@ const ReelTalk = React.createClass({
       />
   	);
 	}
-});
+}
 
 const relayRenderScene = (route, navigator) => {
   const { title, Component, queryConfig } = route;
@@ -331,5 +325,3 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('ReelTalk', () => ReelTalk);
-
-module.exports = ReelTalk;

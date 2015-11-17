@@ -10,7 +10,7 @@ import React, {
 } from 'react-native';
 import Relay from 'react-relay';
 
-import MovieGrid from "./MovieGrid";
+import MovieGrid from './MovieGrid';
 
 class TopChartsHome extends React.Component {
   constructor(props) {

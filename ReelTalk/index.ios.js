@@ -15,7 +15,7 @@ import React, {
 import RecommendHome from './containers/RecommendHome';
 import ListsHome from './containers/ListsHome';
 import TopChartsHome from './containers/TopChartsHome';
-import SettingsHome from './containers/Billboard';
+import SettingsHome from './containers/SettingsHome';
 
 import Relay from 'react-relay';
 Relay.injectNetworkLayer(

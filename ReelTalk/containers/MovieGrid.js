@@ -9,9 +9,11 @@ import React, {
   TouchableHighlight,
   View,
 } from 'react-native';
+import Relay from 'react-relay';
 
-var json = require("../Data");
 import MovieDetailView from "./MovieDetailView";
+
+import { getMovieDetailRoute } from '../queryConfigs';
 
 class MovieGrid extends React.Component {
 
@@ -19,30 +21,27 @@ class MovieGrid extends React.Component {
     super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(props.shows),
+      dataSource: ds.cloneWithRows(props.shows.edges),
     };
   }
 
   _showDetails(show) {
     this.props.navigator.push({
-      title: show.name,
-      component: MovieDetailView,
-      props: {
-        initialShow: show,
-        ...this.props,
-      },
+      title: show.title,
+      Component: MovieDetailView,
+      queryConfig: getMovieDetailRoute(show.id),
+      props: {...this.props},
     });
   }
 
-  renderGridComponent(showID) {
-    const show = json.shows[showID];
+  renderGridComponent(show) {
     return (
       <TouchableHighlight
         style={styles.movieButton}
-        onPress={()=>this._showDetails(show)}
+        onPress={() => this._showDetails(show)}
       >
         <Image
-            source={{uri: show.thumbnail}}
+            source={{uri: show.poster}}
             style={styles.image}
         />
       </TouchableHighlight>
@@ -53,14 +52,30 @@ class MovieGrid extends React.Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderGridComponent}
-        style={this.listView}
+        renderRow={(edge) => this.renderGridComponent(edge.node)}
+        style={styles.listView}
         contentContainerStyle={styles.listViewContainer}
         automaticallyAdjustContentInsets={false}
       />
     );
   }
 }
+
+export default Relay.createContainer(MovieGrid, {
+  fragments: {
+    shows: () => Relay.QL`
+      fragment on ShowConnection {
+        edges {
+          node {
+            id
+            title
+            poster
+          }
+        }
+      }
+    `
+  }
+});
 
 const styles = StyleSheet.create({
   listView: {

@@ -15,8 +15,16 @@ UserQueryConfig.paramDefinitions = {
   userID: {required: true},
 };
 
-export class RootQueryConfig extends Relay.Route {}
-RootQueryConfig.routeName = 'RootQueryConfig';
-RootQueryConfig.queries = {
-  viewer: () => Relay.QL`query RootQuery { viewer }`
+export const getRootQueryConfig = () => {
+  return { queries: { viewer: () => Relay.QL`query { viewer }` }, name: 'RootQueryConfig', params: {}};
+}
+
+export const getMovieDetailRoute = (id) => {
+   return {
+     queries: {
+       show: () => Relay.QL`query { show(id: $showId) }`,
+     },
+     name: 'ShowDetailRoute',
+     params: { showId: id }
+   };
 };

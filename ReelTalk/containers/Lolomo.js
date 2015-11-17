@@ -12,15 +12,7 @@ import Relay from 'react-relay';
 import LolomoRow from './LolomoRow';
 import MovieDetailView from './MovieDetailView';
 
-const getMovieDetailRoute = (id) => {
-   return {
-     queries: {
-       show: () => Relay.QL`query { show(id: $showId) }`,
-     },
-     name: 'ShowDetailRoute',
-     params: { showId: id }
-   };
-};
+import { getMovieDetailRoute } from '../queryConfigs';
 
 class Lolomo extends React.Component {
 

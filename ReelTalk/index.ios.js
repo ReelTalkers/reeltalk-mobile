@@ -24,7 +24,7 @@ Relay.injectNetworkLayer(
 
 import cssVar from 'cssVar';
 
-import { RootQueryConfig } from './queryConfigs';
+import { getRootQueryConfig } from './queryConfigs';
 
 const NavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
@@ -277,13 +277,8 @@ const ReelTalk = React.createClass({
 	}
 });
 
-const getRootQueryConfig = () => {
-  return { queries: { viewer: () => Relay.QL`query { viewer }` }, name: 'RootQueryConfig', params: {}};
-}
-
 const relayRenderScene = (route, navigator) => {
-  const { title, Component } = route;
-  const queryConfig = route.queryConfig || getRootQueryConfig();
+  const { title, Component, queryConfig } = route;
   return (
     <View style={styles.container}>
       <Relay.RootContainer

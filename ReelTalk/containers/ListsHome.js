@@ -15,6 +15,7 @@ import Relay from 'react-relay';
 import Billboard from './Billboard';
 import ListDetailView from './ListDetailView';
 
+import { getRootQueryConfig } from '../queryConfigs';
 import json from '../Data.json';
 
 class ListsHome extends React.Component {
@@ -28,10 +29,11 @@ class ListsHome extends React.Component {
     };
   }
 
-  _showList(list) {
+  _showList(listName, list) {
     this.props.navigator.push({
-      component: ListDetailView,
-      props: { list: list}
+      Component: ListDetailView,
+      queryConfig: getRootQueryConfig(),
+      props: { listName }
     });
   }
 
@@ -66,7 +68,7 @@ class ListsHome extends React.Component {
   renderListRow(listName) {
     const { viewer } = this.props;
     return (
-      <TouchableHighlight onPress={()=>this._showList(list)}>
+      <TouchableHighlight onPress={() => this._showList(listName, viewer[listName].edges)}>
         <View style={styles.container}>
           <View style={styles.listRow}>
             {this._getListImage(viewer[listName].edges)}

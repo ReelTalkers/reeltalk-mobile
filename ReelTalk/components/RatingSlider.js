@@ -88,7 +88,7 @@ export default class RatingSlider extends React.Component {
   render() {
     return (
       <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]}
-            onLayout={this._onLayout}
+            onLayout={(event) => this._onLayout(event)}
             {...this._responder}
       >
         <Text style={styles.sliderText}>{this.state.text}</Text>

@@ -12,32 +12,43 @@ import Relay from 'react-relay';
 import LolomoRow from './LolomoRow';
 import MovieDetailView from './MovieDetailView';
 
-export default class Lolomo extends React.Component {
+const getMovieDetailRoute = (id) => {
+   return {
+     queries: {
+       show: () => Relay.QL`query { show(id: $showId) }`,
+     },
+     name: 'ShowDetailRoute',
+     params: { showId: id }
+   };
+};
+
+class Lolomo extends React.Component {
 
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    console.log(props.viewer)
     this.state = {
       dataSource: ds.cloneWithRows(Object.keys(props.viewer).filter(k => !k.startsWith('__')))
     };
   }
 
-  _showDetails(show) {
+  _showDetails(showTitle, showId) {
+    console.log(showTitle + ' ' + showId)
     this.props.navigator.push({
-      title: show.title,
-      component: MovieDetailView,
-      props: { initialShow: show, userId: this.props.userId }
+      title: showTitle,
+      Component: MovieDetailView,
+      queryConfig: getMovieDetailRoute(showId),
+      props: { userId: this.props.userId }
     });
   }
 
   renderLolomoRow(categoryName) {
-    console.log(this.props.viewer)
-    console.log(categoryName)
-    console.log(this.props.viewer[categoryName])
     return (
-      <LolomoRow shows={this.props.viewer[categoryName]} categoryName={categoryName} onSelect={(show) => this._showDetails(show)}/>
-    )
+      <LolomoRow
+        shows={this.props.viewer[categoryName]}
+        categoryName={categoryName}
+        onSelect={(title, id) => this._showDetails(title, id)} />
+    );
   }
 
   render() {

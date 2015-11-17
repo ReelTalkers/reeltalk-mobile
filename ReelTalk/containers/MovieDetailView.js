@@ -11,20 +11,19 @@ import React, {
   TouchableHighlight,
   View,
 } from 'react-native';
-
+import Relay from 'react-relay';
 import ParallaxView from 'react-native-parallax-view';
 
 import Rating from '../components/Rating';
 import RatingSlider from '../components/RatingSlider';
 import HeaderScrollView from '../components/HeaderScrollView';
 import LolomoRow from './LolomoRow';
-import json from '../Data';
 
-export default class MovieDetailView extends React.Component {
+class MovieDetailView extends React.Component {
   constructor(props) {
     super(props);
   	this.state = {
-  		show: props.initialShow,
+  		show: props.show,
       scrollEnabled: true,
   	};
 	}
@@ -39,19 +38,19 @@ export default class MovieDetailView extends React.Component {
   _getColorStyles() {
     return {
       primaryBackground: {
-        backgroundColor: this.state.show.colors.primary
+        backgroundColor: this.state.show.backgroundColor
       },
       primaryShadow: {
-        shadowColor: this.state.show.colors.primary
+        shadowColor: this.state.show.backgroundColor
       },
       detailFontColor: {
-        color: this.state.show.colors.detail
+        color: this.state.show.detailColor
       },
       textFontColor: {
-        color: this.state.show.colors.text
+        color: this.state.show.textColor
       },
       primaryBorderLeftColor: {
-        borderLeftColor: this.state.show.colors.primary
+        borderLeftColor: this.state.show.backgroundColor
       },
     };
   }
@@ -75,26 +74,24 @@ export default class MovieDetailView extends React.Component {
 // TODO: Lists should not be stored within movies, there should be lists containing movies but I want to focus on design now
 // TODO: make <RatingSlider style={styles.ratingSlider}/>
   render() {
+    const { show, relatedShows } = this.props;
     return (
       <ParallaxView
         style={styles.scrollView}
         automaticallyAdjustContentInsets={false}
         scrollEnabled={this.state.scrollEnabled}
-        backgroundSource={{uri: this.state.show.largePoster}}
+        backgroundSource={{uri: this.state.show.banner}}
         windowHeight={470}
       >
         <View style={styles.content}>
           <View style={[styles.headerLine, this._getColorStyles().primaryBackground]} />
           <View style={styles.header}>
-            <Text style={styles.title}>{this.state.show.name}</Text>
+            <Text style={styles.title}>{this.state.show.title}</Text>
             <View style={styles.detail}>
               <Text style={styles.detailText}>{this.state.show.runtime}</Text>
               <Text style={styles.detailText}>{this.state.show.genre}</Text>
               <Text style={styles.detailText}>{this.state.show.year}</Text>
-              <Text style={styles.detailText}>{this.state.show.rating}</Text>
-            </View>
-            <View style={styles.listsContainer}>
-              {json.lists.map(list => <Text style={styles.listName}>{list.name}</Text>)}
+              <Text style={styles.detailText}>{this.state.show.mpaaRating}</Text>
             </View>
           </View>
           <RatingSlider
@@ -107,8 +104,8 @@ export default class MovieDetailView extends React.Component {
               {text: "Good", color: "rgba(253, 199, 12, .7)"},
               {text: "Fantastic", color: "rgba(255, 243, 12, .7)"}
             ]}
-            disableScroll={this._disableScroll}
-            enableScroll={this._enableScroll}
+            disableScroll={() => this._disableScroll}
+            enableScroll={() => this._enableScroll}
           />
           <Text style={styles.description}>{this.state.show.description}</Text>
         </View>
@@ -116,6 +113,26 @@ export default class MovieDetailView extends React.Component {
     );
   }
 }
+
+export default Relay.createContainer(MovieDetailView, {
+  fragments: {
+    show: () => Relay.QL`
+      fragment on Show {
+        id
+        title
+        banner
+        description
+        runtime
+        genre
+        year
+        mpaaRating
+        backgroundColor
+        detailColor
+        textColor
+      }
+    `,
+  }
+});
 
 const styles = StyleSheet.create({
     scrollView: {

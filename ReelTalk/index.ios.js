@@ -282,7 +282,8 @@ const getRootQueryConfig = () => {
 }
 
 const relayRenderScene = (route, navigator) => {
-  const { title, Component, queryConfig } = route;
+  const { title, Component } = route;
+  const queryConfig = route.queryConfig || getRootQueryConfig();
   return (
     <View style={styles.container}>
       <Relay.RootContainer

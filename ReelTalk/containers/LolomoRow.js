@@ -12,15 +12,13 @@ import React, {
 } from 'react-native';
 import Relay from 'react-relay';
 
-const json = require("../Data");
-
 export default class LolomoRow extends React.Component {
 
   createThumbnail(show) {
     return (
       <TouchableHighlight
         style={styles.movieButton}
-        onPress={()=>this.props.onSelect(show)}
+        onPress={()=>this.props.onSelect(show.title, show.id)}
       >
         <Image
             source={{uri: show.poster}}

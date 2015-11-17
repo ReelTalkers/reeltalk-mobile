@@ -7,11 +7,12 @@ import React, {
   ScrollView,
   View,
 } from 'react-native';
+import Relay from 'react-relay';
 
 import Billboard from './Billboard';
 import Lolomo from './Lolomo';
 
-export default class RecommendHome extends React.Component {
+class RecommendHome extends React.Component {
   render() {
     return (
       <ScrollView
@@ -21,6 +22,7 @@ export default class RecommendHome extends React.Component {
         </View>
         <Lolomo
           style={styles.lolomo}
+          viewer={this.props.viewer}
           navigator={this.props.navigator}
           userId={this.props.userId}
         />
@@ -28,6 +30,16 @@ export default class RecommendHome extends React.Component {
     );
   }
 }
+
+export default Relay.createContainer(RecommendHome, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        ${Lolomo.getFragment('viewer')}
+      }
+    `
+  }
+});
 
 const styles = StyleSheet.create({
   billboardContainer: {

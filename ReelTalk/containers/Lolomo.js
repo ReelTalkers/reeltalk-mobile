@@ -7,8 +7,8 @@ import React, {
   Text,
   View,
 } from 'react-native';
+import Relay from 'react-relay';
 
-const json = require("../Data");
 import LolomoRow from './LolomoRow';
 import MovieDetailView from './MovieDetailView';
 
@@ -17,22 +17,26 @@ export default class Lolomo extends React.Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    console.log(props.viewer)
     this.state = {
-      dataSource: ds.cloneWithRows(json.categories),
+      dataSource: ds.cloneWithRows(Object.keys(props.viewer).filter(k => !k.startsWith('__')))
     };
   }
 
   _showDetails(show) {
     this.props.navigator.push({
-      title: show.name,
+      title: show.title,
       component: MovieDetailView,
       props: { initialShow: show, userId: this.props.userId }
     });
   }
 
-  renderLolomoRow(category) {
+  renderLolomoRow(categoryName) {
+    console.log(this.props.viewer)
+    console.log(categoryName)
+    console.log(this.props.viewer[categoryName])
     return (
-      <LolomoRow header={category.name} category={category} onSelect={(show) => this._showDetails(show)}/>
+      <LolomoRow shows={this.props.viewer[categoryName]} categoryName={categoryName} onSelect={(show) => this._showDetails(show)}/>
     )
   }
 
@@ -40,13 +44,28 @@ export default class Lolomo extends React.Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={(category) => this.renderLolomoRow(category)}
+        renderRow={(categoryName) => this.renderLolomoRow(categoryName)}
         style={styles.listView}
         showsVerticalScrollIndicator={false}
       />
     );
   }
 }
+
+export default Relay.createContainer(Lolomo, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        Comedies: allShows(first: 5) {
+          ${LolomoRow.getFragment('shows')}
+        }
+        Romance: allShows(last: 5) {
+          ${LolomoRow.getFragment('shows')}
+        }
+      }
+    `
+  }
+})
 
 const styles = StyleSheet.create({
   listView: {

@@ -10,20 +10,20 @@ import React, {
   TouchableHighlight,
   View,
 } from 'react-native';
+import Relay from 'react-relay';
 
 const json = require("../Data");
 
 export default class LolomoRow extends React.Component {
 
-  createThumbnail(showID) {
-    const show =json.shows[showID];
+  createThumbnail(show) {
     return (
       <TouchableHighlight
         style={styles.movieButton}
         onPress={()=>this.props.onSelect(show)}
       >
         <Image
-            source={{uri: show.thumbnail}}
+            source={{uri: show.poster}}
             style={styles.image}
         />
       </TouchableHighlight>
@@ -31,22 +31,39 @@ export default class LolomoRow extends React.Component {
   }
 
   render() {
+    const { categoryName, shows } = this.props;
     return (
       <View>
-        <Text style={styles.categoryName}>{this.props.header}</Text>
+        <Text style={styles.categoryName}>{categoryName}</Text>
         <ScrollView
           automaticallyAdjustContentInsets={false}
           horizontal={true}
           style={styles.row}
           showsHorizontalScrollIndicator={false}
         >
-          {this.props.category.shows.map(showID => this.createThumbnail(showID))}
+          {shows.edges.map(edge => this.createThumbnail(edge.node))}
           <View style={styles.endOfRow}/>
         </ScrollView>
       </View>
     );
   }
 }
+
+export default Relay.createContainer(LolomoRow, {
+  fragments: {
+    shows: () => Relay.QL`
+      fragment on ShowConnection {
+        edges {
+          node {
+            id
+            title
+            poster
+          }
+        }
+      }
+    `
+  }
+})
 
 const styles = StyleSheet.create({
   categoryName: {

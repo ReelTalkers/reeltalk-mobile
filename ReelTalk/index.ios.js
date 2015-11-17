@@ -12,10 +12,10 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import RecommendScreen from './screens/RecommendScreen';
-import ListsScreen from './screens/ListsScreen';
-import TopChartsScreen from './screens/TopChartsScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import RecommendScreen from './containers/RecommendHome';
+import ListsScreen from './containers/ListsHome';
+import TopChartsScreen from './containers/TopChartsHome';
+import SettingsScreen from './containers/Billboard';
 
 import Relay from 'react-relay';
 Relay.injectNetworkLayer(
@@ -283,7 +283,6 @@ const getRootQueryConfig = () => {
 
 const relayRenderScene = (route, navigator) => {
   const { title, Component, queryConfig } = route;
-  console.log(route)
   return (
     <View style={styles.container}>
       <Relay.RootContainer

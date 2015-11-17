@@ -12,7 +12,7 @@ import Relay from 'react-relay';
 import LolomoRow from './LolomoRow';
 import MovieDetailView from './MovieDetailView';
 
-import { getMovieDetailRoute } from '../queryConfigs';
+import { getMovieDetailQueryConfig } from '../queryConfigs';
 
 class Lolomo extends React.Component {
 
@@ -29,7 +29,7 @@ class Lolomo extends React.Component {
     this.props.navigator.push({
       title: showTitle,
       Component: MovieDetailView,
-      queryConfig: getMovieDetailRoute(showId),
+      queryConfig: getMovieDetailQueryConfig(showId),
       props: { userId: this.props.userId }
     });
   }

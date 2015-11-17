@@ -13,7 +13,7 @@ import Relay from 'react-relay';
 
 import MovieDetailView from "./MovieDetailView";
 
-import { getMovieDetailRoute } from '../queryConfigs';
+import { getMovieDetailQueryConfig } from '../queryConfigs';
 
 class MovieGrid extends React.Component {
 
@@ -29,7 +29,7 @@ class MovieGrid extends React.Component {
     this.props.navigator.push({
       title: show.title,
       Component: MovieDetailView,
-      queryConfig: getMovieDetailRoute(show.id),
+      queryConfig: getMovieDetailQueryConfig(show.id),
       props: {...this.props},
     });
   }

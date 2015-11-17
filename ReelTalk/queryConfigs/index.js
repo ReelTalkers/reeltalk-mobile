@@ -2,24 +2,19 @@
 
 import Relay from 'react-relay';
 
-export class UserQueryConfig extends Relay.Route {};
-UserQueryConfig.routeName = 'UserQueryConfig';
-UserQueryConfig.queries = {
-  user: () => Relay.QL`
-    query {
-      user(id: $userID)
-    }
-  `
-};
-UserQueryConfig.paramDefinitions = {
-  userID: {required: true},
+export const getUserQueryConfig = (id) => {
+  return {
+    queries: { user: () => Relay.QL`query { user(id: $userId) }`, },
+    name: 'UserQueryConfig',
+    params: { userId: id }
+  };
 };
 
 export const getRootQueryConfig = () => {
   return { queries: { viewer: () => Relay.QL`query { viewer }` }, name: 'RootQueryConfig', params: {}};
-}
+};
 
-export const getMovieDetailRoute = (id) => {
+export const getMovieDetailQueryConfig = (id) => {
    return {
      queries: {
        show: () => Relay.QL`query { show(id: $showId) }`,

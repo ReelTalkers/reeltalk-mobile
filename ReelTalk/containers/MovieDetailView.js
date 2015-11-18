@@ -74,24 +74,38 @@ class MovieDetailView extends React.Component {
 // TODO: Lists should not be stored within movies, there should be lists containing movies but I want to focus on design now
 // TODO: make <RatingSlider style={styles.ratingSlider}/>
   render() {
-    const { show, relatedShows } = this.props;
+    const { relatedShows } = this.props;
+    const { show, scrollEnabled } = this.state;
+    const actors = show.actors.edges.map(edge =>
+      edge.node.firstName + ' ' + edge.node.lastName
+    ).join(', ');
+    const director = show.director.firstName + ' ' + show.director.lastName;
     return (
       <ParallaxView
         style={styles.scrollView}
         automaticallyAdjustContentInsets={false}
-        scrollEnabled={this.state.scrollEnabled}
-        backgroundSource={{uri: this.state.show.banner}}
+        scrollEnabled={scrollEnabled}
+        backgroundSource={{uri: show.banner}}
         windowHeight={470}
       >
         <View style={styles.content}>
           <View style={[styles.headerLine, this._getColorStyles().primaryBackground]} />
           <View style={styles.header}>
-            <Text style={styles.title}>{this.state.show.title}</Text>
+            <Text style={styles.title}>{show.title}</Text>
             <View style={styles.detail}>
-              <Text style={styles.detailText}>{this.state.show.runtime}</Text>
-              <Text style={styles.detailText}>{this.state.show.genre}</Text>
-              <Text style={styles.detailText}>{this.state.show.year}</Text>
-              <Text style={styles.detailText}>{this.state.show.mpaaRating}</Text>
+              <Text style={styles.detailText}>{show.runtime}</Text>
+              <Text style={styles.detailText}>{show.genre}</Text>
+              <Text style={styles.detailText}>{show.year}</Text>
+              <Text style={styles.detailText}>{show.mpaaRating}</Text>
+            </View>
+            <View style={styles.detail}>
+              <Text style={styles.detailText}>Directed by: {director}</Text>
+            </View>
+            <View style={styles.detail}>
+              <Text style={styles.detailText, {fontWeight: 'bold'}}>Starring</Text>
+            </View>
+            <View style={styles.detail}>
+              <Text style={styles.detailText}>{actors}</Text>
             </View>
           </View>
           <RatingSlider
@@ -107,7 +121,7 @@ class MovieDetailView extends React.Component {
             disableScroll={() => this._disableScroll}
             enableScroll={() => this._enableScroll}
           />
-          <Text style={styles.description}>{this.state.show.description}</Text>
+          <Text style={styles.description}>{show.description}</Text>
         </View>
       </ParallaxView>
     );
@@ -129,6 +143,18 @@ export default Relay.createContainer(MovieDetailView, {
         backgroundColor
         detailColor
         textColor
+        director {
+          firstName
+          lastName
+        }
+        actors(first: 3) {
+          edges {
+            node {
+              firstName
+              lastName
+            }
+          }
+        }
       }
     `,
   }

@@ -8,6 +8,7 @@ import React, {
   Text,
   View,
 } from 'react-native';
+import Relay from 'react-relay';
 
 var BUTTONS = [
   'Just Me',
@@ -17,9 +18,7 @@ var BUTTONS = [
 ];
 var CANCEL_INDEX = 3;
 
-var json = require("../Data");
-
-export default class Billboard extends React.Component {
+class Billboard extends React.Component {
 
   constructor() {
     super();
@@ -46,7 +45,7 @@ export default class Billboard extends React.Component {
     return (
       <View style={styles.container}>
         <Image
-          source={{uri: json.users[this.props.userId].picture}}
+          source={{uri: this.props.user.picture}}
           style={styles.image}
         />
         <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
@@ -55,6 +54,16 @@ export default class Billboard extends React.Component {
     );
   }
 }
+
+export default Relay.createContainer(Billboard, {
+  fragments: {
+    user: () => Relay.QL`
+      fragment on UserProfile {
+        picture
+      }
+    `
+  }
+});
 
 const styles = StyleSheet.create({
     container: {

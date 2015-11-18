@@ -16,7 +16,6 @@ import Billboard from './Billboard';
 import ListDetailView from './ListDetailView';
 
 import { getRootQueryConfig } from '../queryConfigs';
-import json from '../Data.json';
 
 class ListsHome extends React.Component {
   constructor(props) {

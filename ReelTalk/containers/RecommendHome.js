@@ -18,7 +18,7 @@ class RecommendHome extends React.Component {
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
-          <Billboard userId={this.props.userId}/>
+          <Billboard user={this.props.user}/>
         </View>
         <Lolomo
           style={styles.lolomo}
@@ -33,6 +33,11 @@ class RecommendHome extends React.Component {
 
 export default Relay.createContainer(RecommendHome, {
   fragments: {
+    user: () => Relay.QL`
+      fragment on UserProfile {
+        ${Billboard.getFragment('user')}
+      }
+    `,
     viewer: () => Relay.QL`
       fragment on Query {
         ${Lolomo.getFragment('viewer')}

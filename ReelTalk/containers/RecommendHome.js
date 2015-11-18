@@ -34,7 +34,6 @@ var RecommendHome = React.createClass({
   },
 
   handleCreateGroup: function(selectedUsers, groupName) {
-    console.log(groupName);
     if (Object.keys(selectedUsers).length === 0) {
       AlertIOS.alert(
         'No Users Selected',
@@ -71,6 +70,13 @@ var RecommendHome = React.createClass({
     })
   },
 
+  selectMe: function() {
+    this.setState({
+      groupMembers: [json.users[this.props.userId]],
+      filterName: "Just Me",
+    });
+  },
+
   showActionSheet: function() {
     ActionSheetIOS.showActionSheetWithOptions({
       options: BUTTONS,
@@ -83,9 +89,7 @@ var RecommendHome = React.createClass({
         });
       }
       if (buttonIndex === 0) {
-        this.setState({
-          groupMembers: [json.users[this.props.userId]],
-        });
+        this.selectMe();
       }
       if (buttonIndex === 1) {
         this.selectGroup();

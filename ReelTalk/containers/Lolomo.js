@@ -61,7 +61,10 @@ export default Relay.createContainer(Lolomo, {
         Comedies: allShows(first: 5) {
           ${LolomoRow.getFragment('shows')}
         }
-        Romance: allShows(last: 5) {
+        Romance: allShows(last: 8) {
+          ${LolomoRow.getFragment('shows')}
+        }
+        Childrens: allShows(last: 5) {
           ${LolomoRow.getFragment('shows')}
         }
       }

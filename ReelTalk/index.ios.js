@@ -69,20 +69,7 @@ const RecommendBarRouteMapper = {
   },
 
   RightButton: function(route, navigator, index, navState) {
-    if (index === 0) {
-      return (null)
-    }
-    else {
-      return (
-        <TouchableOpacity
-          onPress={() => navigator.pop()}
-          style={styles.navBarLeftButton}>
-          <Text style={[styles.navBarText, styles.navBarButtonText]}>
-            {"Create"}
-          </Text>
-        </TouchableOpacity>
-      );
-    }
+    return (null)
   },
 
   Title: function(route, navigator, index, navState) {

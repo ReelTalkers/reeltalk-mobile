@@ -4,9 +4,11 @@ var React = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
+  Button,
   ListView,
   Text,
   TextInput,
+  TouchableHighlight,
   View,
 } = React;
 
@@ -30,13 +32,18 @@ var CreateGroupPage = React.createClass({
 
   renderHeader: function() {
     return (
+      <View style={styles.horizontal}>
       <TextInput
-    style={{height: 40, borderColor: 'gray', borderWidth: 1, marginLeft:10, marginRight:10, marginBottom:10}}
+    style={{height: 40, borderColor: 'gray', borderWidth: 1, marginLeft:10, marginRight:10, marginBottom:10, flex:10}}
     onChangeText={(text) => this.setState({text})}
     value={this.state.text}
     placeholder="Group Name"
     keyboardType="numeric"
   />
+<TouchableHighlight>
+<Text> Create </Text>
+</TouchableHighlight>
+</View>
     );
   },
 
@@ -56,6 +63,9 @@ var CreateGroupPage = React.createClass({
 var styles = StyleSheet.create({
   listView: {
      backgroundColor: 'white',
+  },
+  horizontal: {
+    flexDirection: "row",
   },
 });
 

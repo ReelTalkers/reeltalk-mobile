@@ -10,13 +10,13 @@ var {
   View,
 } = React;
 
-var BUTTONS = [
+const BUTTONS = [
   'Just Me',
   'Group',
   'None',
   'Cancel',
 ];
-var CANCEL_INDEX = 3;
+const CANCEL_INDEX = 3;
 
 var Billboard = require('./Billboard');
 var CreateGroupPage = require('./CreateGroupPage');
@@ -76,8 +76,6 @@ var RecommendHome = React.createClass({
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
           <Billboard groupMembers={this.state.groupMembers}
-            selectGroup={this.selectGroup}
-            defaultCategories={this.defaultCategories}
             showActionSheet={this.showActionSheet}/>
         </View>
         <Lolomo

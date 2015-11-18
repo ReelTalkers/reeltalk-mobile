@@ -17,7 +17,6 @@ var Billboard = React.createClass({
   getInitialState: function() {
   	return {
   		currentFilter: 'Just Me',
-      userId: this.props.userId,
   	};
 	},
 

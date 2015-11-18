@@ -10,47 +10,20 @@ var {
   View,
 } = React;
 
-var BUTTONS = [
-  'Just Me',
-  'Group',
-  'None',
-  'Cancel',
-];
-var CANCEL_INDEX = 3;
-
 var json = require("../Data");
+var Avatar = require("../components/Avatar");
 
 var Billboard = React.createClass({
 
-  getInitialState: function() {
-  	return {
-  		currentFilter: 'Just Me',
-  	};
-	},
-
-  showActionSheet() {
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: BUTTONS,
-      cancelButtonIndex: CANCEL_INDEX,
-    },
-    (buttonIndex) => {
-      if (buttonIndex != CANCEL_INDEX) {
-        this.setState({
-          currentFilter: BUTTONS[buttonIndex]
-        });
-      }
-    });
+  generateGroupImage: function() {
+    return ({uri: this.props.groupMembers[0].picture});
   },
-
 
   render: function() {
     return (
       <View style={styles.container}>
-        <Image
-          source={{uri: json.users[this.props.userId].picture}}
-          style={styles.image}
-        />
-        <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
+        <Avatar groupMembers={this.props.groupMembers}/>
+      <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.props.filterName}</Text>
         <View style={styles.line} />
       </View>
     );

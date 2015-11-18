@@ -121,7 +121,6 @@ class Main extends React.Component {
           title: 'Recommend',
           Component: RecommendHome,
           queryConfig: getRecommendHomeQueryConfig(FIRST_USER_ID),
-          props: { userId: this.props.userId }
         }}
         navigationBar={
           <Navigator.NavigationBar
@@ -141,7 +140,6 @@ class Main extends React.Component {
           title: 'Lists',
           Component: ListsHome,
           queryConfig: getUserQueryConfig(FIRST_USER_ID),
-          props: { userId: this.props.userId },
           rightButtonTitle: 'Edit'
         }}
         navigationBar={
@@ -163,7 +161,6 @@ class Main extends React.Component {
           title: 'Top Charts',
           Component: TopChartsHome,
           queryConfig: getRootQueryConfig(),
-          props: { userId: this.props.userId }
         }}
         renderScene={relayRenderScene}
         navigationBar={
@@ -183,7 +180,6 @@ class Main extends React.Component {
           title: 'Settings',
           Component: SettingsHome,
           queryConfig: getRootQueryConfig(),
-          props: { userId: this.props.userId }
         }}
         renderScene={relayRenderScene} />
     );
@@ -237,13 +233,6 @@ class Main extends React.Component {
 }
 
 export default class ReelTalk extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-    	userId: '2',
-    };
-  }
-
 	render() {
   	return (
       <Navigator
@@ -264,7 +253,6 @@ export default class ReelTalk extends React.Component {
           title: 'ReelTalk',
           Component: Main,
           props: {
-            userId: this.state.userId,
             activeTab: 'recommend'
           }
         }}

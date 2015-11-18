@@ -22,18 +22,17 @@ class ListsHome extends React.Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const viewer = this.props.viewer;
-    const listNames = Object.keys(props.viewer).filter(name => !name.startsWith('__'));
+    const viewer = props.viewer;
     this.state = {
-      dataSource: ds.cloneWithRows(listNames),
+      dataSource: ds.cloneWithRows(viewer.lists.edges),
     };
   }
 
-  _showList(listName, list) {
+  _showList(list) {
     this.props.navigator.push({
       Component: ListDetailView,
       queryConfig: getRootQueryConfig(),
-      props: { listName }
+      props: { listName: list.title }
     });
   }
 
@@ -65,16 +64,16 @@ class ListsHome extends React.Component {
     );
   }
 
-  renderListRow(listName) {
+  renderListRow(list) {
     const { viewer } = this.props;
     return (
-      <TouchableHighlight onPress={() => this._showList(listName, viewer[listName].edges)}>
+      <TouchableHighlight onPress={() => this._showList(list)}>
         <View style={styles.container}>
           <View style={styles.listRow}>
-            {this._getListImage(viewer[listName].edges)}
+            {this._getListImage(list.shows.edges)}
             <View>
-              <Text style={styles.listTitle}>{listName}</Text>
-              <Text style={styles.listSubheading}>{viewer[listName].totalCount} items</Text>
+              <Text style={styles.listTitle}>{list.title}</Text>
+              <Text style={styles.listSubheading}>{list.shows.edges.totalCount} items</Text>
             </View>
           </View>
           <View style={styles.rowDivider}/>
@@ -97,7 +96,7 @@ class ListsHome extends React.Component {
         </View>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={(name) => this.renderListRow(name)}
+          renderRow={(edge) => this.renderListRow(edge.node)}
           style={styles.listView}
         />
       </ScrollView>
@@ -109,19 +108,20 @@ export default Relay.createContainer(ListsHome, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Query {
-        Favorites: allShows(first: 4) {
-          totalCount
+        lists: allCuratedLists(first: 5) {
           edges {
             node {
-              poster
-            }
-          }
-        }
-        MyFavoriteComedies: allShows(last: 4) {
-          totalCount
-          edges {
-            node {
-              poster
+              id
+              title
+              shows(first: 4) {
+                edges {
+                  node {
+                    id
+                    title
+                    poster
+                  }
+                }
+              }
             }
           }
         }

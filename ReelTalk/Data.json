@@ -376,6 +376,16 @@
 			"name": "Greg",
 			"id": "3",
 		 	"picture": "https://avatars0.githubusercontent.com/u/3099999?v=3&s=400"
+		},
+		'4': {
+			"name": "Galen",
+			"id": "4",
+		 	"picture": "http://cdn87.psbin.com/img/mw=150/mh=200/cr=n/d=t0qce/t398ltnaree7w68j.jpg"
+		},
+		'5': {
+			"name": "Chippy",
+			"id": "5",
+		 	"picture": "http://cdn87.psbin.com/img/mw=150/mh=200/cr=n/d=t0qce/d7xvrkgkxyh372zj.jpg"
 		}
 	},
 	"categories" : [

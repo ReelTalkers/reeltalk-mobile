@@ -14,12 +14,6 @@ var json = require("../Data");
 
 var Billboard = React.createClass({
 
-  getInitialState: function() {
-  	return {
-  		currentFilter: 'Just Me',
-  	};
-	},
-
   generateGroupImage: function() {
     return ({uri: this.props.groupMembers[0].picture});
   },
@@ -31,7 +25,7 @@ var Billboard = React.createClass({
           source={this.generateGroupImage()}
           style={styles.image}
         />
-      <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
+      <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.props.filterName}</Text>
         <View style={styles.line} />
       </View>
     );

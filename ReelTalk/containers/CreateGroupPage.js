@@ -59,7 +59,7 @@ var CreateGroupPage = React.createClass({
           placeholder="Group Name"
           keyboardType="numeric"
         />
-      <Text onPress={() => this.props.onCreateGroup(this.state.selectedUsers)}> Create </Text>
+      <Text onPress={() => this.props.onCreateGroup(this.state.selectedUsers, this.state.text)}> Create </Text>
       </View>
     );
   },

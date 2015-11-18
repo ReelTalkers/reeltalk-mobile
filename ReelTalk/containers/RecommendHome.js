@@ -28,13 +28,15 @@ var RecommendHome = React.createClass({
     return {
       categories: json.categories,
       groupMembers: [json.users[this.props.userId]],
+      filterName: "Just me",
     };
   },
 
-  handleCreateGroup: function(selectedUsers) {
+  handleCreateGroup: function(selectedUsers, groupName) {
     this.props.navigator.pop();
     this.setState({
       groupMembers: Object.keys(selectedUsers).map(k => selectedUsers[k]),
+      filterName: groupName,
     });
     // TODO Filter out and set new movies here
   },
@@ -70,12 +72,12 @@ var RecommendHome = React.createClass({
   },
 
   render: function() {
-    console.log(this.state.groupMembers);
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
           <Billboard groupMembers={this.state.groupMembers}
+            filterName={this.state.filterName}
             showActionSheet={this.showActionSheet}/>
         </View>
         <Lolomo

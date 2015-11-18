@@ -24,7 +24,7 @@ import TopChartsHome from './containers/TopChartsHome';
 import SettingsHome from './containers/SettingsHome';
 
 import { relayRenderScene } from './utils';
-import { getRootQueryConfig } from './queryConfigs';
+import { getRootQueryConfig, getUserQueryConfig } from './queryConfigs';
 
 const NavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
@@ -138,7 +138,7 @@ class Main extends React.Component {
         initialRoute={{
           title: 'Lists',
           Component: ListsHome,
-          queryConfig: getRootQueryConfig(),
+          queryConfig: getUserQueryConfig('VXNlclByb2ZpbGU6MQ=='),
           props: { userId: this.props.userId },
           rightButtonTitle: 'Edit'
         }}

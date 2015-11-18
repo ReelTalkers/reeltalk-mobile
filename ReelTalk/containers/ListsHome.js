@@ -22,9 +22,8 @@ class ListsHome extends React.Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const viewer = props.viewer;
     this.state = {
-      dataSource: ds.cloneWithRows(viewer.lists.edges),
+      dataSource: ds.cloneWithRows(props.user.lists.edges),
     };
   }
 
@@ -65,7 +64,7 @@ class ListsHome extends React.Component {
   }
 
   renderListRow(list) {
-    const { viewer } = this.props;
+    const { user } = this.props;
     return (
       <TouchableHighlight onPress={() => this._showList(list)}>
         <View style={styles.container}>
@@ -90,7 +89,7 @@ class ListsHome extends React.Component {
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
            <Image
-             source={{uri: json.users[this.props.userId].picture}}
+             source={{uri: this.props.user.picture}}
              style={styles.circularImage}
            />
         </View>
@@ -106,9 +105,10 @@ class ListsHome extends React.Component {
 
 export default Relay.createContainer(ListsHome, {
   fragments: {
-    viewer: () => Relay.QL`
-      fragment on Query {
-        lists: allCuratedLists(first: 5) {
+    user: () => Relay.QL`
+      fragment on UserProfile {
+        picture
+        lists: subscribedLists(first: 5) {
           edges {
             node {
               id
@@ -116,8 +116,6 @@ export default Relay.createContainer(ListsHome, {
               shows(first: 4) {
                 edges {
                   node {
-                    id
-                    title
                     poster
                   }
                 }

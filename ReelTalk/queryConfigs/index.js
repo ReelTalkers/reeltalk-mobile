@@ -4,7 +4,7 @@ import Relay from 'react-relay';
 
 export const getUserQueryConfig = (id) => {
   return {
-    queries: { user: () => Relay.QL`query { user(id: $userId) }`, },
+    queries: { user: () => Relay.QL`query { userProfile(id: $userId) }`, },
     name: 'UserQueryConfig',
     params: { userId: id }
   };

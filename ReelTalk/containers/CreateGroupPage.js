@@ -40,9 +40,7 @@ var CreateGroupPage = React.createClass({
     placeholder="Group Name"
     keyboardType="numeric"
   />
-<TouchableHighlight>
-<Text> Create </Text>
-</TouchableHighlight>
+<Text onPress={this.props.onCreateGroup}> Create </Text>
 </View>
     );
   },

@@ -21,10 +21,16 @@ var RecommendHome = React.createClass({
     };
   },
 
+  handleCreateGroup: function() {
+    this.props.navigator.pop();
+    console.log("Creating group");
+  },
+
   selectGroup: function() {
     this.props.navigator.push({
       title: "Group",
       component: CreateGroupPage,
+      props: {onCreateGroup: this.handleCreateGroup},
     })
     this.setState({
       currentFilter: "Friends",

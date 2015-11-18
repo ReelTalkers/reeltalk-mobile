@@ -18,6 +18,8 @@ var BUTTONS = [
 ];
 var CANCEL_INDEX = 3;
 
+import Avatar from "../components/Avatar";
+
 class Billboard extends React.Component {
 
   constructor() {
@@ -41,14 +43,15 @@ class Billboard extends React.Component {
     });
   }
 
+  generateGroupImage() {
+    return ({uri: this.props.user.picture});
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Image
-          source={{uri: this.props.user.picture}}
-          style={styles.image}
-        />
-        <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
+        <Avatar groupMembers={this.props.groupMembers}/>
+      <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.props.filterName}</Text>
         <View style={styles.line} />
       </View>
     );

@@ -28,8 +28,7 @@ class Lolomo extends React.Component {
     this.props.navigator.push({
       title: showTitle,
       Component: MovieDetailView,
-      queryConfig: getMovieDetailQueryConfig(showId),
-      props: { userId: this.props.userId }
+      queryConfig: getMovieDetailQueryConfig(showId)
     });
   }
 

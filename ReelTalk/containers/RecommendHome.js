@@ -18,12 +18,16 @@ var RecommendHome = React.createClass({
   getInitialState: function() {
     return {
       categories: json.categories,
+      groupMembers: [json.users[this.props.userId]],
     };
   },
 
   handleCreateGroup: function(selectedUsers) {
+    console.log(Object.keys(selectedUsers).map(k => selectedUsers[k]));
     this.props.navigator.pop();
-    console.log(selectedUsers);
+    this.setState({
+      groupMembers: Object.keys(selectedUsers).map(k => selectedUsers[k]),
+    });
   },
 
   selectGroup: function() {
@@ -54,15 +58,15 @@ var RecommendHome = React.createClass({
     this.setState({
       categories: updatedCategories
     });
-    console.log(updatedCategories)
   },
 
   render: function() {
+    console.log(this.state.groupMembers);
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
-          <Billboard userId={this.props.userId}
+          <Billboard groupMembers={this.state.groupMembers}
             selectGroup={this.selectGroup}
             defaultCategories={this.defaultCategories}/>
         </View>

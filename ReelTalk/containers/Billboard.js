@@ -52,12 +52,15 @@ var Billboard = React.createClass({
     })
   },
 
+  generateGroupImage: function() {
+    return ({uri: this.props.groupMembers[0].picture});
+  },
 
   render: function() {
     return (
       <View style={styles.container}>
         <Image
-          source={{uri: json.users[this.state.userId].picture}}
+          source={this.generateGroupImage()}
           style={styles.image}
         />
         <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>

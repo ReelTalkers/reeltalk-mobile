@@ -19,7 +19,6 @@ var BUTTONS = [
 var CANCEL_INDEX = 3;
 
 var json = require("../Data");
-var CreateGroupPage = require('./CreateGroupPage');
 
 var Billboard = React.createClass({
 
@@ -48,15 +47,7 @@ var Billboard = React.createClass({
         this.props.defaultCategories();
       }
       if (buttonIndex === 1) {
-        this.props.navigator.push({
-          title: "Group",
-          component: CreateGroupPage,
-        })
-        this.setState({
-          currentFilter: "Friends",
-          userId: String((parseInt(this.state.userId) % 3) + 1),
-        });
-        this.props.amendCategories();
+        this.props.selectGroup();
       }
     })
   },

@@ -10,6 +10,7 @@ var {
 } = React;
 
 var Billboard = require('./Billboard');
+var CreateGroupPage = require('./CreateGroupPage');
 var Lolomo = require('./Lolomo');
 var json = require("../Data");
 
@@ -18,6 +19,18 @@ var RecommendHome = React.createClass({
     return {
       categories: json.categories,
     };
+  },
+
+  selectGroup: function() {
+    this.props.navigator.push({
+      title: "Group",
+      component: CreateGroupPage,
+    })
+    this.setState({
+      currentFilter: "Friends",
+      userId: String((parseInt(this.state.userId) % 3) + 1),
+    });
+    this.amendCategories();
   },
 
   defaultCategories:function() {
@@ -44,8 +57,7 @@ var RecommendHome = React.createClass({
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
           <Billboard userId={this.props.userId}
-            navigator={this.props.navigator}
-            amendCategories={this.amendCategories}
+            selectGroup={this.selectGroup}
             defaultCategories={this.defaultCategories}/>
         </View>
         <Lolomo

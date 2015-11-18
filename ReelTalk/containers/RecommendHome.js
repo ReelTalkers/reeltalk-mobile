@@ -21,9 +21,9 @@ var RecommendHome = React.createClass({
     };
   },
 
-  handleCreateGroup: function() {
+  handleCreateGroup: function(selectedUsers) {
     this.props.navigator.pop();
-    console.log("Creating group");
+    console.log(selectedUsers);
   },
 
   selectGroup: function() {

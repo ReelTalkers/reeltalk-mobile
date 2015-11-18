@@ -364,14 +364,17 @@
 	"users" : {
 		'1': {
 			"name": "Billy",
+			"id" : "1",
 		 	"picture": "http://i.ytimg.com/vi/4ZMZD4z4wqQ/maxresdefault.jpg"
 		},
 		'2': {
 			"name": "Andrew",
+			"id": "2",
 		 	"picture": "https://avatars2.githubusercontent.com/u/7542350?v=3&s=400"
 		},
 		'3': {
 			"name": "Greg",
+			"id": "3",
 		 	"picture": "https://avatars0.githubusercontent.com/u/3099999?v=3&s=400"
 		}
 	},

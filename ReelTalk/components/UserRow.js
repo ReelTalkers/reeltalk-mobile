@@ -19,20 +19,24 @@ var UserRow = React.createClass({
   },
 
   render: function() {
+    const { user, onSelectUser, onDeselectUser } = this.props;
     return (
-      <TouchableHighlight style={styles.container} onPress={()=>this.setState({
-        selected: !this.state.selected,
-      })}>
+      <TouchableHighlight style={styles.container} onPress={()=>{
+          this.state.selected ? onDeselectUser(user) : onSelectUser(user);
+          this.setState({
+            selected: !this.state.selected,
+          })
+        }}>
       <View style={{
       backgroundColor: this.state.selected ? 'green' : 'white',
     }}>
         <View style={styles.horizontal}>
           <Image
-              source={{uri: this.props.user.picture}}
+              source={{uri: user.picture}}
               style={styles.image}
           />
           <View style={styles.displayData}>
-              <Text>{this.props.user.name}</Text>
+              <Text>{user.name}</Text>
           </View>
         </View>
       </View>

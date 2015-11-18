@@ -94,6 +94,7 @@ var styles = StyleSheet.create({
     width: 125,
     height: 125,
     flexDirection: 'column',
+    borderRadius:125/2,
   },
   squareRow: {
     flexDirection: 'row',

@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var FBSDKLogin = require('react-native-fbsdklogin');
 var {
   ActionSheetIOS,
   AppRegistry,
@@ -9,6 +10,11 @@ var {
   Text,
   View,
 } = React;
+
+var FBSDKLogin = require('react-native-fbsdklogin');
+var {
+  FBSDKLoginButton,
+} = FBSDKLogin;
 
 var json = require("../Data");
 var Avatar = require("../components/Avatar");
@@ -25,6 +31,22 @@ var Billboard = React.createClass({
         <Avatar groupMembers={this.props.groupMembers}/>
       <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.props.filterName}</Text>
         <View style={styles.line} />
+        <FBSDKLoginButton
+          style={styles.loginButton}
+          onLoginFinished={(error, result) => {
+            if (error) {
+              alert('Error logging in.');
+            } else {
+              if (result.isCancelled) {
+                alert('Login cancelled.');
+              } else {
+                alert('Logged in.');
+              }
+            }
+          }}
+          onLogoutFinished={() => alert('Logged out.')}
+          readPermissions={[]}
+          publishPermissions={[]}/>
       </View>
     );
   },

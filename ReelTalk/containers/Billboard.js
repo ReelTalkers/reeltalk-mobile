@@ -11,6 +11,7 @@ var {
 } = React;
 
 var json = require("../Data");
+var Avatar = require("../components/Avatar");
 
 var Billboard = React.createClass({
 
@@ -21,10 +22,7 @@ var Billboard = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image
-          source={this.generateGroupImage()}
-          style={styles.image}
-        />
+        <Avatar groupMembers={this.props.groupMembers}/>
       <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.props.filterName}</Text>
         <View style={styles.line} />
       </View>

@@ -25,7 +25,6 @@ class Lolomo extends React.Component {
   }
 
   _showDetails(showTitle, showId) {
-    console.log(showTitle + ' ' + showId)
     this.props.navigator.push({
       title: showTitle,
       Component: MovieDetailView,

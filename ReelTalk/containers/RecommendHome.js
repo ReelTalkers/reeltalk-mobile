@@ -2,12 +2,21 @@
 
 var React = require('react-native');
 var {
+  ActionSheetIOS,
   AppRegistry,
   StyleSheet,
   Text,
   ScrollView,
   View,
 } = React;
+
+var BUTTONS = [
+  'Just Me',
+  'Group',
+  'None',
+  'Cancel',
+];
+var CANCEL_INDEX = 3;
 
 var Billboard = require('./Billboard');
 var CreateGroupPage = require('./CreateGroupPage');
@@ -23,11 +32,11 @@ var RecommendHome = React.createClass({
   },
 
   handleCreateGroup: function(selectedUsers) {
-    console.log(Object.keys(selectedUsers).map(k => selectedUsers[k]));
     this.props.navigator.pop();
     this.setState({
       groupMembers: Object.keys(selectedUsers).map(k => selectedUsers[k]),
     });
+    // TODO Filter out and set new movies here
   },
 
   selectGroup: function() {
@@ -36,28 +45,28 @@ var RecommendHome = React.createClass({
       component: CreateGroupPage,
       props: {onCreateGroup: this.handleCreateGroup},
     })
-    this.setState({
-      currentFilter: "Friends",
-      userId: String((parseInt(this.state.userId) % 3) + 1),
-    });
-    this.amendCategories();
   },
 
-  defaultCategories:function() {
-    this.setState({
-      categories: json.categories
-    });
-  },
-
-  reversedDict: function(category) {
-      return {name: category.name, shows: category.shows.reverse()}
-  },
-
-  amendCategories: function() {
-    var updatedCategories = this.state.categories.reverse().map(category => this.reversedDict(category))
-    this.setState({
-      categories: updatedCategories
-    });
+  showActionSheet: function() {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: BUTTONS,
+      cancelButtonIndex: CANCEL_INDEX,
+    },
+    (buttonIndex) => {
+      if (buttonIndex != CANCEL_INDEX) {
+        this.setState({
+          currentFilter: BUTTONS[buttonIndex]
+        });
+      }
+      if (buttonIndex === 0) {
+        this.setState({
+          groupMembers: [json.users[this.props.userId]],
+        });
+      }
+      if (buttonIndex === 1) {
+        this.selectGroup();
+      }
+    })
   },
 
   render: function() {
@@ -68,7 +77,8 @@ var RecommendHome = React.createClass({
         <View style={styles.billboardContainer}>
           <Billboard groupMembers={this.state.groupMembers}
             selectGroup={this.selectGroup}
-            defaultCategories={this.defaultCategories}/>
+            defaultCategories={this.defaultCategories}
+            showActionSheet={this.showActionSheet}/>
         </View>
         <Lolomo
           style={styles.lolomo}

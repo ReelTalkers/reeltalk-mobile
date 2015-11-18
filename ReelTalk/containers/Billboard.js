@@ -10,14 +10,6 @@ var {
   View,
 } = React;
 
-var BUTTONS = [
-  'Just Me',
-  'Group',
-  'None',
-  'Cancel',
-];
-var CANCEL_INDEX = 3;
-
 var json = require("../Data");
 
 var Billboard = React.createClass({
@@ -28,29 +20,6 @@ var Billboard = React.createClass({
       userId: this.props.userId,
   	};
 	},
-
-  showActionSheet() {
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: BUTTONS,
-      cancelButtonIndex: CANCEL_INDEX,
-    },
-    (buttonIndex) => {
-      if (buttonIndex != CANCEL_INDEX) {
-        this.setState({
-          currentFilter: BUTTONS[buttonIndex]
-        });
-      }
-      if (buttonIndex === 0) {
-        this.setState({
-          userId: "2",
-        });
-        this.props.defaultCategories();
-      }
-      if (buttonIndex === 1) {
-        this.props.selectGroup();
-      }
-    })
-  },
 
   generateGroupImage: function() {
     return ({uri: this.props.groupMembers[0].picture});
@@ -63,7 +32,7 @@ var Billboard = React.createClass({
           source={this.generateGroupImage()}
           style={styles.image}
         />
-        <Text onPress={this.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
+      <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.state.currentFilter}</Text>
         <View style={styles.line} />
       </View>
     );

@@ -22,6 +22,7 @@ var CreateGroupPage = React.createClass({
     return {
       dataSource: ds.cloneWithRows(json.users),
       selectedUsers: {},
+      text: null,
     };
   },
 

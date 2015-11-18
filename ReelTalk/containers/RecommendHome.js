@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
   ActionSheetIOS,
+  AlertIOS,
   AppRegistry,
   StyleSheet,
   Text,
@@ -33,12 +34,33 @@ var RecommendHome = React.createClass({
   },
 
   handleCreateGroup: function(selectedUsers, groupName) {
-    this.props.navigator.pop();
-    this.setState({
-      groupMembers: Object.keys(selectedUsers).map(k => selectedUsers[k]),
-      filterName: groupName,
-    });
-    // TODO Filter out and set new movies here
+    console.log(groupName);
+    if (Object.keys(selectedUsers).length === 0) {
+      AlertIOS.alert(
+        'No Users Selected',
+        'Please select at least one user',
+        [
+          {text: 'Ok'},
+        ]
+      )
+    }
+    else if (groupName === null) {
+      AlertIOS.alert(
+        'No Group Name',
+        'Please name your group',
+        [
+          {text: 'Ok'},
+        ]
+      )
+    }
+    else {
+      this.props.navigator.pop();
+      this.setState({
+        groupMembers: Object.keys(selectedUsers).map(k => selectedUsers[k]),
+        filterName: groupName,
+      });
+      // TODO Filter out and set new movies here
+    }
   },
 
   selectGroup: function() {

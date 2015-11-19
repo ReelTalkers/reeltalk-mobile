@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react-native');
-var FBSDKLogin = require('react-native-fbsdklogin');
 var {
   ActionSheetIOS,
   AppRegistry,
@@ -10,6 +9,11 @@ var {
   Text,
   View,
 } = React;
+
+var FBSDKCore = require('react-native-fbsdkcore');
+var {
+  FBSDKAccessToken,
+} = FBSDKCore;
 
 var FBSDKLogin = require('react-native-fbsdklogin');
 var {
@@ -41,6 +45,9 @@ var Billboard = React.createClass({
                 alert('Login cancelled.');
               } else {
                 alert('Logged in.');
+                FBSDKAccessToken.getCurrentAccessToken((token) => {
+                  console.log(token.tokenString);
+                })
               }
             }
           }}

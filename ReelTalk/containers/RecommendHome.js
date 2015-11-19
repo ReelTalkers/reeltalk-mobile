@@ -56,6 +56,7 @@ class RecommendHome extends React.Component {
     else {
       this.props.navigator.pop();
       this.setState({
+        // TODO: Billy, why not just set equal to selectedUsers?
         groupMembers: Object.keys(selectedUsers).map(k => selectedUsers[k]),
         filterName: groupName,
       });

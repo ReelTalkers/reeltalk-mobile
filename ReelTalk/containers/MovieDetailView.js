@@ -83,7 +83,7 @@ class MovieDetailView extends React.Component {
     return (
       <ParallaxView
         style={styles.scrollView}
-        automaticallyAdjustContentInsets={false}
+        automaticallyAdjustContentInsets={true}
         scrollEnabled={scrollEnabled}
         backgroundSource={{uri: show.banner}}
         windowHeight={470}
@@ -97,15 +97,6 @@ class MovieDetailView extends React.Component {
               <Text style={styles.detailText}>{show.genre}</Text>
               <Text style={styles.detailText}>{show.year}</Text>
               <Text style={styles.detailText}>{show.mpaaRating}</Text>
-            </View>
-            <View style={styles.detail}>
-              <Text style={styles.detailText}>Directed by: {director}</Text>
-            </View>
-            <View style={styles.detail}>
-              <Text style={styles.detailText, {fontWeight: 'bold'}}>Starring</Text>
-            </View>
-            <View style={styles.detail}>
-              <Text style={styles.detailText}>{actors}</Text>
             </View>
           </View>
           <RatingSlider
@@ -122,6 +113,8 @@ class MovieDetailView extends React.Component {
             enableScroll={() => this._enableScroll}
           />
           <Text style={styles.description}>{show.description}</Text>
+          <Text style={styles.description}>Directed by: {director}</Text>
+          <Text style={styles.description}>Starring {actors}</Text>
         </View>
       </ParallaxView>
     );
@@ -164,6 +157,8 @@ const styles = StyleSheet.create({
     scrollView: {
       flex: 1,
       backgroundColor: '#B6AEA3',
+      // TODO: should not be hard coded
+      paddingBottom: 50,
     },
     content: {
       backgroundColor: '#B6AEA3',
@@ -207,7 +202,7 @@ const styles = StyleSheet.create({
     },
     description: {
       paddingTop: 30,
-      paddingBottom: 30,
+      //paddingBottom: 30,
       paddingLeft: 20,
       paddingRight: 20,
       fontSize: 14,

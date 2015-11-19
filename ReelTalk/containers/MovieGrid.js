@@ -72,14 +72,17 @@ var MovieGrid = React.createClass({
 var posterMargin = 5;
 // left and right of all 3 images and on wrapper = 8
 var totalSpacing = posterMargin * 8;
-var posterWidth = (screen.width - totalSpacing) / 3;
+var posterWidth = Math.floor((screen.width - totalSpacing) / 3);
 var posterRatio = 172 / 115;
+var posterHeight = Math.floor(posterWidth * posterRatio);
 
 var styles = StyleSheet.create({
   container: {
+    flex: 1,
     margin: posterMargin,
     // TODO: height only temp fix for bug
     height: screen.height,
+    // TODO: center this container so if you turn it sideways then it will be good
   },
   listView: {
     flex: 1,
@@ -100,7 +103,7 @@ var styles = StyleSheet.create({
   },
   image: {
     width: posterWidth,
-    height: posterWidth * posterRatio,
+    height: posterHeight,
   },
 });
 

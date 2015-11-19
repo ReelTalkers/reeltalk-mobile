@@ -109,8 +109,8 @@ class MovieDetailView extends React.Component {
               {text: "Good", color: "rgba(253, 199, 12, .7)"},
               {text: "Fantastic", color: "rgba(255, 243, 12, .7)"}
             ]}
-            disableScroll={() => this._disableScroll}
-            enableScroll={() => this._enableScroll}
+            disableScroll={this._disableScroll.bind(this)}
+            enableScroll={this._enableScroll.bind(this)}
           />
           <Text style={styles.description}>{show.description}</Text>
           <Text style={styles.description}>Directed by: {director}</Text>

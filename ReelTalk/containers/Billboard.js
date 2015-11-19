@@ -13,6 +13,7 @@ var {
 var FBSDKCore = require('react-native-fbsdkcore');
 var {
   FBSDKAccessToken,
+  FBSDKGraphRequest,
 } = FBSDKCore;
 
 var FBSDKLogin = require('react-native-fbsdklogin');
@@ -25,14 +26,37 @@ var Avatar = require("../components/Avatar");
 
 var Billboard = React.createClass({
 
+  getInitialState: function() {
+    return {
+      userPic: "https://avatars0.githubusercontent.com/u/3099999?v=3&s=400",
+    };
+  },
+
   generateGroupImage: function() {
     return ({uri: this.props.groupMembers[0].picture});
   },
 
+  _handleRequest(error, result) {
+   if (!error) {
+     var photos = result.data;
+     var renderedPhotos = [];
+     for (var i = 0, il = photos.length; i < il; i++) {
+       var photo = photos[i];
+       if (photo.images && photo.images.length > 0) {
+         console.log(photo)
+       }
+     }
+   }
+ },
+
   render: function() {
     return (
       <View style={styles.container}>
-        <Avatar groupMembers={this.props.groupMembers}/>
+      <Image
+          source={{uri: this.state.userPic}}
+          style={styles.image}
+        />
+
       <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.props.filterName}</Text>
         <View style={styles.line} />
         <FBSDKLoginButton
@@ -46,7 +70,21 @@ var Billboard = React.createClass({
               } else {
                 alert('Logged in.');
                 FBSDKAccessToken.getCurrentAccessToken((token) => {
-                  console.log(token.tokenString);
+                  var fetchProfileRequest = new FBSDKGraphRequest((error, result) => {
+                    if (error) {
+                      alert('Error making request.');
+                    } else {
+                      this.setState({
+                        userPic: result.picture.data.url,
+                      });
+                    }
+                    }, 'me',
+                    {
+                      fields: { string: 'picture.type(large)' },
+                    }
+                  );
+                  // Start the graph request.
+                  fetchProfileRequest.start();
                 })
               }
             }

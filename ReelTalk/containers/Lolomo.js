@@ -57,13 +57,13 @@ export default Relay.createContainer(Lolomo, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Query {
-        Comedies: showsByGenre(first: 10, genre: "Comedy") {
+        Comedies: allShows(first: 10, genre: "Comedy") {
           ${LolomoRow.getFragment('shows')}
         }
-        Action: showsByGenre(first: 10, genre: "Action") {
+        Action: allShows(first: 10, genre: "Action") {
           ${LolomoRow.getFragment('shows')}
         }
-        Dramas: showsByGenre(first: 10, genre: "Drama") {
+        Dramas: allShows(first: 10, genre: "Drama") {
           ${LolomoRow.getFragment('shows')}
         }
       }

@@ -6,7 +6,6 @@ import React, {
   Button,
   ListView,
   Text,
-  TextInput,
   TouchableHighlight,
   View,
 } from 'react-native';
@@ -23,7 +22,6 @@ class CreateGroupPage extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows(users),
       selectedUsers: {},
-      text: null,
     };
   }
 
@@ -53,19 +51,13 @@ class CreateGroupPage extends React.Component {
   }
 
   renderHeader() {
+    const selectedUsers = this.state.selectedUsers;
+    const userFirstNames = Object.keys(selectedUsers).map(k => selectedUsers[k].user.firstName+" ")
     return (
-      <View style={styles.horizontal}>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1, marginLeft:10, marginRight:10, marginBottom:10, flex:10}}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-          placeholder="Group Name"
-        />
-        <Text
-          onPress={() => this.props.onCreateGroup(this.state.selectedUsers, this.state.text)}>
-           Create
-        </Text>
-      </View>
+      <Text
+        onPress={() => this.props.onCreateGroup(this.state.selectedUsers, userFirstNames)}>
+         Create
+      </Text>
     );
   }
 
@@ -101,8 +93,5 @@ export default Relay.createContainer(CreateGroupPage, {
 const styles = StyleSheet.create({
   listView: {
      backgroundColor: 'white',
-  },
-  horizontal: {
-    flexDirection: "row",
   },
 });

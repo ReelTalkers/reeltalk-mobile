@@ -43,17 +43,7 @@ class RecommendHome extends React.Component {
           {text: 'Ok'},
         ]
       )
-    }
-    else if (groupName === null) {
-      AlertIOS.alert(
-        'No Group Name',
-        'Please name your group',
-        [
-          {text: 'Ok'},
-        ]
-      )
-    }
-    else {
+    } else {
       this.props.navigator.pop();
       this.setState({
         // TODO: Billy, why not just set equal to selectedUsers?

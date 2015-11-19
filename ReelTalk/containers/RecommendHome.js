@@ -2,6 +2,7 @@
 
 import React, {
   ActionSheetIOS,
+  AlertIOS,
   AppRegistry,
   StyleSheet,
   Text,

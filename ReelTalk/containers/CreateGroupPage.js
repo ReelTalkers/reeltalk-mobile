@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   Button,
@@ -10,47 +9,50 @@ var {
   TextInput,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
 
-var json = require("../Data");
-var UserRow = require("../components/UserRow");
+import UserRow from "./UserRow";
 
-var CreateGroupPage = React.createClass({
+class CreateGroupPage extends React.Component {
 
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      dataSource: ds.cloneWithRows(json.users),
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const users = props.viewer.users.edges.map(edge => edge.node);
+    this.state = {
+      dataSource: ds.cloneWithRows(users),
       selectedUsers: {},
       text: null,
     };
-  },
+  }
 
-  handleSelectUser: function(user) {
-    console.log("Selecting");
+  handleSelectUser(user) {
     var updatedSelectedUsers = Object.assign({}, this.state.selectedUsers);
     updatedSelectedUsers[user.id] = user;
     this.setState({
       selectedUsers: updatedSelectedUsers,
     });
-  },
+  }
 
-  handleDeselectUser: function(user) {
-    console.log("Deselecting");
+  handleDeselectUser(user) {
     var updatedSelectedUsers = Object.assign({}, this.state.selectedUsers);
     delete updatedSelectedUsers[user.id];
     this.setState({
       selectedUsers: updatedSelectedUsers,
     });
-  },
+  }
 
-  renderUserRow: function(user) {
+  renderUserRow(userProfile) {
     return (
-      <UserRow user={user} onSelectUser={this.handleSelectUser} onDeselectUser={this.handleDeselectUser}/>
+      <UserRow
+        userProfile={userProfile}
+        onSelectUser={(user) => this.handleSelectUser(user)}
+        onDeselectUser={(user) => this.handleDeselectUser(user)} />
     )
-  },
+  }
 
-  renderHeader: function() {
+  renderHeader() {
     return (
       <View style={styles.horizontal}>
         <TextInput
@@ -59,25 +61,44 @@ var CreateGroupPage = React.createClass({
           value={this.state.text}
           placeholder="Group Name"
         />
-      <Text onPress={() => this.props.onCreateGroup(this.state.selectedUsers, this.state.text)}> Create </Text>
+        <Text
+          onPress={() => this.props.onCreateGroup(this.state.selectedUsers, this.state.text)}>
+           Create
+        </Text>
       </View>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderHeader={this.renderHeader}
-        renderRow={this.renderUserRow}
+        renderHeader={() => this.renderHeader()}
+        renderRow={(userProfile) => this.renderUserRow(userProfile)}
         style={styles.listView}
         showsVerticalScrollIndicator={true}
       />
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+export default Relay.createContainer(CreateGroupPage, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        users: allUserProfiles(first: 10) {
+          edges {
+            node {
+              ${UserRow.getFragment('userProfile')}
+            }
+          }
+        }
+      }
+    `
+  }
+})
+
+const styles = StyleSheet.create({
   listView: {
      backgroundColor: 'white',
   },
@@ -85,5 +106,3 @@ var styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
-
-module.exports = CreateGroupPage;

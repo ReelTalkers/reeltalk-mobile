@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Image,
   StyleSheet,
@@ -10,38 +9,50 @@ var {
   ScrollView,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
 
-var MovieGrid = require("./MovieGrid");
+import MovieGrid from "./MovieGrid";
 var json = require("../Data");
 
-var ListDetailView = React.createClass({
+class ListDetailView extends React.Component {
 
-  render: function() {
-    
+  //TODO: Implement followers and actual list model in backend
+
+  render() {
     return (
       <View>
         <View style={styles.billboardContainer}>
-          <Text>{this.props.list.name}</Text>
-          <Text>{this.props.list.followers.length} Followers</Text>
-          <Text>Owned by {json.users[this.props.list.owner].name}</Text>
+          <Text>{this.props.listName}</Text>
+          <Text>10 Followers</Text>
+          <Text>Owned by Me</Text>
         </View>
         <MovieGrid
-          shows={this.props.list["shows"]}
+          shows={this.props.viewer.list}
           style={styles.grid}
           navigator={this.props.navigator}
         />
       </View>
     );
-  },
+  }
+}
+
+export default Relay.createContainer(ListDetailView, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        list: allShows(first: 5) {
+          ${MovieGrid.getFragment('shows')}
+        }
+      }
+    `
+  }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   billboardContainer: {
     marginBottom: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
-
-module.exports = ListDetailView;

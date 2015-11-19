@@ -1,16 +1,15 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Image,
   StyleSheet,
   View,
-} = React;
+} from 'react-native';
 
-var Avatar = React.createClass({
+export default class Avatar extends React.Component {
 
-  render: function() {
+  render() {
     if (this.props.groupMembers.length === 1) {
       return (
           <Image
@@ -86,7 +85,7 @@ var Avatar = React.createClass({
       );
     }
   }
-});
+}
 
 var styles = StyleSheet.create({
   circle: {
@@ -108,5 +107,3 @@ var styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-module.exports = Avatar;

@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AlertIOS,
   AppRegistry,
   StyleSheet,
@@ -10,46 +9,61 @@ var {
   Text,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
 
-var json = require("../Data");
+export default class LolomoRow extends React.Component {
 
-var LolomoRow = React.createClass({
-
-  createThumbnail: function(showID) {
-    const show =json.shows[showID];
+  createThumbnail(show) {
     return (
       <TouchableHighlight
         style={styles.movieButton}
-        onPress={()=>this.props.onSelect(show)}
+        onPress={()=>this.props.onSelect(show.title, show.id)}
       >
         <Image
-            source={{uri: show.thumbnail}}
+            source={{uri: show.poster}}
             style={styles.image}
         />
       </TouchableHighlight>
     );
-  },
+  }
 
-  render: function() {
+  render() {
+    const { categoryName, shows } = this.props;
     return (
       <View>
-        <Text style={styles.categoryName}>{this.props.header}</Text>
+        <Text style={styles.categoryName}>{categoryName}</Text>
         <ScrollView
           automaticallyAdjustContentInsets={false}
           horizontal={true}
           style={styles.row}
           showsHorizontalScrollIndicator={false}
         >
-          {this.props.category.shows.map(showID => this.createThumbnail(showID))}
+          {shows.edges.map(edge => this.createThumbnail(edge.node))}
           <View style={styles.endOfRow}/>
         </ScrollView>
       </View>
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+export default Relay.createContainer(LolomoRow, {
+  fragments: {
+    shows: () => Relay.QL`
+      fragment on ShowConnection {
+        edges {
+          node {
+            id
+            title
+            poster
+          }
+        }
+      }
+    `
+  }
+})
+
+const styles = StyleSheet.create({
   categoryName: {
     fontWeight: '600',
     fontSize: 17,
@@ -79,5 +93,3 @@ var styles = StyleSheet.create({
     width: 5
   }
 });
-
-module.exports = LolomoRow;

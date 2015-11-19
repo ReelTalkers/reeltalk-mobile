@@ -1,25 +1,53 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   ActionSheetIOS,
   AppRegistry,
   Image,
   StyleSheet,
   Text,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
 
-var json = require("../Data");
-var Avatar = require("../components/Avatar");
+var BUTTONS = [
+  'Just Me',
+  'Group',
+  'None',
+  'Cancel',
+];
+var CANCEL_INDEX = 3;
 
-var Billboard = React.createClass({
+import Avatar from "../components/Avatar";
 
-  generateGroupImage: function() {
-    return ({uri: this.props.groupMembers[0].picture});
-  },
+class Billboard extends React.Component {
 
-  render: function() {
+  constructor() {
+    super();
+  	this.state = {
+  		currentFilter: 'Just Me',
+  	};
+	}
+
+  showActionSheet() {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: BUTTONS,
+      cancelButtonIndex: CANCEL_INDEX,
+    },
+    (buttonIndex) => {
+      if (buttonIndex != CANCEL_INDEX) {
+        this.setState({
+          currentFilter: BUTTONS[buttonIndex]
+        });
+      }
+    });
+  }
+
+  generateGroupImage() {
+    return ({uri: this.props.user.picture});
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <Avatar groupMembers={this.props.groupMembers}/>
@@ -27,10 +55,20 @@ var Billboard = React.createClass({
         <View style={styles.line} />
       </View>
     );
-  },
+  }
+}
+
+export default Relay.createContainer(Billboard, {
+  fragments: {
+    user: () => Relay.QL`
+      fragment on UserProfile {
+        picture
+      }
+    `
+  }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'white',
@@ -56,5 +94,3 @@ var styles = StyleSheet.create({
       borderRadius: 125/2,
     },
 });
-
-module.exports = Billboard;

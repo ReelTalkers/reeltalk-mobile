@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Image,
   StyleSheet,
@@ -10,98 +9,127 @@ var {
   ScrollView,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
 
-var Billboard = require('./Billboard');
-var ListDetailView = require('./ListDetailView');
+import Billboard from './Billboard';
+import ListDetailView from './ListDetailView';
 
-var json = require("../Data");
+import { getRootQueryConfig } from '../queryConfigs';
 
-var ListsHome = React.createClass({
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      dataSource: ds.cloneWithRows(json.lists),
+class ListsHome extends React.Component {
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(props.user.lists.edges),
     };
-  },
+  }
 
-  _showList: function(list) {
+  _showList(list) {
     this.props.navigator.push({
-      component: ListDetailView,
-      props: { list: list}
+      Component: ListDetailView,
+      queryConfig: getRootQueryConfig(),
+      props: { listName: list.title }
     });
-  },
+  }
 
   // TODO: Add cases where there are less than 4 films
-  _getListImage: function(listShows) {
+  _getListImage(listShows) {
     return (
       <View style={styles.square}>
         <View style={styles.squareRow}>
           <Image
-              source={{uri: json.shows[listShows[0]].thumbnail}}
+              source={{uri: listShows[0].node.poster}}
               style={styles.image}
           />
           <Image
-              source={{uri: json.shows[listShows[1]].thumbnail}}
+              source={{uri: listShows[1].node.poster}}
               style={styles.image}
           />
         </View>
         <View style={styles.squareRow}>
           <Image
-              source={{uri: json.shows[listShows[2]].thumbnail}}
+              source={{uri: listShows[2].node.poster}}
               style={styles.image}
           />
           <Image
-              source={{uri: json.shows[listShows[3]].thumbnail}}
+              source={{uri: listShows[3].node.poster}}
               style={styles.image}
           />
         </View>
       </View>
     );
-  },
+  }
 
-  renderListRow: function(list) {
+  renderListRow(list) {
+    const { user } = this.props;
     return (
-      <TouchableHighlight onPress={()=>this._showList(list)}>
+      <TouchableHighlight onPress={() => this._showList(list)}>
         <View style={styles.container}>
           <View style={styles.listRow}>
-            {this._getListImage(list.shows)}
+            {this._getListImage(list.shows.edges)}
             <View>
-              <Text style={styles.listTitle}>{list.name}</Text>
-              <Text style={styles.listSubheading}>{list.shows.length} items</Text>
+              <Text style={styles.listTitle}>{list.title}</Text>
+              <Text style={styles.listSubheading}>{list.shows.edges.totalCount} items</Text>
             </View>
           </View>
           <View style={styles.rowDivider}/>
         </View>
       </TouchableHighlight>
     )
-  },
+  }
 
   // TODO: This circular image should pulled from billboard. Billboard should take an argument of what to display beneath,
   //        in this case it would just be the users name. This is like the users 'profile'
-  render: function() {
+  render() {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
            <Image
-             source={{uri: json.users[this.props.userId].picture}}
+             source={{uri: this.props.user.picture}}
              style={styles.circularImage}
            />
         </View>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderListRow}
+          renderRow={(edge) => this.renderListRow(edge.node)}
           style={styles.listView}
         />
       </ScrollView>
     );
-  },
+  }
+}
+
+export default Relay.createContainer(ListsHome, {
+  fragments: {
+    user: () => Relay.QL`
+      fragment on UserProfile {
+        picture
+        lists: subscribedLists(first: 5) {
+          edges {
+            node {
+              id
+              title
+              shows(first: 4) {
+                edges {
+                  node {
+                    poster
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+  }
 });
 
 const rowHeight = 55;
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   billboardContainer: {
     marginBottom: 5,
     alignItems: 'center',
@@ -152,5 +180,3 @@ var styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-module.exports = ListsHome;

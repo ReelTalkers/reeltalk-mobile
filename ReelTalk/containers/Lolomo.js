@@ -1,52 +1,78 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   ListView,
   Text,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
 
-var json = require("../Data");
-var LolomoRow = require('./LolomoRow');
-var MovieDetailView = require('./MovieDetailView');
+import LolomoRow from './LolomoRow';
+import MovieDetailView from './MovieDetailView';
 
-var Lolomo = React.createClass({
+import { getMovieDetailQueryConfig } from '../queryConfigs';
 
-  _showDetails: function(show) {
+class Lolomo extends React.Component {
+
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(Object.keys(props.viewer).filter(k => !k.startsWith('__')))
+    };
+  }
+
+  _showDetails(showTitle, showId) {
     this.props.navigator.push({
-      title: show.name,
-      component: MovieDetailView,
-      props: { initialShow: show, userId: this.props.userId }
+      title: showTitle,
+      Component: MovieDetailView,
+      queryConfig: getMovieDetailQueryConfig(showId)
     });
-  },
+  }
 
-  renderLolomoRow: function(category) {
+  renderLolomoRow(categoryName) {
     return (
-      <LolomoRow header={category.name} category={category} onSelect={this._showDetails}/>
-    )
-  },
+      <LolomoRow
+        shows={this.props.viewer[categoryName]}
+        categoryName={categoryName}
+        onSelect={(title, id) => this._showDetails(title, id)} />
+    );
+  }
 
-  render: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dataSource = ds.cloneWithRows(this.props.categories)
+  render() {
     return (
       <ListView
-        dataSource={dataSource}
-        renderRow={this.renderLolomoRow}
+        dataSource={this.state.dataSource}
+        renderRow={(categoryName) => this.renderLolomoRow(categoryName)}
         style={styles.listView}
         showsVerticalScrollIndicator={false}
       />
     );
-  },
-});
+  }
+}
 
-var styles = StyleSheet.create({
+export default Relay.createContainer(Lolomo, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Query {
+        Comedies: showsByGenre(first: 10, genre: "Comedy") {
+          ${LolomoRow.getFragment('shows')}
+        }
+        Action: showsByGenre(first: 10, genre: "Action") {
+          ${LolomoRow.getFragment('shows')}
+        }
+        Dramas: showsByGenre(first: 10, genre: "Drama") {
+          ${LolomoRow.getFragment('shows')}
+        }
+      }
+    `
+  }
+})
+
+const styles = StyleSheet.create({
   listView: {
      backgroundColor: 'white',
   },
 });
-
-module.exports = Lolomo;

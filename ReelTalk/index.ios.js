@@ -25,9 +25,8 @@ import SearchHome from './containers/SearchHome';
 import { relayRenderScene } from './utils';
 import { getRootQueryConfig, getUserQueryConfig, getRecommendHomeQueryConfig } from './queryConfigs';
 
-// TODO: should these be const or import?
-var { TabBarIOS, } = require('react-native-icons');
-var TabBarItemIOS = TabBarIOS.Item;
+import { TabBarIOS, Icon, } from 'react-native-icons';
+const TabBarItemIOS = TabBarIOS.Item;
 
 const FIRST_USER_ID = 'VXNlclByb2ZpbGU6MQ==';
 
@@ -42,9 +41,11 @@ const NavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => navigator.pop()}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          {"<"}
-        </Text>
+        <Icon
+          name='ion|chevron-left'
+          size={20}
+          style={[{width: 10, height: 42, marginRight: 5}]}
+        />
       </TouchableOpacity>
     );
   },
@@ -74,9 +75,12 @@ const getRecommendBarRouteMapper = (changeTransparency) => {
         <TouchableOpacity
           onPress={() => {changeTransparency(false); navigator.pop();}}
           style={styles.navBarLeftButton}>
-          <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
-            {"<"}
-          </Text>
+          {/* TODO: all of these icons are messy, clean up */}
+          <Icon
+            name='ion|chevron-left'
+            size={20}
+            style={[{width: 10, height: 42, marginRight: 5}]}
+          />
         </TouchableOpacity>
       );
     },
@@ -103,9 +107,11 @@ const ListsNavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => console.log("Add list")}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          {"+"}
-        </Text>
+        <Icon
+          name='ion|ios-plus-empty'
+          size={30}
+          style={[{width: 30, height: 42, marginRight: 5}]}
+        />
       </TouchableOpacity>
     );
     }
@@ -115,9 +121,16 @@ const ListsNavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => navigator.pop()}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          {"< " + previousRoute.title}
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Icon
+            name='ion|chevron-left'
+            size={20}
+            style={[{width: 10, height: 42, marginRight: 5}]}
+          />
+          <Text style={[styles.navBarText, styles.navBarButtonText]}>
+            {previousRoute.title}
+          </Text>
+        </View>
       </TouchableOpacity>
     );
   },
@@ -352,11 +365,6 @@ const styles = StyleSheet.create({
   },
   navBarText: {
     fontSize: 16,
-    marginVertical: 10,
-    marginRight: 10,
-  },
-  navBarSymbolText: {
-    fontSize: 22,
     marginVertical: 10,
     marginRight: 10,
   },

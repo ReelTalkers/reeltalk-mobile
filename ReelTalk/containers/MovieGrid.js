@@ -14,8 +14,9 @@ import Relay from 'react-relay';
 var screen = require('Dimensions').get('window');
 
 import MovieDetailView from "./MovieDetailView";
+import UserDetailView from "./UserDetailView";
 
-import { getMovieDetailQueryConfig } from '../queryConfigs';
+import { getMovieDetailQueryConfig, getUserQueryConfig } from '../queryConfigs';
 
 class MovieGrid extends React.Component {
 
@@ -44,11 +45,20 @@ class MovieGrid extends React.Component {
     });
   }
 
-  _showDetails(show) {
+  _showMovieDetails(show) {
     this.props.navigator.push({
       title: show.title,
       Component: MovieDetailView,
       queryConfig: getMovieDetailQueryConfig(show.id),
+      props: {...this.props},
+    });
+  }
+
+  _showUserDetails(user) {
+    this.props.navigator.push({
+      title: user.user.firstName,
+      Component: UserDetailView,
+      queryConfig: getUserQueryConfig(user.id),
       props: {...this.props},
     });
   }
@@ -59,7 +69,7 @@ class MovieGrid extends React.Component {
       return (
         <TouchableHighlight
           style={styles.movieButton}
-          onPress={() => this._showDetails(item)}
+          onPress={() => this._showUserDetails(item)}
         >
           <Image
               source={{uri: item.picture}}
@@ -72,7 +82,7 @@ class MovieGrid extends React.Component {
       return (
         <TouchableHighlight
           style={styles.movieButton}
-          onPress={() => this._showDetails(item)}
+          onPress={() => this._showMovieDetails(item)}
         >
           <Image
               source={{uri: item.poster}}

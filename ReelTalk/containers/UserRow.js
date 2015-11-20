@@ -23,25 +23,21 @@ class UserRow extends React.Component {
     const { userProfile, onSelectUser, onDeselectUser } = this.props;
     console.log(userProfile)
     return (
-      <TouchableHighlight style={styles.container} onPress={()=>{
+      <TouchableHighlight
+        onPress={ () => {
           this.state.selected ? onDeselectUser(userProfile) : onSelectUser(userProfile);
           this.setState({
             selected: !this.state.selected,
           })
         }}>
-      <View style={{
-          backgroundColor: this.state.selected ? 'green' : 'white'
-        }}>
-        <View style={styles.horizontal}>
+        <View style={styles.container}>
           <Image
-              source={{uri: userProfile.picture}}
-              style={styles.image}
+            source={{uri: userProfile.picture}}
+            style={styles.image}
           />
-          <View style={styles.displayData}>
-              <Text>{userProfile.user.firstName + ' ' + userProfile.user.lastName}</Text>
-          </View>
+          <Text>{userProfile.user.firstName + ' ' + userProfile.user.lastName}</Text>
+          <View style={[styles.checkBox, {backgroundColor: this.state.selected ? 'green' : 'white'}]}/>
         </View>
-      </View>
       </TouchableHighlight>
     );
   }
@@ -65,14 +61,7 @@ export default Relay.createContainer(UserRow, {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 100,
-    backgroundColor: 'white',
-  },
-  displayData: {
-    flexDirection: 'column',
-  },
-  horizontal: {
-    flexDirection: 'row',
+    backgroundColor: 'white'
   },
   image: {
     width: 70,
@@ -80,4 +69,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderRadius: 70/2,
   },
+  checkBox: {
+    height: 20,
+    width: 20,
+  }
 });

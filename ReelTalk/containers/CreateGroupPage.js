@@ -52,7 +52,7 @@ class CreateGroupPage extends React.Component {
 
   renderHeader() {
     const selectedUsers = this.state.selectedUsers;
-    const userFirstNames = Object.keys(selectedUsers).map(k => selectedUsers[k].user.firstName+" ")
+    const userFirstNames = Object.keys(selectedUsers).map(k => selectedUsers[k].user.firstName).join(", ");
     return (
       <Text
         onPress={() => this.props.onCreateGroup(this.state.selectedUsers, userFirstNames)}>

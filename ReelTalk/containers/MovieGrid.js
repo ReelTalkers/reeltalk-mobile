@@ -11,6 +11,8 @@ import React, {
 } from 'react-native';
 import Relay from 'react-relay';
 
+var screen = require('Dimensions').get('window');
+
 import MovieDetailView from "./MovieDetailView";
 
 import { getMovieDetailQueryConfig } from '../queryConfigs';
@@ -83,13 +85,15 @@ class MovieGrid extends React.Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(edge) => this.renderGridComponent(edge.node)}
-        style={styles.listView}
-        contentContainerStyle={styles.listViewContainer}
-        automaticallyAdjustContentInsets={false}
-      />
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(edge) => this.renderGridComponent(edge.node)}
+          style={this.listView}
+          contentContainerStyle={styles.listViewContainer}
+          automaticallyAdjustContentInsets={false}
+        />
+      </View>
     );
   }
 }
@@ -124,16 +128,32 @@ export default Relay.createContainer(MovieGrid, {
   }
 });
 
+// TODO: not sure that this is the best way to do it, but cant think of how to use flexbox and maintain ratio
+// enough space for 3 images and padding arround them
+var posterMargin = 5;
+// left and right of all 3 images and on wrapper = 8
+var totalSpacing = posterMargin * 8;
+var posterWidth = Math.floor((screen.width - totalSpacing) / 3);
+var posterRatio = 172 / 115;
+var posterHeight = Math.floor(posterWidth * posterRatio);
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: posterMargin,
+    // TODO: height only temp fix for bug
+    height: screen.height,
+    // TODO: center this container so if you turn it sideways then it will be good
+  },
   listView: {
     flex: 1,
   },
   listViewContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   movieButton: {
-    margin: 5,
+    margin: posterMargin,
     shadowColor: "black",
     shadowOpacity: 0.35,
     shadowRadius: 2,
@@ -143,7 +163,7 @@ const styles = StyleSheet.create({
     }
   },
   image: {
-    width: 115,
-    height: 172,
+    width: posterWidth,
+    height: posterHeight,
   },
 });

@@ -6,7 +6,6 @@ import React, {
   Button,
   ListView,
   Text,
-  TextInput,
   TouchableHighlight,
   View,
 } from 'react-native';
@@ -23,7 +22,6 @@ class CreateGroupPage extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows(users),
       selectedUsers: {},
-      text: null,
     };
   }
 
@@ -53,19 +51,16 @@ class CreateGroupPage extends React.Component {
   }
 
   renderHeader() {
+    const selectedUsers = this.state.selectedUsers;
+    const userFirstNames = Object.keys(selectedUsers).map(k => selectedUsers[k].user.firstName).join(", ");
     return (
-      <View style={styles.horizontal}>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1, marginLeft:10, marginRight:10, marginBottom:10, flex:10}}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-          placeholder="Group Name"
-        />
-        <Text
-          onPress={() => this.props.onCreateGroup(this.state.selectedUsers, this.state.text)}>
-           Create
-        </Text>
-      </View>
+      <TouchableHighlight onPress={() => this.props.onCreateGroup(this.state.selectedUsers, userFirstNames)}>
+        <View style={styles.createButton}>
+          <Text style={styles.createText}>
+             Create
+          </Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 
@@ -102,7 +97,18 @@ const styles = StyleSheet.create({
   listView: {
      backgroundColor: 'white',
   },
-  horizontal: {
-    flexDirection: "row",
+  createButton: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#F5F5F5',
+    borderColor: '#E6E6E6',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
+  createText: {
+    fontSize: 17,
+    color: '#0066FA',
+  }
 });

@@ -97,6 +97,7 @@ class RecommendHome extends React.Component {
   render() {
     return (
       <ScrollView
+        style={styles.scrollView}
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
           <Billboard
@@ -135,6 +136,10 @@ export default Relay.createContainer(RecommendHome, {
 });
 
 const styles = StyleSheet.create({
+  // TODO: un-hard code
+  scrollView: {
+    marginBottom: 50,
+  },
   billboardContainer: {
     marginBottom: 10,
   },

@@ -13,7 +13,7 @@ class SettingsHome extends React.Component {
   render() {
     return (
       <View>
-        <Text>Welcome {this.props.viewer.allUsers.edges[0].node.username}!</Text>
+        <Text>Welcome {this.props.viewer.allUserProfiles.edges[0].node.user.firstName}!</Text>
       </View>
     );
   }
@@ -23,11 +23,13 @@ export default Relay.createContainer(SettingsHome, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Query {
-        allUsers(first: 1) {
+        allUserProfiles(first: 1) {
           edges {
             node {
               id
-              username
+              user {
+                firstName
+              }
             }
           }
         }

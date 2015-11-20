@@ -76,10 +76,9 @@ class MovieDetailView extends React.Component {
   render() {
     const { relatedShows } = this.props;
     const { show, scrollEnabled } = this.state;
-    const actors = show.actors.edges.map(edge =>
-      edge.node.firstName + ' ' + edge.node.lastName
-    ).join(', ');
-    const director = show.director.firstName + ' ' + show.director.lastName;
+    const cast = show.cast.edges.map(edge => edge.node.fullName).join(', ');
+    const directors = show.directors.edges.map(edge => edge.node.fullName).join(', ');
+
     return (
       <ParallaxView
         style={styles.scrollView}
@@ -96,7 +95,7 @@ class MovieDetailView extends React.Component {
               <Text style={styles.detailText}>{show.runtime}</Text>
               <Text style={styles.detailText}>{show.genre}</Text>
               <Text style={styles.detailText}>{show.year}</Text>
-              <Text style={styles.detailText}>{show.mpaaRating}</Text>
+              <Text style={styles.detailText}>{show.rating}</Text>
             </View>
           </View>
           <RatingSlider
@@ -113,8 +112,8 @@ class MovieDetailView extends React.Component {
             enableScroll={this._enableScroll.bind(this)}
           />
           <Text style={styles.description}>{show.description}</Text>
-          <Text style={styles.description}>Directed by: {director}</Text>
-          <Text style={styles.description}>Starring {actors}</Text>
+          <Text style={styles.description}>Directed by: {directors}</Text>
+          <Text style={styles.description}>Starring {cast}</Text>
         </View>
       </ParallaxView>
     );
@@ -128,23 +127,25 @@ export default Relay.createContainer(MovieDetailView, {
         id
         title
         banner
-        description
+        plot
         runtime
         genre
         year
-        mpaaRating
+        rating
         backgroundColor
         detailColor
         textColor
-        director {
-          firstName
-          lastName
-        }
-        actors(first: 3) {
+        directors(first: 3) {
           edges {
             node {
-              firstName
-              lastName
+              fullName
+            }
+          }
+        }
+        cast(first: 3) {
+          edges {
+            node {
+              fullName
             }
           }
         }

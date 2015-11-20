@@ -363,16 +363,29 @@
 	},
 	"users" : {
 		'1': {
-			"name": "Kanye West",
-		 	"picture": "https://pbs.twimg.com/profile_images/3491760112/d10ed92223f7c53a2f6072baf5a6c5a0_400x400.jpeg"
+			"name": "Billy",
+			"id" : "1",
+		 	"picture": "http://i.ytimg.com/vi/4ZMZD4z4wqQ/maxresdefault.jpg"
 		},
 		'2': {
-			"name": "Elmo",
-		 	"picture": "http://picturesforcoloring.com/wp-content/uploads/2012/04/elmo-picture.gif"
+			"name": "Andrew",
+			"id": "2",
+		 	"picture": "https://avatars2.githubusercontent.com/u/7542350?v=3&s=400"
 		},
 		'3': {
-			"name": "Andy",
-		 	"picture": "http://www.case.edu/magazine/springsummer2009/images/records03.jpg"
+			"name": "Greg",
+			"id": "3",
+		 	"picture": "https://avatars0.githubusercontent.com/u/3099999?v=3&s=400"
+		},
+		'4': {
+			"name": "Galen",
+			"id": "4",
+		 	"picture": "http://cdn87.psbin.com/img/mw=150/mh=200/cr=n/d=t0qce/t398ltnaree7w68j.jpg"
+		},
+		'5': {
+			"name": "Chippy",
+			"id": "5",
+		 	"picture": "http://cdn87.psbin.com/img/mw=150/mh=200/cr=n/d=t0qce/d7xvrkgkxyh372zj.jpg"
 		}
 	},
 	"categories" : [

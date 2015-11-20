@@ -12,12 +12,21 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import RecommendScreen from './screens/RecommendScreen';
-import ListsScreen from './screens/ListsScreen';
-import TopChartsScreen from './screens/TopChartsScreen';
-import SettingsScreen from './screens/SettingsScreen';
-
+import Relay from 'react-relay';
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('http://localhost:8000/graphql')
+);
 import cssVar from 'cssVar';
+
+import RecommendHome from './containers/RecommendHome';
+import ListsHome from './containers/ListsHome';
+import TopChartsHome from './containers/TopChartsHome';
+import SettingsHome from './containers/SettingsHome';
+
+import { relayRenderScene } from './utils';
+import { getRootQueryConfig, getUserQueryConfig, getRecommendHomeQueryConfig } from './queryConfigs';
+
+const FIRST_USER_ID = 'VXNlclByb2ZpbGU6MQ==';
 
 const NavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
@@ -38,7 +47,38 @@ const NavigationBarRouteMapper = {
   },
 
   RightButton: function(route, navigator, index, navState) {
-    return null;
+    return (null);
+  },
+
+  Title: function(route, navigator, index, navState) {
+    return (
+      <Text style={[styles.navBarText, styles.navBarTitleText]}>
+        {route.title}
+      </Text>
+    );
+  },
+};
+
+const RecommendBarRouteMapper = {
+  LeftButton: function(route, navigator, index, navState) {
+    if (index === 0) {
+      return null;
+    }
+
+    const previousRoute = navState.routeStack[index - 1];
+    return (
+      <TouchableOpacity
+        onPress={() => navigator.pop()}
+        style={styles.navBarLeftButton}>
+        <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
+          {"<"}
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+
+  RightButton: function(route, navigator, index, navState) {
+    return (null)
   },
 
   Title: function(route, navigator, index, navState) {
@@ -97,44 +137,41 @@ const ListsNavigationBarRouteMapper = {
   },
 };
 
-const Main = React.createClass({
-  getInitialState: function() {
-    return { state: this.props.activeTab }
-  },
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedTab: props.activeTab }
+  }
 
-  componentDidMount: function() {
-    this.refs.recommendTabRef.setState({hasBeenSelected: true})
-  },
-
-  renderRecommendScreen: function() {
+  renderRecommendHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="recommendRef"
         initialRoute={{
           title: 'Recommend',
-          component: RecommendScreen,
-          props: { userId: this.props.userId }
+          Component: RecommendHome,
+          queryConfig: getRecommendHomeQueryConfig(FIRST_USER_ID),
         }}
         navigationBar={
           <Navigator.NavigationBar
-            routeMapper={NavigationBarRouteMapper}
+            routeMapper={RecommendBarRouteMapper}
             style={styles.navBar} />
         }
-        renderScene={renderScene} />
+        renderScene={relayRenderScene} />
     );
-  },
+  }
 
-  renderListsScreen: function() {
+  renderListsHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="listsRef"
         initialRoute={{
           title: 'Lists',
-          component: ListsScreen,
-          props: { userId: this.props.userId },
-          rightButtonTitle: 'Edit',
+          Component: ListsHome,
+          queryConfig: getUserQueryConfig(FIRST_USER_ID),
+          rightButtonTitle: 'Edit'
         }}
         navigationBar={
           <Navigator.NavigationBar
@@ -142,62 +179,61 @@ const Main = React.createClass({
             style={styles.navBar}
              />
         }
-        renderScene={renderScene} />
+        renderScene={relayRenderScene} />
     );
-  },
+  }
 
-  renderTopChartsScreen: function() {
+  renderTopChartsHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="chartsRef"
         initialRoute={{
           title: 'Top Charts',
-          component: TopChartsScreen,
-          props: { userId: this.props.userId }
+          Component: TopChartsHome,
+          queryConfig: getRootQueryConfig(),
         }}
-        renderScene={renderScene}
+        renderScene={relayRenderScene}
         navigationBar={
           <Navigator.NavigationBar
             routeMapper={NavigationBarRouteMapper}
             style={styles.navBar} />
         } />
     );
-  },
+  }
 
-  renderSettingsScreen: function() {
+  renderSettingsHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="settingsRef"
         initialRoute={{
           title: 'Settings',
-          component: SettingsScreen,
-          props: { userId: this.props.userId }
+          Component: SettingsHome,
+          queryConfig: getRootQueryConfig(),
         }}
-        renderScene={renderScene} />
+        renderScene={relayRenderScene} />
     );
-  },
+  }
 
-  _onPressTab: function (tabTitle) {
+  _onPressTab(tabTitle) {
     if (this.state.selectedTab !== tabTitle) {
       this.setState({
         selectedTab: tabTitle
       });
-    } else if (this.state.selectedTab === 'recommend') {
+    } else {
       this.refs[tabTitle + 'Ref'].popToTop();
     }
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <TabBarIOS>
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'recommend'}
-          ref="recommendTabRef"
   	      systemIcon="favorites"
   	      onPress={() => this._onPressTab('recommend')}>
-          {this.renderRecommendScreen()}
+          {this.renderRecommendHome()}
 
   	    </TabBarIOS.Item>
 
@@ -205,65 +241,56 @@ const Main = React.createClass({
   	      selected={this.state.selectedTab === 'lists'}
   	      systemIcon="bookmarks"
   	      onPress={() => this._onPressTab('lists')}>
-          {this.renderListsScreen()}
+          {this.renderListsHome()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'charts'}
   	      systemIcon="most-viewed"
   	      onPress={() => this._onPressTab('charts')}>
-          {this.renderTopChartsScreen()}
+          {this.renderTopChartsHome()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'settings'}
   	      systemIcon="more"
   	      onPress={() => this._onPressTab('settings')}>
-  	      {this.renderSettingsScreen()}
+  	      {this.renderSettingsHome()}
   	    </TabBarIOS.Item>
 
   	  </TabBarIOS>
     );
   }
-})
+}
 
-const ReelTalk = React.createClass({
-	getInitialState: function() {
-    	return {
-    		userId: '2',
-    	};
-  	},
-
-	render: function() {
-	return (
-    <Navigator
-      ref={(navigator) => { this.navigator = navigator; }}
-      renderScene={renderScene}
-      initialRoute={{
-        title: 'ReelTalk',
-        component: Main,
-        props: {
-          userId: this.state.userId,
-          activeTab: 'recommend'
-        }
-      }}
-    />
-	);
+export default class ReelTalk extends React.Component {
+	render() {
+  	return (
+      <Navigator
+        ref={(navigator) => { this.navigator = navigator; }}
+        renderScene={(route, navigator) => {
+          const { Component } = route;
+          return (
+            <View style={styles.container}>
+              <Component
+                route={route}
+                navigator={navigator}
+                topNavigator={navigator}
+                {...route.props} />
+            </View>
+          );
+        }}
+        initialRoute={{
+          title: 'ReelTalk',
+          Component: Main,
+          props: {
+            activeTab: 'recommend'
+          }
+        }}
+      />
+  	);
 	}
-});
-
-const renderScene = (route, navigator) => {
-  const Component = route.component;
-  return (
-    <View style={styles.container}>
-      <Component
-        route={route}
-        navigator={navigator}
-        topNavigator={navigator}
-        {...route.props} />
-    </View>
-  );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -280,6 +307,12 @@ const styles = StyleSheet.create({
   navBarText: {
     fontSize: 16,
     marginVertical: 10,
+    marginRight: 10,
+  },
+  navBarSymbolText: {
+    fontSize: 22,
+    marginVertical: 10,
+    marginRight: 10,
   },
   navBarTitleText: {
     color: cssVar('fbui-bluegray-60'),
@@ -298,5 +331,3 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('ReelTalk', () => ReelTalk);
-
-module.exports = ReelTalk;

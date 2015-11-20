@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   StyleSheet,
   ListView,
@@ -9,62 +8,77 @@ var {
   Text,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
 
-var json = require("../Data");
 var screen = require('Dimensions').get('window');
 
-var MovieDetailView = require("./MovieDetailView");
+import MovieDetailView from "./MovieDetailView";
 
-var MovieGrid = React.createClass({
+import { getMovieDetailQueryConfig } from '../queryConfigs';
 
-  getInitialState: function() {
-    console.log(this.props.shows);
+class MovieGrid extends React.Component {
+
+  constructor(props) {
+    super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      dataSource: ds.cloneWithRows(this.props.shows),
+    this.state = {
+      dataSource: ds.cloneWithRows(props.shows.edges),
     };
-  },
+  }
 
-  _showDetails: function(show) {
+  _showDetails(show) {
     this.props.navigator.push({
-      title: show.name,
-      component: MovieDetailView,
-      props: {
-        initialShow: show,
-        ...this.props,
-      },
+      title: show.title,
+      Component: MovieDetailView,
+      queryConfig: getMovieDetailQueryConfig(show.id),
+      props: {...this.props},
     });
-  },
+  }
 
-  renderGridComponent: function(showID) {
-    const show = json.shows[showID];
+  renderGridComponent(show) {
     return (
       <TouchableHighlight
         style={styles.movieButton}
-        onPress={()=>this._showDetails(show)}
+        onPress={() => this._showDetails(show)}
       >
         <Image
-            source={{uri: show.thumbnail}}
+            source={{uri: show.poster}}
             style={styles.image}
         />
       </TouchableHighlight>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View style={styles.container}>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderGridComponent}
+          renderRow={(edge) => this.renderGridComponent(edge.node)}
           style={this.listView}
           contentContainerStyle={styles.listViewContainer}
           automaticallyAdjustContentInsets={false}
         />
       </View>
     );
-  },
+  }
+}
+
+export default Relay.createContainer(MovieGrid, {
+  fragments: {
+    shows: () => Relay.QL`
+      fragment on ShowConnection {
+        edges {
+          node {
+            id
+            title
+            poster
+          }
+        }
+      }
+    `
+  }
 });
 
 // TODO: not sure that this is the best way to do it, but cant think of how to use flexbox and maintain ratio
@@ -76,7 +90,7 @@ var posterWidth = Math.floor((screen.width - totalSpacing) / 3);
 var posterRatio = 172 / 115;
 var posterHeight = Math.floor(posterWidth * posterRatio);
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: posterMargin,
@@ -106,5 +120,3 @@ var styles = StyleSheet.create({
     height: posterHeight,
   },
 });
-
-module.exports = MovieGrid;

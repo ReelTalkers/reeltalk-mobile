@@ -1,8 +1,7 @@
 // TODO break into components
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
   Image,
   StyleSheet,
@@ -11,90 +10,92 @@ var {
   Text,
   TouchableHighlight,
   View,
-} = React;
+} from 'react-native';
+import Relay from 'react-relay';
+import ParallaxView from 'react-native-parallax-view';
 
-var ParallaxView = require('react-native-parallax-view');
+import Rating from '../components/Rating';
+import RatingSlider from '../components/RatingSlider';
+import HeaderScrollView from '../components/HeaderScrollView';
+import LolomoRow from './LolomoRow';
 
-var Rating = require('../components/Rating');
-var RatingSlider = require('../components/RatingSlider');
-var HeaderScrollView = require('../components/HeaderScrollView');
-var LolomoRow = require('./LolomoRow');
-var json = require("../Data");
-
-var MovieDetailView = React.createClass({
-  getInitialState: function() {
-  	return {
-  		show: this.props.initialShow,
+class MovieDetailView extends React.Component {
+  constructor(props) {
+    super(props);
+  	this.state = {
+  		show: props.show,
       scrollEnabled: true,
   	};
-	},
+	}
 
-  _changeShow: function(newShow) {
+  _changeShow(newShow) {
     this.setState({
       show: newShow,
       scrollEnabled: true,
     });
-  },
+  }
 
-  _getColorStyles: function() {
+  _getColorStyles() {
     return {
       primaryBackground: {
-        backgroundColor: this.state.show.colors.primary
+        backgroundColor: this.state.show.backgroundColor
       },
       primaryShadow: {
-        shadowColor: this.state.show.colors.primary
+        shadowColor: this.state.show.backgroundColor
       },
       detailFontColor: {
-        color: this.state.show.colors.detail
+        color: this.state.show.detailColor
       },
       textFontColor: {
-        color: this.state.show.colors.text
+        color: this.state.show.textColor
       },
       primaryBorderLeftColor: {
-        borderLeftColor: this.state.show.colors.primary
+        borderLeftColor: this.state.show.backgroundColor
       },
     };
-  },
+  }
 
   // TODO: not sure about the this.state.show... Do I even need it?
-  _setScrollEnabled: function(scrollEnabled) {
+  _setScrollEnabled(scrollEnabled) {
     this.setState({
       show: this.state.show,
       scrollEnabled: scrollEnabled,
     });
-  },
+  }
 
-  _disableScroll: function() {
+  _disableScroll() {
     this._setScrollEnabled(false);
-  },
+  }
 
-  _enableScroll: function() {
+  _enableScroll() {
     this._setScrollEnabled(true);
-  },
+  }
 
 // TODO: Lists should not be stored within movies, there should be lists containing movies but I want to focus on design now
 // TODO: make <RatingSlider style={styles.ratingSlider}/>
-  render: function() {
+  render() {
+    const { relatedShows } = this.props;
+    const { show, scrollEnabled } = this.state;
+    const cast = show.cast.edges.map(edge => edge.node.fullName).join(', ');
+    const directors = show.directors.edges.map(edge => edge.node.fullName).join(', ');
+
     return (
       <ParallaxView
         style={styles.scrollView}
-        automaticallyAdjustContentInsets={false}
-        scrollEnabled={this.state.scrollEnabled}
-        backgroundSource={{uri: this.state.show.largePoster}}
+        automaticallyAdjustContentInsets={true}
+        scrollEnabled={scrollEnabled}
+        backgroundSource={{uri: show.banner}}
         windowHeight={470}
       >
         <View style={styles.content}>
           <View style={[styles.headerLine, this._getColorStyles().primaryBackground]} />
           <View style={styles.header}>
-            <Text style={styles.title}>{this.state.show.name}</Text>
+            <Text style={styles.title}>{show.title}</Text>
             <View style={styles.detail}>
-              <Text style={styles.detailText}>{this.state.show.runtime}</Text>
-              <Text style={styles.detailText}>{this.state.show.genre}</Text>
-              <Text style={styles.detailText}>{this.state.show.year}</Text>
-              <Text style={styles.detailText}>{this.state.show.rating}</Text>
-            </View>
-            <View style={styles.listsContainer}>
-              {json.lists.map(list => <Text style={styles.listName}>{list.name}</Text>)}
+              <Text style={styles.detailText}>{show.runtime}</Text>
+              <Text style={styles.detailText}>{show.genre}</Text>
+              <Text style={styles.detailText}>{show.year}</Text>
+              <Text style={styles.detailText}>{show.rating}</Text>
             </View>
           </View>
           <RatingSlider
@@ -107,20 +108,58 @@ var MovieDetailView = React.createClass({
               {text: "Good", color: "rgba(253, 199, 12, .7)"},
               {text: "Fantastic", color: "rgba(255, 243, 12, .7)"}
             ]}
-            disableScroll={this._disableScroll}
-            enableScroll={this._enableScroll}
+            disableScroll={this._disableScroll.bind(this)}
+            enableScroll={this._enableScroll.bind(this)}
           />
-          <Text style={styles.description}>{this.state.show.description}</Text>
+          <Text style={styles.description}>{show.description}</Text>
+          <Text style={styles.description}>Directed by: {directors}</Text>
+          <Text style={styles.description}>Starring {cast}</Text>
         </View>
       </ParallaxView>
     );
-  },
+  }
+}
+
+export default Relay.createContainer(MovieDetailView, {
+  fragments: {
+    show: () => Relay.QL`
+      fragment on Show {
+        id
+        title
+        banner
+        plot
+        runtime
+        genre
+        year
+        rating
+        backgroundColor
+        detailColor
+        textColor
+        directors(first: 3) {
+          edges {
+            node {
+              fullName
+            }
+          }
+        }
+        cast(first: 3) {
+          edges {
+            node {
+              fullName
+            }
+          }
+        }
+      }
+    `,
+  }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     scrollView: {
       flex: 1,
       backgroundColor: '#B6AEA3',
+      // TODO: should not be hard coded
+      paddingBottom: 50,
     },
     content: {
       backgroundColor: '#B6AEA3',
@@ -164,12 +203,10 @@ var styles = StyleSheet.create({
     },
     description: {
       paddingTop: 30,
-      paddingBottom: 30,
+      //paddingBottom: 30,
       paddingLeft: 20,
       paddingRight: 20,
       fontSize: 14,
       fontWeight: '300'
     }
 });
-
-module.exports = MovieDetailView;

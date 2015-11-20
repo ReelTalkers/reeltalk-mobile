@@ -27,7 +27,6 @@ class Lolomo extends React.Component {
   _showDetails(showTitle, showId) {
     this.props.changeTransparency(true);
     this.props.navigator.push({
-      title: showTitle,
       Component: MovieDetailView,
       queryConfig: getMovieDetailQueryConfig(showId)
     });

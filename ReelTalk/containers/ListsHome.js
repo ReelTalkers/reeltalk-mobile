@@ -71,7 +71,7 @@ class ListsHome extends React.Component {
             {this._getListImage(list.shows.edges)}
             <View>
               <Text style={styles.listTitle}>{list.title}</Text>
-              <Text style={styles.listSubheading}>{list.shows.edges.totalCount} items</Text>
+              <Text style={styles.listSubheading}>{list.shows.edges.length} items</Text>
             </View>
           </View>
           <View style={styles.rowDivider}/>
@@ -112,7 +112,7 @@ export default Relay.createContainer(ListsHome, {
             node {
               id
               title
-              shows(first: 4) {
+              shows(first: 10) {
                 edges {
                   node {
                     poster

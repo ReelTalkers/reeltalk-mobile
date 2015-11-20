@@ -12,7 +12,7 @@ import React, {
 } from 'react-native';
 import Relay from 'react-relay';
 
-import Billboard from './Billboard';
+import ProfileDisplay from '../components/ProfileDisplay'
 import ListDetailView from './ListDetailView';
 
 import { getRootQueryConfig } from '../queryConfigs';
@@ -86,12 +86,7 @@ class ListsHome extends React.Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}>
-        <View style={styles.billboardContainer}>
-           <Image
-             source={{uri: this.props.user.picture}}
-             style={styles.circularImage}
-           />
-        </View>
+        <ProfileDisplay picture={this.props.user.picture}/>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(edge) => this.renderListRow(edge.node)}
@@ -106,6 +101,10 @@ export default Relay.createContainer(ListsHome, {
   fragments: {
     user: () => Relay.QL`
       fragment on UserProfile {
+        user {
+          firstName
+          lastName
+        }
         picture
         lists: subscribedLists(first: 5) {
           edges {

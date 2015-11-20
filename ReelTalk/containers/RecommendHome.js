@@ -136,7 +136,7 @@ export default Relay.createContainer(RecommendHome, {
 
 const styles = StyleSheet.create({
   billboardContainer: {
-    marginBottom: 5,
+    marginBottom: 10,
   },
   lolomo: {
     flex: 1,

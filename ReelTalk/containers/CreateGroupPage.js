@@ -50,16 +50,17 @@ class CreateGroupPage extends React.Component {
     )
   }
 
-  renderHeader(sectionData, sectionID) {
+  renderHeader() {
     const selectedUsers = this.state.selectedUsers;
     const userFirstNames = Object.keys(selectedUsers).map(k => selectedUsers[k].user.firstName).join(", ");
     return (
-      <View style = {styles.createButton}>
-        <Text
-          onPress={() => this.props.onCreateGroup(this.state.selectedUsers, userFirstNames)}>
-           Create
-        </Text>
-      </View>
+      <TouchableHighlight onPress={() => this.props.onCreateGroup(this.state.selectedUsers, userFirstNames)}>
+        <View style={styles.createButton}>
+          <Text style={styles.createText}>
+             Create
+          </Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 
@@ -67,7 +68,7 @@ class CreateGroupPage extends React.Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderSectionHeader={(sectionData, sectionID) => this.renderHeader(sectionData, sectionID)}
+        renderHeader={() => this.renderHeader()}
         renderRow={(userProfile) => this.renderUserRow(userProfile)}
         style={styles.listView}
         showsVerticalScrollIndicator={true}
@@ -98,7 +99,16 @@ const styles = StyleSheet.create({
   },
   createButton: {
     flex: 1,
-    height: 40,
-    backgroundColor: '#96C0EE'
+    height: 50,
+    backgroundColor: '#F5F5F5',
+    borderColor: '#E6E6E6',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  createText: {
+    fontSize: 17,
+    color: '#0066FA',
   }
 });

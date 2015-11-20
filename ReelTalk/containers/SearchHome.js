@@ -10,13 +10,12 @@ import React, {
 import Relay from 'react-relay';
 
 import SearchBar from '../components/SearchBar';
+import MovieGrid from './MovieGrid';
 
 class SearchHome extends React.Component {
 
   constructor(props) {
     super(props);
-    const { viewer } = this.props
-    viewer.shows.edges.map(edge => console.log(edge.node))
   	this.state = {
   		isLoading: false,
       dataSource: new ListView.DataSource({
@@ -25,33 +24,29 @@ class SearchHome extends React.Component {
   	};
 	}
 
-  onSearchChange(event) {
-    this.searchMovies(event.nativeEvent.text);
-  }
-
   searchMovies(query) {
     this.props.relay.setVariables({
       searchTerm: query,
     });
   }
 
+  onSearchChange(event) {
+    this.searchMovies(event.nativeEvent.text);
+  }
+
   render() {
+    const { viewer } = this.props
+    viewer.shows.edges.map(edge => console.log(edge.node))
     return (
       <View>
         <SearchBar
-          onSearchChange={this.onSearchChange}
+          onSearchChange={(event) => this.onSearchChange(event)}
           isLoading={this.state.isLoading}
-          onFocus={() =>
-            this.refs.listview && this.refs.listview.getScrollResponder().scrollTo(0, 0)}
         />
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          automaticallyAdjustContentInsets={false}
-          keyboardDismissMode="on-drag"
-          keyboardShouldPersistTaps={true}
+        <MovieGrid
+          shows={viewer.shows}
+          navigator={this.props.navigator}
         />
-        <Text>Welcome {this.props.viewer.users.edges[0].node.user.firstName}!</Text>
       </View>
     );
   }
@@ -72,6 +67,7 @@ export default Relay.createContainer(SearchHome, {
               title
             }
           }
+          ${MovieGrid.getFragment('shows')}
         }
         users: allUserProfiles(first: 10, user__first_name__contains: $searchTerm) {
           edges {

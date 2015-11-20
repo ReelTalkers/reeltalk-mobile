@@ -24,13 +24,15 @@ class MovieGrid extends React.Component {
     super(props);
     const showIds = props.shows ? props.shows.edges.map(edge => edge.node.id) : [];
     const userIds = props.users ? props.users.edges.map(edge => edge.node.id) : [];
+    const peopleIds = props.people ? props.people.edges.map(edge => edge.node.id) : [];
 
     const shows = props.shows ? props.shows.edges : []
     const users = props.users ? props.users.edges : []
+    const people = props.people ? props.people.edges : []
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(shows.concat(users)),
+      dataSource: ds.cloneWithRows(people.concat(shows.concat(users))),
       showIds: props.shows ? props.shows.edges.map(edge => edge.node.id) : [],
       userIds: props.users ? props.users.edges.map(edge => edge.node.id) : []
     };
@@ -40,8 +42,9 @@ class MovieGrid extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const shows = nextProps.shows ? nextProps.shows.edges : []
     const users = nextProps.users ? nextProps.users.edges : []
+    const people = nextProps.people ? nextProps.people.edges : []
     this.setState({
-      dataSource: ds.cloneWithRows(shows.concat(users))
+      dataSource: ds.cloneWithRows(people.concat(shows.concat(users)))
     });
   }
 
@@ -63,6 +66,10 @@ class MovieGrid extends React.Component {
     });
   }
 
+  removeParens(name) {
+    return(name.indexOf("(") === -1 ? name : name.substring(0, name.indexOf("(")));
+  }
+
   renderGridComponent(item) {
     console.log(item)
     if (this.state.userIds.indexOf(item.id) > -1) {
@@ -78,7 +85,7 @@ class MovieGrid extends React.Component {
         </TouchableHighlight>
       )
     }
-    else {
+    else if (this.state.showIds.indexOf(item.id) > -1) {
       return (
         <TouchableHighlight
           style={styles.movieButton}
@@ -88,6 +95,18 @@ class MovieGrid extends React.Component {
               source={{uri: item.poster}}
               style={styles.image}
           />
+        </TouchableHighlight>
+      );
+    }
+    else {
+      return (
+        <TouchableHighlight
+
+          onPress={() => this._showMovieDetails(item)}
+        >
+          <Text
+              style={styles.image}
+          >{this.removeParens(item.fullName)}</Text>
         </TouchableHighlight>
       );
     }
@@ -131,6 +150,16 @@ export default Relay.createContainer(MovieGrid, {
               firstName
               lastName
             }
+          }
+        }
+      }
+    `,
+    people: () => Relay.QL`
+      fragment on PersonConnection {
+        edges {
+          node {
+            id
+            fullName
           }
         }
       }

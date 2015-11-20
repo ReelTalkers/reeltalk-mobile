@@ -45,6 +45,7 @@ class SearchHome extends React.Component {
         <MovieGrid
           shows={viewer.shows}
           users={viewer.users}
+          people={viewer.people}
           navigator={this.props.navigator}
         />
       </View>
@@ -81,6 +82,15 @@ export default Relay.createContainer(SearchHome, {
             }
           }
           ${MovieGrid.getFragment('users')}
+        }
+        people: allPeople(first: 10, full_name__contains: $searchTerm) {
+          edges {
+            node {
+              id
+              fullName
+            }
+          }
+          ${MovieGrid.getFragment('people')}
         }
       }
     `

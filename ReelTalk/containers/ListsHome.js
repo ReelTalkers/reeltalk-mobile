@@ -112,7 +112,7 @@ export default Relay.createContainer(ListsHome, {
             node {
               id
               title
-              shows(first: 4) {
+              shows(first: 10) {
                 edges {
                   node {
                     poster

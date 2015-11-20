@@ -50,14 +50,16 @@ class CreateGroupPage extends React.Component {
     )
   }
 
-  renderHeader() {
+  renderHeader(sectionData, sectionID) {
     const selectedUsers = this.state.selectedUsers;
     const userFirstNames = Object.keys(selectedUsers).map(k => selectedUsers[k].user.firstName).join(", ");
     return (
-      <Text
-        onPress={() => this.props.onCreateGroup(this.state.selectedUsers, userFirstNames)}>
-         Create
-      </Text>
+      <View style = {styles.createButton}>
+        <Text
+          onPress={() => this.props.onCreateGroup(this.state.selectedUsers, userFirstNames)}>
+           Create
+        </Text>
+      </View>
     );
   }
 
@@ -65,7 +67,7 @@ class CreateGroupPage extends React.Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderHeader={() => this.renderHeader()}
+        renderSectionHeader={(sectionData, sectionID) => this.renderHeader(sectionData, sectionID)}
         renderRow={(userProfile) => this.renderUserRow(userProfile)}
         style={styles.listView}
         showsVerticalScrollIndicator={true}
@@ -94,4 +96,9 @@ const styles = StyleSheet.create({
   listView: {
      backgroundColor: 'white',
   },
+  createButton: {
+    flex: 1,
+    height: 40,
+    backgroundColor: '#96C0EE'
+  }
 });

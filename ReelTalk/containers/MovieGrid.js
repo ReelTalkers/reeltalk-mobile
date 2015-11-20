@@ -21,8 +21,8 @@ class MovieGrid extends React.Component {
 
   constructor(props) {
     super(props);
-    const showIds = this.props.shows.edges.map(edge => edge.node.id);
-    const userIds = this.props.users.edges.map(edge => edge.node.id);
+    const showIds = props.shows ? props.shows.edges.map(edge => edge.node.id) : [];
+    const userIds = props.users ? props.users.edges.map(edge => edge.node.id) : [];
 
     const shows = props.shows ? props.shows.edges : []
     const users = props.users ? props.users.edges : []
@@ -30,8 +30,8 @@ class MovieGrid extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(shows.concat(users)),
-      showIds: this.props.shows.edges.map(edge => edge.node.id),
-      userIds: this.props.users.edges.map(edge => edge.node.id)
+      showIds: props.shows ? props.shows.edges.map(edge => edge.node.id) : [],
+      userIds: props.users ? props.users.edges.map(edge => edge.node.id) : []
     };
   }
 

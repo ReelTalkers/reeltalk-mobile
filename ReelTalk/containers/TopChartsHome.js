@@ -38,7 +38,6 @@ class TopChartsHome extends React.Component {
         />
         <MovieGrid
           shows={this.state.shows}
-          users={this.props.viewer.users}
           navigator={this.props.navigator}
         />
       </View>
@@ -55,9 +54,6 @@ export default Relay.createContainer(TopChartsHome, {
         }
         topToday: allShows(last: 5) {
           ${MovieGrid.getFragment('shows')}
-        }
-        users: allUserProfiles(first: 1) {
-          ${MovieGrid.getFragment('users')}
         }
       }
     `

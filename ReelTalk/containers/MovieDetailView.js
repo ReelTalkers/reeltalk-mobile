@@ -81,7 +81,7 @@ class MovieDetailView extends React.Component {
     return (
       <ParallaxView
         style={styles.scrollView}
-        automaticallyAdjustContentInsets={true}
+        automaticallyAdjustContentInsets={false}
         scrollEnabled={scrollEnabled}
         backgroundSource={{uri: show.banner}}
         windowHeight={470}

@@ -326,7 +326,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   transparent: {
-    backgroundColor: 'transparent',
+    // TODO: change to transparent for transparency
+    backgroundColor: 'white',
   },
   navBarText: {
     fontSize: 16,

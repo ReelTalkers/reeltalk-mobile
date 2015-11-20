@@ -71,7 +71,6 @@ class MovieGrid extends React.Component {
   }
 
   renderGridComponent(item) {
-    console.log(item)
     if (this.state.userIds.indexOf(item.id) > -1) {
       return (
         <TouchableHighlight
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: posterMargin,
     // TODO: height only temp fix for bug
-    height: screen.height,
+    height: screen.height - 150,
     // TODO: center this container so if you turn it sideways then it will be good
   },
   listView: {

@@ -114,7 +114,7 @@ class MovieDetailView extends React.Component {
           <Text style={styles.description}>Directed by: {directors}</Text>
           <Text style={styles.description}>Starring {cast}</Text>
           <Text style={styles.description}>Plot: {show.fullPlot}</Text>
-          <Text style={styles.description}>IMBD Rating: {show.imdbRating}</Text>
+          <Text style={styles.description}>IMBD Rating: {show.imdbRating}/10</Text>
           <Text style={styles.description}>Metacritic Rating: {show.metacritic}/100</Text>
         </View>
       </ParallaxView>

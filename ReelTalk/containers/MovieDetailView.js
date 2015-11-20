@@ -113,6 +113,7 @@ class MovieDetailView extends React.Component {
           <Text style={styles.description}>{show.description}</Text>
           <Text style={styles.description}>Directed by: {directors}</Text>
           <Text style={styles.description}>Starring {cast}</Text>
+          <Text style={styles.description}>Plot: {show.fullPlot}</Text>
         </View>
       </ParallaxView>
     );
@@ -126,7 +127,7 @@ export default Relay.createContainer(MovieDetailView, {
         id
         title
         banner
-        plot
+        fullPlot
         runtime
         genre
         year

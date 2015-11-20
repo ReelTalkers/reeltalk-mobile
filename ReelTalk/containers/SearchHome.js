@@ -36,7 +36,6 @@ class SearchHome extends React.Component {
 
   render() {
     const { viewer } = this.props
-    viewer.shows.edges.map(edge => console.log(edge.node))
     return (
       <View>
         <SearchBar

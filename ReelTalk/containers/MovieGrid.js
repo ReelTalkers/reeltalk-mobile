@@ -27,8 +27,9 @@ class MovieGrid extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const shows = nextProps.shows ? nextProps.shows.edges : []
     this.setState({
-      dataSource: ds.cloneWithRows(nextProps.shows.edges)
+      dataSource: ds.cloneWithRows(shows)
     });
   }
 

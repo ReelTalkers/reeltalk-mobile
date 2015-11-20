@@ -44,6 +44,7 @@ class RecommendHome extends React.Component {
         ]
       )
     } else {
+      this.props.changeTransparency(false);
       this.props.navigator.pop();
       this.setState({
         // TODO: Billy, why not just set equal to selectedUsers?
@@ -55,6 +56,7 @@ class RecommendHome extends React.Component {
   }
 
   selectGroup() {
+    this.props.changeTransparency(true);
     this.props.navigator.push({
       title: "Group",
       Component: CreateGroupPage,

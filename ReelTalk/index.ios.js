@@ -59,36 +59,39 @@ const NavigationBarRouteMapper = {
   },
 };
 
-const RecommendBarRouteMapper = {
-  LeftButton: function(route, navigator, index, navState) {
-    if (index === 0) {
-      return null;
-    }
+const getRecommendBarRouteMapper = (changeTransparency) => {
+  const RecommendBarRouteMapper = {
+    LeftButton: function(route, navigator, index, navState) {
+      if (index === 0) {
+        return null;
+      }
 
-    const previousRoute = navState.routeStack[index - 1];
-    return (
-      <TouchableOpacity
-        onPress={() => navigator.pop()}
-        style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
-          {"<"}
+      const previousRoute = navState.routeStack[index - 1];
+      return (
+        <TouchableOpacity
+          onPress={() => {changeTransparency(false); navigator.pop();}}
+          style={styles.navBarLeftButton}>
+          <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
+            {"<"}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+
+    RightButton: function(route, navigator, index, navState) {
+      return (null)
+    },
+
+    Title: function(route, navigator, index, navState) {
+      return (
+        <Text style={[styles.navBarText, styles.navBarTitleText]}>
+          {route.title}
         </Text>
-      </TouchableOpacity>
-    );
-  },
-
-  RightButton: function(route, navigator, index, navState) {
-    return (null)
-  },
-
-  Title: function(route, navigator, index, navState) {
-    return (
-      <Text style={[styles.navBarText, styles.navBarTitleText]}>
-        {route.title}
-      </Text>
-    );
-  },
-};
+      );
+    },
+  };
+  return RecommendBarRouteMapper;
+}
 
 const ListsNavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
@@ -140,7 +143,17 @@ const ListsNavigationBarRouteMapper = {
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedTab: props.activeTab }
+    this.state = {
+      selectedTab: props.activeTab,
+      transparentBar: false
+    }
+  }
+
+  setTransparent(transparent) {
+    console.log("Called")
+    this.setState({
+      transparentBar: transparent
+    });
   }
 
   renderRecommendHome() {
@@ -152,11 +165,14 @@ class Main extends React.Component {
           title: 'Recommend',
           Component: RecommendHome,
           queryConfig: getRecommendHomeQueryConfig(FIRST_USER_ID),
+          props: {
+            changeTransparency: (transparent) => this.setTransparent(transparent)
+          }
         }}
         navigationBar={
           <Navigator.NavigationBar
-            routeMapper={RecommendBarRouteMapper}
-            style={styles.navBar} />
+            routeMapper={getRecommendBarRouteMapper((transparent) => this.setTransparent(transparent))}
+            style={this.state.transparentBar ? styles.transparent : styles.navBar} />
         }
         renderScene={relayRenderScene} />
     );
@@ -308,6 +324,9 @@ const styles = StyleSheet.create({
   },
   navBar: {
     backgroundColor: 'white',
+  },
+  transparent: {
+    backgroundColor: 'black',
   },
   navBarText: {
     fontSize: 16,

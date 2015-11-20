@@ -208,11 +208,16 @@ class Main extends React.Component {
         sceneStyle={styles.scene}
         ref="settingsRef"
         initialRoute={{
-          title: 'Settings',
+          title: 'Search',
           Component: SearchHome,
           queryConfig: getRootQueryConfig(),
         }}
-        renderScene={relayRenderScene} />
+        renderScene={relayRenderScene}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+            style={styles.navBar} />
+        } />
     );
   }
 
@@ -239,7 +244,7 @@ class Main extends React.Component {
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'lists'}
-  	      systemIcon="bookmarks"
+  	      systemIcon="more"
   	      onPress={() => this._onPressTab('lists')}>
           {this.renderListsHome()}
   	    </TabBarIOS.Item>

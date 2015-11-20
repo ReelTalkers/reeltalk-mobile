@@ -6,6 +6,7 @@ import React, {
   Image,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } from 'react-native';
 import Relay from 'react-relay';
@@ -50,8 +51,12 @@ class Billboard extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Avatar groupMembers={this.props.groupMembers}/>
-      <Text onPress={this.props.showActionSheet} style={styles.filterSelect}>{this.props.filterName}</Text>
+        <TouchableHighlight onPress={this.props.showActionSheet} activeOpacity={1}>
+          <View style={styles.container}>
+            <Avatar groupMembers={this.props.groupMembers}/>
+            <Text  style={styles.filterSelect}>{this.props.filterName}</Text>
+          </View>
+        </TouchableHighlight>
         <View style={styles.line} />
       </View>
     );

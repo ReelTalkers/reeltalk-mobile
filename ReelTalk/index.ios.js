@@ -3,7 +3,6 @@
 import React, {
   AppRegistry,
   StyleSheet,
-  TabBarIOS,
   Text,
   Navigator,
   NavigatorIOS,
@@ -26,6 +25,9 @@ import SearchHome from './containers/SearchHome';
 import { relayRenderScene } from './utils';
 import { getRootQueryConfig, getUserQueryConfig, getRecommendHomeQueryConfig } from './queryConfigs';
 
+import { TabBarIOS, Icon, } from 'react-native-icons';
+const TabBarItemIOS = TabBarIOS.Item;
+
 const FIRST_USER_ID = 'VXNlclByb2ZpbGU6MQ==';
 
 const NavigationBarRouteMapper = {
@@ -39,9 +41,11 @@ const NavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => navigator.pop()}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          {"<"}
-        </Text>
+        <Icon
+          name='ion|chevron-left'
+          size={20}
+          style={[{width: 10, height: 42, marginRight: 5}]}
+        />
       </TouchableOpacity>
     );
   },
@@ -59,36 +63,42 @@ const NavigationBarRouteMapper = {
   },
 };
 
-const RecommendBarRouteMapper = {
-  LeftButton: function(route, navigator, index, navState) {
-    if (index === 0) {
-      return null;
-    }
+const getRecommendBarRouteMapper = (changeTransparency) => {
+  const RecommendBarRouteMapper = {
+    LeftButton: function(route, navigator, index, navState) {
+      if (index === 0) {
+        return null;
+      }
 
-    const previousRoute = navState.routeStack[index - 1];
-    return (
-      <TouchableOpacity
-        onPress={() => navigator.pop()}
-        style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarSymbolText, styles.navBarButtonText]}>
-          {"<"}
+      const previousRoute = navState.routeStack[index - 1];
+      return (
+        <TouchableOpacity
+          onPress={() => {changeTransparency(false); navigator.pop();}}
+          style={styles.navBarLeftButton}>
+          {/* TODO: all of these icons are messy, clean up */}
+          <Icon
+            name='ion|chevron-left'
+            size={20}
+            style={[{width: 10, height: 42, marginRight: 5}]}
+          />
+        </TouchableOpacity>
+      );
+    },
+
+    RightButton: function(route, navigator, index, navState) {
+      return (null)
+    },
+
+    Title: function(route, navigator, index, navState) {
+      return (
+        <Text style={[styles.navBarText, styles.navBarTitleText]}>
+          {route.title}
         </Text>
-      </TouchableOpacity>
-    );
-  },
-
-  RightButton: function(route, navigator, index, navState) {
-    return (null)
-  },
-
-  Title: function(route, navigator, index, navState) {
-    return (
-      <Text style={[styles.navBarText, styles.navBarTitleText]}>
-        {route.title}
-      </Text>
-    );
-  },
-};
+      );
+    },
+  };
+  return RecommendBarRouteMapper;
+}
 
 const ListsNavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
@@ -97,9 +107,11 @@ const ListsNavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => console.log("Add list")}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          {"+"}
-        </Text>
+        <Icon
+          name='ion|ios-plus-empty'
+          size={30}
+          style={[{width: 30, height: 42, marginRight: 5}]}
+        />
       </TouchableOpacity>
     );
     }
@@ -109,9 +121,16 @@ const ListsNavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => navigator.pop()}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-          {"< " + previousRoute.title}
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Icon
+            name='ion|chevron-left'
+            size={20}
+            style={[{width: 10, height: 42, marginRight: 5}]}
+          />
+          <Text style={[styles.navBarText, styles.navBarButtonText]}>
+            {previousRoute.title}
+          </Text>
+        </View>
       </TouchableOpacity>
     );
   },
@@ -140,7 +159,17 @@ const ListsNavigationBarRouteMapper = {
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedTab: props.activeTab }
+    this.state = {
+      selectedTab: props.activeTab,
+      transparentBar: false
+    }
+  }
+
+  setTransparent(transparent) {
+    console.log("Called")
+    this.setState({
+      transparentBar: transparent
+    });
   }
 
   renderRecommendHome() {
@@ -152,11 +181,14 @@ class Main extends React.Component {
           title: 'Recommend',
           Component: RecommendHome,
           queryConfig: getRecommendHomeQueryConfig(FIRST_USER_ID),
+          props: {
+            changeTransparency: (transparent) => this.setTransparent(transparent)
+          }
         }}
         navigationBar={
           <Navigator.NavigationBar
-            routeMapper={RecommendBarRouteMapper}
-            style={styles.navBar} />
+            routeMapper={getRecommendBarRouteMapper((transparent) => this.setTransparent(transparent))}
+            style={this.state.transparentBar ? styles.transparent : styles.navBar} />
         }
         renderScene={relayRenderScene} />
     );
@@ -235,21 +267,34 @@ class Main extends React.Component {
     return (
       <TabBarIOS>
   	    <TabBarIOS.Item
+          name="recommend"
+          iconName={'ion|ios-monitor-outline'}
+          selectedIconName={'ion|ios-monitor'}
+          title={'Recommend'}
+          iconSize={32}
   	      selected={this.state.selectedTab === 'recommend'}
-  	      systemIcon="favorites"
   	      onPress={() => this._onPressTab('recommend')}>
           {this.renderRecommendHome()}
 
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
+          name="lists"
+          iconName={'ion|ios-list-outline'}
+          selectedIconName={'ion|ios-list'}
+          title={'Lists'}
+          iconSize={32}
   	      selected={this.state.selectedTab === 'lists'}
-  	      systemIcon="more"
   	      onPress={() => this._onPressTab('lists')}>
           {this.renderListsHome()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
+          name="charts"
+          iconName={'ion|fireball'}
+          selectedIconName={'ion|fireball'}
+          title={'Top Charts'}
+          iconSize={32}
   	      selected={this.state.selectedTab === 'charts'}
   	      systemIcon="most-viewed"
   	      onPress={() => this._onPressTab('charts')}>
@@ -257,9 +302,14 @@ class Main extends React.Component {
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
-  	      selected={this.state.selectedTab === 'settings'}
-  	      systemIcon="search"
-  	      onPress={() => this._onPressTab('settings')}>
+          name="search"
+          iconName={'ion|ios-search'}
+          selectedIconName={'ion|ios-search-strong'}
+          title={'Search'}
+          iconSize={32}
+  	      selected={this.state.selectedTab === 'search'}
+  	      //systemIcon="search"
+  	      onPress={() => this._onPressTab('search')}>
   	      {this.renderSearchHome()}
   	    </TabBarIOS.Item>
 
@@ -309,13 +359,12 @@ const styles = StyleSheet.create({
   navBar: {
     backgroundColor: 'white',
   },
+  transparent: {
+    // TODO: change to transparent for transparency
+    backgroundColor: 'white',
+  },
   navBarText: {
     fontSize: 16,
-    marginVertical: 10,
-    marginRight: 10,
-  },
-  navBarSymbolText: {
-    fontSize: 22,
     marginVertical: 10,
     marginRight: 10,
   },

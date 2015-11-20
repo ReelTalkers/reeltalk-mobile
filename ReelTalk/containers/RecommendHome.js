@@ -44,6 +44,7 @@ class RecommendHome extends React.Component {
         ]
       )
     } else {
+      this.props.changeTransparency(false);
       this.props.navigator.pop();
       this.setState({
         // TODO: Billy, why not just set equal to selectedUsers?
@@ -55,6 +56,7 @@ class RecommendHome extends React.Component {
   }
 
   selectGroup() {
+    this.props.changeTransparency(true);
     this.props.navigator.push({
       title: "Group",
       Component: CreateGroupPage,
@@ -95,6 +97,7 @@ class RecommendHome extends React.Component {
   render() {
     return (
       <ScrollView
+        style={styles.scrollView}
         automaticallyAdjustContentInsets={true}>
         <View style={styles.billboardContainer}>
           <Billboard
@@ -110,6 +113,7 @@ class RecommendHome extends React.Component {
           viewer={this.props.viewer}
           navigator={this.props.navigator}
           categories={this.state.categories}
+          changeTransparency={this.props.changeTransparency}
         />
       </ScrollView>
     );
@@ -133,8 +137,12 @@ export default Relay.createContainer(RecommendHome, {
 });
 
 const styles = StyleSheet.create({
+  // TODO: un-hard code
+  scrollView: {
+    marginBottom: 50,
+  },
   billboardContainer: {
-    marginBottom: 5,
+    marginBottom: 10,
   },
   lolomo: {
     flex: 1,

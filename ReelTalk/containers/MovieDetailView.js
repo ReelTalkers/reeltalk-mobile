@@ -14,7 +14,6 @@ import React, {
 import Relay from 'react-relay';
 import ParallaxView from 'react-native-parallax-view';
 
-import Rating from '../components/Rating';
 import RatingSlider from '../components/RatingSlider';
 import HeaderScrollView from '../components/HeaderScrollView';
 import LolomoRow from './LolomoRow';

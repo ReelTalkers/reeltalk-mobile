@@ -9,7 +9,7 @@ import React, {
 } from 'react-native';
 import Relay from 'react-relay';
 
-class SettingsHome extends React.Component {
+class SearchHome extends React.Component {
   render() {
     return (
       <View>
@@ -19,7 +19,7 @@ class SettingsHome extends React.Component {
   }
 }
 
-export default Relay.createContainer(SettingsHome, {
+export default Relay.createContainer(SearchHome, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Query {

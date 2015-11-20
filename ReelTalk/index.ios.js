@@ -21,7 +21,7 @@ import cssVar from 'cssVar';
 import RecommendHome from './containers/RecommendHome';
 import ListsHome from './containers/ListsHome';
 import TopChartsHome from './containers/TopChartsHome';
-import SettingsHome from './containers/SettingsHome';
+import SearchHome from './containers/SearchHome';
 
 import { relayRenderScene } from './utils';
 import { getRootQueryConfig, getUserQueryConfig, getRecommendHomeQueryConfig } from './queryConfigs';
@@ -202,14 +202,14 @@ class Main extends React.Component {
     );
   }
 
-  renderSettingsHome() {
+  renderSearchHome() {
     return (
       <Navigator
         sceneStyle={styles.scene}
         ref="settingsRef"
         initialRoute={{
           title: 'Settings',
-          Component: SettingsHome,
+          Component: SearchHome,
           queryConfig: getRootQueryConfig(),
         }}
         renderScene={relayRenderScene} />
@@ -253,9 +253,9 @@ class Main extends React.Component {
 
   	    <TabBarIOS.Item
   	      selected={this.state.selectedTab === 'settings'}
-  	      systemIcon="more"
+  	      systemIcon="search"
   	      onPress={() => this._onPressTab('settings')}>
-  	      {this.renderSettingsHome()}
+  	      {this.renderSearchHome()}
   	    </TabBarIOS.Item>
 
   	  </TabBarIOS>

@@ -102,14 +102,20 @@ class MovieGrid extends React.Component {
       );
     }
     else {
+      const nameArray = this.removeParens(item.fullName).split(' ');
       return (
         <TouchableHighlight
 
           onPress={() => this._showMovieDetails(item)}
         >
-          <Text
-              style={styles.image}
-          >{this.getInitials(this.removeParens(item.fullName))}</Text>
+          <View style={styles.circle}>
+            <Text style={styles.name}>
+              {nameArray[0]}
+            </Text>
+            <Text style={styles.name}>
+              {nameArray[nameArray.length - 1]}
+            </Text>
+          </View>
         </TouchableHighlight>
       );
     }
@@ -207,5 +213,19 @@ const styles = StyleSheet.create({
   image: {
     width: posterWidth,
     height: posterHeight,
+  },
+  name: {
+    fontSize: 18,
+    color: 'white',
+  },
+  circle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center', // center
+    width: posterWidth,
+    height: posterWidth,
+    flexDirection: 'column',
+    borderRadius:posterWidth/2,
+    backgroundColor: '#0066FA',
   },
 });

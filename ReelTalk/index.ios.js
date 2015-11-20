@@ -206,7 +206,7 @@ class Main extends React.Component {
     return (
       <Navigator
         sceneStyle={styles.scene}
-        ref="settingsRef"
+        ref="searchRef"
         initialRoute={{
           title: 'Search',
           Component: SearchHome,

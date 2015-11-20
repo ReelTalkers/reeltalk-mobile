@@ -23,7 +23,6 @@ class TopChartsHome extends React.Component {
   _onValueChange(value) {
     const { viewer } = this.props;
     const newList = (value === 'Today') ? viewer.topToday : viewer.topWeek;
-    // TODO: does not update. need real queries
     this.setState({
       shows: newList,
     });
@@ -39,6 +38,7 @@ class TopChartsHome extends React.Component {
         />
         <MovieGrid
           shows={this.state.shows}
+          users={this.props.viewer.users}
           navigator={this.props.navigator}
         />
       </View>
@@ -55,6 +55,9 @@ export default Relay.createContainer(TopChartsHome, {
         }
         topToday: allShows(last: 5) {
           ${MovieGrid.getFragment('shows')}
+        }
+        users: allUserProfiles(first: 1) {
+          ${MovieGrid.getFragment('users')}
         }
       }
     `

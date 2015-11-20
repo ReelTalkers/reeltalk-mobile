@@ -31,12 +31,16 @@ class UserRow extends React.Component {
           })
         }}>
         <View style={styles.container}>
-          <Image
-            source={{uri: userProfile.picture}}
-            style={styles.image}
-          />
-          <Text>{userProfile.user.firstName + ' ' + userProfile.user.lastName}</Text>
-          <View style={[styles.checkBox, {backgroundColor: this.state.selected ? 'green' : 'white'}]}/>
+          <View style={styles.row}>
+            <Image
+              source={{uri: userProfile.picture}}
+              style={styles.image}
+            />
+            {/* TODO: ask Greg how to get username*/}
+            <Text style={[styles.humanName, this.state.selected && styles.selectedFont]}>{userProfile.user.firstName + ' ' + userProfile.user.lastName}</Text>
+            <View style={[styles.checkBox, this.state.selected && styles.selectedCheckBox]}/>
+          </View>
+          <View style={styles.rowDivider}/>
         </View>
       </TouchableHighlight>
     );
@@ -60,17 +64,46 @@ export default Relay.createContainer(UserRow, {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
+  },
+  row: {
+    backgroundColor: 'white',
     flexDirection: 'row',
-    backgroundColor: 'white'
+    alignItems: 'center',
+    paddingLeft: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   image: {
-    width: 70,
-    height: 70,
-    marginLeft: 10,
-    borderRadius: 70/2,
+    width: 30,
+    height: 30,
+    marginRight: 10,
+    borderRadius: 30/2,
+  },
+  humanName: {
+    fontSize: 15,
+  },
+  selectedFont: {
+    color: '#4090DB'
   },
   checkBox: {
-    height: 20,
-    width: 20,
-  }
+    position: 'absolute',
+    right: 10,
+    height: 30,
+    width: 30,
+    borderRadius: 30/ 2,
+    borderColor: '#E6E6E6',
+    backgroundColor: 'white',
+    borderWidth: 2,
+  },
+  selectedCheckBox: {
+    backgroundColor: '#3DAF2C',
+    borderWidth: 0,
+  },
+  rowDivider: {
+    height: 1,
+    marginLeft: 50,
+    marginRight: 10,
+    backgroundColor: '#E6E6E6'
+  },
 });

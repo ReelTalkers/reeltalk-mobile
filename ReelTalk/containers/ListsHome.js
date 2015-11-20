@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     height: 1,
     marginLeft: 10,
     marginRight: 10,
-    backgroundColor: '#F1F1F1'
+    backgroundColor: '#E6E6E6'
   },
   listTitle: {
     fontSize: 17,

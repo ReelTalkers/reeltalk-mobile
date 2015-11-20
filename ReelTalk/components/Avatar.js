@@ -9,6 +9,16 @@ import React, {
 
 export default class Avatar extends React.Component {
 
+  // given an id returns an image object of the groupMember at that location
+  _getImage(id) {
+    return (
+      <Image
+          source={{uri: this.props.groupMembers[id].picture}}
+          style={styles.image}
+      />
+  );
+  }
+
   render() {
     if (this.props.groupMembers.length === 1) {
       return (
@@ -22,14 +32,8 @@ export default class Avatar extends React.Component {
       return (
         <View style={styles.circle}>
           <View style={styles.squareRow}>
-            <Image
-                source={{uri: this.props.groupMembers[0].picture}}
-                style={styles.image}
-            />
-            <Image
-                source={{uri: this.props.groupMembers[1].picture}}
-                style={styles.image}
-            />
+            {this._getImage(0)}
+            {this._getImage(1)}
           </View>
         </View>
       );
@@ -39,20 +43,11 @@ export default class Avatar extends React.Component {
         <View style={styles.circle}>
           <View style={styles.squareRow}>
           <View style={styles.squareColumn}>
-            <Image
-                source={{uri: this.props.groupMembers[0].picture}}
-                style={styles.image}
-            />
+            {this._getImage(0)}
           </View>
           <View style={styles.squareColumn}>
-            <Image
-                source={{uri: this.props.groupMembers[1].picture}}
-                style={styles.image}
-            />
-            <Image
-                source={{uri: this.props.groupMembers[2].picture}}
-                style={styles.image}
-            />
+            {this._getImage(1)}
+            {this._getImage(2)}
           </View>
         </View>
         </View>
@@ -62,24 +57,12 @@ export default class Avatar extends React.Component {
       return (
         <View style={styles.circle}>
           <View style={styles.squareRow}>
-            <Image
-                source={{uri: this.props.groupMembers[0].picture}}
-                style={styles.image}
-            />
-            <Image
-                source={{uri: this.props.groupMembers[1].picture}}
-                style={styles.image}
-            />
+            {this._getImage(0)}
+            {this._getImage(1)}
           </View>
           <View style={styles.squareRow}>
-            <Image
-                source={{uri: this.props.groupMembers[2].picture}}
-                style={styles.image}
-            />
-            <Image
-                source={{uri: this.props.groupMembers[3].picture}}
-                style={styles.image}
-            />
+            {this._getImage(2)}
+            {this._getImage(3)}
           </View>
         </View>
       );

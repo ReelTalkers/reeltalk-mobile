@@ -3,7 +3,6 @@
 import React, {
   AppRegistry,
   StyleSheet,
-  TabBarIOS,
   Text,
   Navigator,
   NavigatorIOS,
@@ -25,6 +24,10 @@ import SearchHome from './containers/SearchHome';
 
 import { relayRenderScene } from './utils';
 import { getRootQueryConfig, getUserQueryConfig, getRecommendHomeQueryConfig } from './queryConfigs';
+
+// TODO: should these be const or import?
+var { TabBarIOS, } = require('react-native-icons');
+var TabBarItemIOS = TabBarIOS.Item;
 
 const FIRST_USER_ID = 'VXNlclByb2ZpbGU6MQ==';
 
@@ -251,21 +254,34 @@ class Main extends React.Component {
     return (
       <TabBarIOS>
   	    <TabBarIOS.Item
+          name="recommend"
+          iconName={'ion|ios-monitor-outline'}
+          selectedIconName={'ion|ios-monitor'}
+          title={'Recommend'}
+          iconSize={32}
   	      selected={this.state.selectedTab === 'recommend'}
-  	      systemIcon="favorites"
   	      onPress={() => this._onPressTab('recommend')}>
           {this.renderRecommendHome()}
 
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
+          name="lists"
+          iconName={'ion|ios-list-outline'}
+          selectedIconName={'ion|ios-list'}
+          title={'Lists'}
+          iconSize={32}
   	      selected={this.state.selectedTab === 'lists'}
-  	      systemIcon="more"
   	      onPress={() => this._onPressTab('lists')}>
           {this.renderListsHome()}
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
+          name="charts"
+          iconName={'ion|fireball'}
+          selectedIconName={'ion|fireball'}
+          title={'Top Charts'}
+          iconSize={32}
   	      selected={this.state.selectedTab === 'charts'}
   	      systemIcon="most-viewed"
   	      onPress={() => this._onPressTab('charts')}>
@@ -273,9 +289,14 @@ class Main extends React.Component {
   	    </TabBarIOS.Item>
 
   	    <TabBarIOS.Item
-  	      selected={this.state.selectedTab === 'settings'}
-  	      systemIcon="search"
-  	      onPress={() => this._onPressTab('settings')}>
+          name="search"
+          iconName={'ion|ios-search'}
+          selectedIconName={'ion|ios-search-strong'}
+          title={'Search'}
+          iconSize={32}
+  	      selected={this.state.selectedTab === 'search'}
+  	      //systemIcon="search"
+  	      onPress={() => this._onPressTab('search')}>
   	      {this.renderSearchHome()}
   	    </TabBarIOS.Item>
 

@@ -111,6 +111,7 @@ class RecommendHome extends React.Component {
           viewer={this.props.viewer}
           navigator={this.props.navigator}
           categories={this.state.categories}
+          changeTransparency={this.props.changeTransparency}
         />
       </ScrollView>
     );

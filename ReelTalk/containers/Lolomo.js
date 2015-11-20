@@ -24,6 +24,25 @@ class Lolomo extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.props.relay.setVariables({
+      userIds: this.props.userIds.join(',')
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.relay.variables.userIds === nextProps.relay.variables.userIds) {
+      return;
+    }
+    nextProps.relay.setVariables({
+      userIds: nextProps.userIds.join(',')
+    });
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.setState({
+      dataSource: ds.cloneWithRows(Object.keys(nextProps.viewer).filter(k => !k.startsWith('__')))
+    });
+  }
+
   _showDetails(showTitle, showId) {
     this.props.navigator.push({
       title: showTitle,
@@ -54,10 +73,13 @@ class Lolomo extends React.Component {
 }
 
 export default Relay.createContainer(Lolomo, {
+  initialVariables: {
+    userIds: "VXNlclByb2ZpbGU6MQ=="
+  },
   fragments: {
     viewer: () => Relay.QL`
       fragment on Query {
-        Comedies: allShows(first: 10, genre: "Comedy") {
+        Recommended: recommendShows(first: 10, user_ids: $userIds) {
           ${LolomoRow.getFragment('shows')}
         }
         Action: allShows(first: 10, genre: "Action") {

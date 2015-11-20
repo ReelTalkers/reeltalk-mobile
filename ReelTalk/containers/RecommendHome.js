@@ -106,6 +106,7 @@ class RecommendHome extends React.Component {
         </View>
         <Lolomo
           style={styles.lolomo}
+          userIds={this.state.groupMembers.map(obj => obj.__dataID__)}
           viewer={this.props.viewer}
           navigator={this.props.navigator}
           categories={this.state.categories}

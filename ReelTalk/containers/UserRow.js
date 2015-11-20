@@ -21,7 +21,6 @@ class UserRow extends React.Component {
 
   render() {
     const { userProfile, onSelectUser, onDeselectUser } = this.props;
-    console.log(userProfile)
     return (
       <TouchableHighlight
         onPress={ () => {

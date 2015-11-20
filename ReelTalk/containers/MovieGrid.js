@@ -70,6 +70,10 @@ class MovieGrid extends React.Component {
     return(name.indexOf("(") === -1 ? name : name.substring(0, name.indexOf("(")));
   }
 
+  getInitials(name) {
+    return(name.split(" ").map(word => word.charAt(0)).join(''))
+  }
+
   renderGridComponent(item) {
     if (this.state.userIds.indexOf(item.id) > -1) {
       return (
@@ -105,7 +109,7 @@ class MovieGrid extends React.Component {
         >
           <Text
               style={styles.image}
-          >{this.removeParens(item.fullName)}</Text>
+          >{this.getInitials(this.removeParens(item.fullName))}</Text>
         </TouchableHighlight>
       );
     }

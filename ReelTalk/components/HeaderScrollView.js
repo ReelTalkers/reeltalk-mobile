@@ -40,8 +40,7 @@ var HeaderScrollView = React.createClass({
       this._scrollView.setNativeProps(props);
     },
 
-    renderBackground: function () {
-        var { windowHeight, backgroundSource } = this.props;
+    renderBackground: function (windowHeight, backgroundSource) {
         if (!windowHeight || !backgroundSource) {
             return null;
         }
@@ -63,7 +62,7 @@ var HeaderScrollView = React.createClass({
                 {...props}
                 style={[style, styles.scrollView]}
                 stickyHeaderIndices={[0]}>
-                {this.renderBackground()}
+                {this.renderBackground(windowHeight, backgroundSource)}
                 <View>
                     {this.props.children}
                 </View>

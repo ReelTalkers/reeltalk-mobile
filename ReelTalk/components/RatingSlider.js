@@ -22,9 +22,7 @@ export default class RatingSlider extends React.Component {
   // TODO: is it bad style to change the states around? Are they supposed to be static?
   _setBucketWidth(bucketWidth) {
     this.setState({
-      text: this.state.text,
       bucketWidth: bucketWidth,
-      color: this.state.color,
     });
   }
 
@@ -34,24 +32,18 @@ export default class RatingSlider extends React.Component {
   }
 
   // TODO: is there a way to do it without storing width in the state?
-  _onLayout(evt) {
-    var numOptions = this.props.options.length;
-    var width = evt.nativeEvent.layout.width;
-
+  _onLayout(numOptions, width) {
     var bucketWidth = width / numOptions;
     this._setBucketWidth(bucketWidth);
   }
 
-  _alterRating(x) {
+  _alterRating(x, bucketWidth, options) {
     // We take the floor since index starts at 0
-    var bucketIndex = Math.floor(x / this.state.bucketWidth);
-    var option = this.props.options[bucketIndex];
+    var bucketIndex = Math.floor(x / bucketWidth);
+    var option = options[bucketIndex];
 
-    // We dont have a method to do this since changing the state triggers
-    //  re-rendering and we dont want to render twice
     this.setState({
       text: option.text,
-      bucketWidth: this.state.bucketWidth,
       color: option.color,
     });
   }
@@ -69,7 +61,7 @@ export default class RatingSlider extends React.Component {
       // TODO: not crazy that we are using pageX, then it will only work well for full page width
       //       but necessary to avoid touching the text messing things up
       onResponderGrant: (evt) => {
-        this._alterRating(evt.nativeEvent.pageX);
+        this._alterRating(evt.nativeEvent.pageX, this.state.bucketWidth);
         this.props.disableScroll && this.props.disableScroll();
       },
 
@@ -88,7 +80,7 @@ export default class RatingSlider extends React.Component {
   render() {
     return (
       <View style={[styles.ratingSlider, this.props.style, {backgroundColor: this.state.color}]}
-            onLayout={(event) => this._onLayout(event)}
+            onLayout={(event) => this._onLayout(this.props.options.length, event.nativeEvent.layout.width, this.props.options)}
             {...this._responder}
       >
         <Text style={styles.sliderText}>{this.state.text}</Text>

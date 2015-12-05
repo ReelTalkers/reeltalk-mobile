@@ -25,16 +25,14 @@ class CreateGroupPage extends React.Component {
     };
   }
 
-  handleSelectUser(user) {
-    var updatedSelectedUsers = Object.assign({}, this.state.selectedUsers);
+  handleSelectUser(user, updatedSelectedUsers) {
     updatedSelectedUsers[user.id] = user;
     this.setState({
       selectedUsers: updatedSelectedUsers,
     });
   }
 
-  handleDeselectUser(user) {
-    var updatedSelectedUsers = Object.assign({}, this.state.selectedUsers);
+  handleDeselectUser(user, updatedSelectedUsers) {
     delete updatedSelectedUsers[user.id];
     this.setState({
       selectedUsers: updatedSelectedUsers,
@@ -45,8 +43,8 @@ class CreateGroupPage extends React.Component {
     return (
       <UserRow
         userProfile={userProfile}
-        onSelectUser={(user) => this.handleSelectUser(user)}
-        onDeselectUser={(user) => this.handleDeselectUser(user)} />
+        onSelectUser={(user) => this.handleSelectUser(user, Object.assign({}, this.state.selectedUsers))}
+        onDeselectUser={(user) => this.handleDeselectUser(user, Object.assign({}, this.state.selectedUsers))} />
     )
   }
 

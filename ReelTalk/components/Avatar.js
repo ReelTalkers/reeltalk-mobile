@@ -10,10 +10,10 @@ import React, {
 export default class Avatar extends React.Component {
 
   // given an id returns an image object of the groupMember at that location
-  _getImage(id) {
+  _getImage(profileURI) {
     return (
       <Image
-          source={{uri: this.props.groupMembers[id].picture}}
+          source={{uri: profileURI}}
           style={styles.image}
       />
   );
@@ -32,8 +32,8 @@ export default class Avatar extends React.Component {
       return (
         <View style={styles.circle}>
           <View style={styles.squareRow}>
-            {this._getImage(0)}
-            {this._getImage(1)}
+            {this._getImage(this.props.groupMembers[0].picture)}
+            {this._getImage(this.props.groupMembers[1].picture)}
           </View>
         </View>
       );
@@ -43,11 +43,11 @@ export default class Avatar extends React.Component {
         <View style={styles.circle}>
           <View style={styles.squareRow}>
           <View style={styles.squareColumn}>
-            {this._getImage(0)}
+            {this._getImage(this.props.groupMembers[0].picture)}
           </View>
           <View style={styles.squareColumn}>
-            {this._getImage(1)}
-            {this._getImage(2)}
+            {this._getImage(this.props.groupMembers[1].picture)}
+            {this._getImage(this.props.groupMembers[2].picture)}
           </View>
         </View>
         </View>
@@ -57,12 +57,12 @@ export default class Avatar extends React.Component {
       return (
         <View style={styles.circle}>
           <View style={styles.squareRow}>
-            {this._getImage(0)}
-            {this._getImage(1)}
+            {this._getImage(this.props.groupMembers[0].picture)}
+            {this._getImage(this.props.groupMembers[1].picture)}
           </View>
           <View style={styles.squareRow}>
-            {this._getImage(2)}
-            {this._getImage(3)}
+            {this._getImage(this.props.groupMembers[2].picture)}
+            {this._getImage(this.props.groupMembers[3].picture)}
           </View>
         </View>
       );

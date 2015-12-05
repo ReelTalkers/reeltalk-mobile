@@ -20,9 +20,8 @@ class TopChartsHome extends React.Component {
     };
   }
 
-  _onValueChange(value) {
-    const { viewer } = this.props;
-    const newList = (value === 'Today') ? viewer.topToday : viewer.topWeek;
+  _onValueChange(value, topToday, topWeek) {
+    const newList = (value === 'Today') ? topToday : topWeek;
     this.setState({
       shows: newList,
     });
@@ -34,7 +33,7 @@ class TopChartsHome extends React.Component {
         <SegmentedControlIOS
           values={["This Week", "Today"]}
           selectedIndex={0}
-          onValueChange={(value) => this._onValueChange(value)}
+          onValueChange={(value) => this._onValueChange(value, this.props.topToday, this.props.topWeek)}
         />
         <MovieGrid
           shows={this.state.shows}

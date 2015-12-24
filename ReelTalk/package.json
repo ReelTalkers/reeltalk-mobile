@@ -24,18 +24,27 @@
     "jest-cli": "^0.6.1"
   },
   "jest": {
-    "scriptPreprocessor": "node_modules/react-native/jestSupport/scriptPreprocess.js",
-    "setupEnvScriptFile": "node_modules/react-native/jestSupport/env.js",
+    "scriptPreprocessor": "jestSupport/scriptProcessor.js",
+    "setupEnvScriptFile": "./node_modules/react-native/jestSupport/env.js",
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "packager/react-packager/src/Activity/"
+      "node_modules/"
     ],
     "testFileExtensions": [
       "js"
     ],
     "unmockedModulePathPatterns": [
       "promise",
-      "source-map"
-    ]
+      "source-map",
+      "key-mirror",
+      "immutable",
+      "fetch",
+      "react",
+      "fbjs"
+    ],
+    "verbose": false,
+    "testPathDirs": [
+      "src/"
+    ],
+    "collectCoverage": false
   }
 }

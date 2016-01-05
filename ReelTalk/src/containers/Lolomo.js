@@ -12,7 +12,7 @@ import Relay from 'react-relay';
 import LolomoRow from './LolomoRow';
 import MovieDetailView from './MovieDetailView';
 
-import { getMovieDetailQueryConfig } from '../queryConfigs';
+import { getMovieDetailQueryConfig } from '../../queryConfigs';
 
 class Lolomo extends React.Component {
 

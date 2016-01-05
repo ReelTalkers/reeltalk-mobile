@@ -13,7 +13,6 @@ import React, {
 import Relay from 'react-relay';
 
 import MovieGrid from "./MovieGrid";
-var json = require("../Data");
 
 class ListDetailView extends React.Component {
 

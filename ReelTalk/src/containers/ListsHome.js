@@ -15,9 +15,9 @@ import Relay from 'react-relay';
 import ProfileDisplay from '../components/ProfileDisplay'
 import ListDetailView from './ListDetailView';
 
-import { getRootQueryConfig } from '../queryConfigs';
+import { getRootQueryConfig } from '../../queryConfigs';
 
-class UserDetailView extends React.Component {
+class ListsHome extends React.Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -97,7 +97,7 @@ class UserDetailView extends React.Component {
   }
 }
 
-export default Relay.createContainer(UserDetailView, {
+export default Relay.createContainer(ListsHome, {
   fragments: {
     user: () => Relay.QL`
       fragment on UserProfile {

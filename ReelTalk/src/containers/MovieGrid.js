@@ -16,7 +16,7 @@ var screen = require('Dimensions').get('window');
 import MovieDetailView from "./MovieDetailView";
 import UserDetailView from "./UserDetailView";
 
-import { getMovieDetailQueryConfig, getUserQueryConfig } from '../queryConfigs';
+import { getMovieDetailQueryConfig, getUserQueryConfig } from '../../queryConfigs';
 
 class MovieGrid extends React.Component {
 

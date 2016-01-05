@@ -15,7 +15,7 @@ import Billboard from './Billboard';
 import Lolomo from './Lolomo';
 import CreateGroupPage from './CreateGroupPage';
 
-import { getRootQueryConfig } from '../queryConfigs';
+import { getRootQueryConfig } from '../../queryConfigs';
 
 const BUTTONS = [
   'Just Me',

@@ -17,10 +17,10 @@ Relay.injectNetworkLayer(
 );
 import cssVar from 'cssVar';
 
-import RecommendHome from './containers/RecommendHome';
-import ListsHome from './containers/ListsHome';
-import TopChartsHome from './containers/TopChartsHome';
-import SearchHome from './containers/SearchHome';
+import RecommendHome from './src/containers/RecommendHome';
+import ListsHome from './src/containers/ListsHome';
+import TopChartsHome from './src/containers/TopChartsHome';
+import SearchHome from './src/containers/SearchHome';
 
 import { relayRenderScene } from './utils';
 import { getRootQueryConfig, getUserQueryConfig, getRecommendHomeQueryConfig } from './queryConfigs';
